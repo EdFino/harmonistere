@@ -1,4 +1,5 @@
 import './home.css';
+import { Link } from 'react-router-dom';
 
 function Home(props) {
   return (
@@ -9,7 +10,7 @@ function Home(props) {
         <ul id="ulMenu">
             <li>Connexion à votre compte</li>
             <li>Création de votre compte</li>
-            <li>L'univers</li>
+            <Link to={'univers'}><li>L'univers</li></Link>
             <li>Créer une fiche</li>
             <li>Vos fiches</li>
             <li>Vos parties</li>

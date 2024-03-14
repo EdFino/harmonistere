@@ -3,13 +3,27 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import Home from './home/home';
 import reportWebVitals from './reportWebVitals';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import ErrorPage from './errorPage';
+import Univers from './univers/univers';
 
-const message = "Hello World !";
+const router = createBrowserRouter ([
+
+  {
+    path: "/",
+    element: <Home/>,
+    errorElement: <ErrorPage/>
+  },
+  {
+    path: "univers",
+    element: <Univers/>
+  }
+])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Home message={message} />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 

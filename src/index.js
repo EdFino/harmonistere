@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import Home from './home/home';
 import reportWebVitals from './reportWebVitals';
 
 const message = "Hello World !";
@@ -9,7 +9,7 @@ const message = "Hello World !";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App message={message} />
+    <Home message={message} />
   </React.StrictMode>
 );
 

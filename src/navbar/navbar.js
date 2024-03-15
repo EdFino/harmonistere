@@ -3,13 +3,12 @@ import logo from '../images/logo.jpg';
 import './navbar.css';
 import { Link, Outlet } from 'react-router-dom';
 
-    function Navbar() {
+    function Navbar(props) {
         return (
-    <div id="navbar">
-        <img id="logo" src={logo} alt="Logo de l'application" />
-        <Link to={'/'}><span id="returnHome">Home</span></Link>
-        <Outlet/>
-    </div>
+            <div id="navbar" style={{width: props.width}}>
+                <Link to={'/'}><img id="logo" src={logo} alt="Logo de l'application" />
+                <span id="returnHome">Home</span></Link>
+            </div>
 
     );
     }

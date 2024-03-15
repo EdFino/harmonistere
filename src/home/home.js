@@ -6,7 +6,7 @@ import useNoScrollFunction from '../noScrollFunction';
 
     function Home() {
         useNoScrollFunction();
-        let isLogged = false;
+        let isLogged = true;
         return (
             <div className="App">
                 <img id="homeArt" src={harmonistereHome} alt="Ecran de la page principale" />

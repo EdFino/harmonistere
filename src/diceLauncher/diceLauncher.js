@@ -1,13 +1,13 @@
 import React from 'react';
 import Navbar from '../navbar/navbar';
 
-function CharacterSpace () {
+function DiceLauncher () {
   return (
     <>
     <Navbar/>
-    <h1>Espace de votre personnage</h1>
+    <h1>Lanceur de dés</h1>
     </>
   )
 }
 
-export default CharacterSpace
+export default DiceLauncher;

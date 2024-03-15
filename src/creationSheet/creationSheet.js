@@ -1,13 +1,13 @@
 import React from 'react';
 import Navbar from '../navbar/navbar';
 
-function CharacterSpace () {
+function CreationSheet () {
   return (
     <>
     <Navbar/>
-    <h1>Espace de votre personnage</h1>
+    <h1>Création de votre nouvelle fiche</h1>
     </>
   )
 }
 
-export default CharacterSpace
+export default CreationSheet

@@ -1,13 +1,13 @@
 import React from 'react';
 import Navbar from '../navbar/navbar';
 
-function CharacterSpace () {
+function Session () {
   return (
     <>
     <Navbar/>
-    <h1>Espace de votre personnage</h1>
+    <h1>Session</h1>
     </>
   )
 }
 
-export default CharacterSpace
+export default Session;

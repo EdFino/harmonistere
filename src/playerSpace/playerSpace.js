@@ -1,13 +1,13 @@
 import React from 'react';
 import Navbar from '../navbar/navbar';
 
-function CharacterSpace () {
+function PlayerSpace () {
   return (
     <>
     <Navbar/>
-    <h1>Espace de votre personnage</h1>
+    <h1>Votre espace joueur</h1>
     </>
   )
 }
 
-export default CharacterSpace
+export default PlayerSpace;

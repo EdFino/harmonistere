@@ -1,7 +1,7 @@
 import { useRouteError, Link } from 'react-router-dom';
-import harmonistereError from './images/harmonistereError.jpg';
+import harmonistereError from '../images/harmonistereError.jpg';
 import './errorPage.css';
-import useNoScrollFunction from './noScrollFunction';
+import useNoScrollFunction from '../noScrollFunction';
 
 export default function ErrorPage(){
 	useNoScrollFunction();

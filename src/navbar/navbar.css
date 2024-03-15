@@ -1,0 +1,17 @@
+#navbar {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background-color: black;
+}
+
+#logo {
+    max-width: 5em;
+    max-height: 5em;
+}
+
+#returnHome {
+    color: #e6c200;
+    font-size: 2em;
+    margin-left: 2em;
+}

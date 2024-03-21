@@ -1,0 +1,30 @@
+.chapter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.disappear {
+    display: none;
+}
+
+.helpPopup {
+    align-self: start;
+    border: solid 1px black;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+}
+
+
+/* ATTENTION, CECI DOIT ETRE CREE EN MODULES PAR LA SUITE, IL CONCERNE SELECTCHARACTERISTICS */
+
+#characForm {
+    display: flex;
+}
+
+#inne, #acquis {
+    display: flex;
+    flex-direction: column;
+}

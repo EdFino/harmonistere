@@ -28,7 +28,7 @@ const router = createBrowserRouter([
     element: <AccountCreation />
   },
   {
-    path: 'espacejeu',
+    path: 'espacefiche',
     element: <CharacterSpace/>
   },
   {

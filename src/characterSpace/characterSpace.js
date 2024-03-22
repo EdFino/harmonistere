@@ -1,11 +1,12 @@
 import React from 'react';
 import Navbar from '../navbar/navbar';
+import './characterSpace.css';
 
 function CharacterSpace () {
   return (
     <>
     <Navbar/>
-    <h1>Espace de votre personnage</h1>
+    <h1>Espace de votre chocolat</h1>
     <div id='columnCRUD'>
       <p>Ici il y aura les valeurs pour modifier sa fiche</p>
     </div>

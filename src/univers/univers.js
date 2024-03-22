@@ -109,7 +109,7 @@ function Univers() {
         <div id="countriesBar">
           <ul id="countriesList">
             {descriptionCountry.map((country, index) => (
-              <li key={index} onClick={() => selectCountry(index)}>{country.name}</li>
+              <li class='likeAA' key={index} onClick={() => selectCountry(index)}>{country.name}</li>
             ))}
           </ul>
         </div>

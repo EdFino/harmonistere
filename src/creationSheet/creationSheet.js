@@ -4,13 +4,15 @@ import './creationSheet.css';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import SelectPersonnality from '../selectPersonnality';
-import SelectTest from '../selectTest';
-import SelectCharacteristic from '../selectCharacteristic';
+import SelectTest from './selectTest';
+import SelectCharacteristic from './selectCharacteristic';
+import FourthChapterSheet from './fourthChapterSheet';
 
 function CreationSheet () {
 
   const [isBender, setIsBender] = useState(false);
   const [selectionBender, setSelectionBender] = useState('');
+  const [uploadAvatar, setUploadAvatar] = useState (null);
 
   const benderOrNotBender = () => {
     setIsBender(!isBender);
@@ -29,6 +31,11 @@ function CreationSheet () {
     console.log (selectionBender);
   }
 
+  function handleAvatarChange (e) {
+    const avatar = e.target.files[0];
+    setUploadAvatar(avatar);
+  }
+
   return (
     <>
     <Navbar/>
@@ -40,6 +47,10 @@ function CreationSheet () {
         <div id='firstChapterForm'>
 
         <h2>1/ Identité de votre personnage</h2>
+
+        <label htmlFor='characterAvatar'>Votre avatar : </label>
+        <input type='file' id='characterName' name='characterName' onChange={handleAvatarChange}/><br/>
+        {uploadAvatar && (<><img src={URL.createObjectURL(uploadAvatar)} alt="Uploaded" width="200" /><br/></>)}
 
         <label htmlFor='characterName'>Le nom de votre personnage : </label>
         <input type='text' id='characterName' name='characterName' required /><br/>
@@ -138,8 +149,16 @@ function CreationSheet () {
         </Popup>
         </div>
         
-        <div id="firstChapter" className="chapter">
-        
+        <div id="fourthChapter" className="chapter">
+          <div id='fourthChapterForm'>
+            <h2>Votre personnage plus en détails</h2>
+            <div className="sideTextForm">
+              <p>Vous n'êtes pas obligés de remplir ces champs pour la validation de la fiche.
+                Mais si vous trouvez l'inspiration plus tard et que vous possédez un compte, vous pourrez toujours les modifier dans votre espace jeu.
+              </p>
+            </div> 
+            <FourthChapterSheet/>
+           </div>
         </div>
     </form>
     </>

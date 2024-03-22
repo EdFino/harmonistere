@@ -28,3 +28,17 @@
     display: flex;
     flex-direction: column;
 }
+
+
+/* ATTENTION, CECI DOIT ETRE CREE EN MODULES PAR LA SUITE, IL CONCERNE FOURTCHAPTERSHEETS */
+
+#textarea-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.textarea-fourth {
+    padding: 1em 2.5em;
+}

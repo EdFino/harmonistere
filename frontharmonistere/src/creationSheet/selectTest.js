@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const SelectTest = () => {
+const SelectTest = ({onPersonalitySelect}) => {
     const [selectedElementsPrincipal, setSelectedElementsPrincipal] = useState('');
     const [selectedElementsAscendant, setSelectedElementsAscendant] = useState('');
     const [selectedElementsNeutral, setSelectedElementsNeutral] = useState('');
@@ -55,6 +55,10 @@ const SelectTest = () => {
         setSelectedElementsOpposite(selectedElement);
     };
 
+    const handleConfirmSelection = () => {
+        onPersonalitySelect(selectedElementsPrincipal, selectedElementsAscendant, selectedElementsNeutral, selectedElementsOpposite);
+    };
+
     const handleReset = () => {
         setSelectedElementsPrincipal('');
         setSelectedElementsAscendant('');
@@ -106,6 +110,7 @@ const SelectTest = () => {
             </div>
 
             <button type='button' onClick={handleReset}>Réinitialiser</button>
+            <button type='button' onClick={handleConfirmSelection}>Confirmer votre choix</button>
         </div>
     );
 }

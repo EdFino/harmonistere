@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function SelectCharacteristic () {
+function SelectCharacteristic ({onCharacteristicSelect}) {
 
     const [bodyValue, setBodyValue] = useState('0');
     const [mindValue, setMindValue] = useState('0');
@@ -49,13 +49,13 @@ const characList= [
     {value:'2', description:'Bonus critique +2'}
 ]
 
-  function controlLevels () {
+  const handlecontrolLevel = () => {
     const limitLevel = 0;
     const playerChoices = parseInt(bodyValue, 10) + parseInt(mindValue, 10) + parseInt(soulValue, 10) + parseInt(martialValue, 10) + parseInt(elementaryValue, 10) + parseInt(speakingValue, 10)
     console.log (bodyValue, mindValue, soulValue, martialValue, elementaryValue, speakingValue, playerChoices);
     if (playerChoices > limitLevel) {
         return console.log ('Vous avez été trop généreux avec vous-même, arrêtez ça...')
-    } else {}
+    } else {onCharacteristicSelect(bodyValue, mindValue, soulValue, martialValue, elementaryValue, speakingValue)}
   }
 
   return (
@@ -100,7 +100,7 @@ const characList= [
                     ))}
                 </select>
         </div>
-        <button type='button' onClick={controlLevels}>Clique</button>
+        <button type='button' onClick={handlecontrolLevel}>Clique</button>
     </div>
     );
 }

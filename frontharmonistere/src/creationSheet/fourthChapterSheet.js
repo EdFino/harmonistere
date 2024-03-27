@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 
-function FourthChapterSheet () {
+function FourthChapterSheet ({onNotesSheet}) {
 
     const [specialSkills, setSpecialSkills] = useState('');
 
     function handleSkillsChange (e) {
         setSpecialSkills(e.target.value);
-        console.log (specialSkills);
     }
 
     const [notes, setNotes] = useState('');
@@ -32,6 +31,10 @@ function FourthChapterSheet () {
     function handleHistoryChange (e) {
         setHistory(e.target.value);
     }
+
+    const handleNotesSelection = () => {
+        onNotesSheet(specialSkills, notes, physicDescription, personnalityDescription, history);
+    };
 
 
     return (
@@ -91,6 +94,7 @@ function FourthChapterSheet () {
                     rows={12}
                 />
             </div>
+            <button type='button' onClick={handleNotesSelection}>Confirmez vos écrits</button>
         </div>
     )
 }

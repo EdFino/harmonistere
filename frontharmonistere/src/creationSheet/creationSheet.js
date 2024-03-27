@@ -7,23 +7,73 @@ import SelectPersonnality from '../selectPersonnality';
 import SelectTest from './selectTest';
 import SelectCharacteristic from './selectCharacteristic';
 import FourthChapterSheet from './fourthChapterSheet';
+import axios from 'axios';
 
 function CreationSheet () {
 
-  const [isBender, setIsBender] = useState(false);
-  const [selectionBender, setSelectionBender] = useState('');
-  const [uploadAvatar, setUploadAvatar] = useState (null);
+    const [isBender, setIsBender] = useState(false);
+    const [selectionBender, setSelectionBender] = useState('');
+    const [uploadAvatar, setUploadAvatar] = useState (null);
 
-  const benderOrNotBender = () => {
-    setIsBender(!isBender);
-    console.log (isBender);
+    const [formData, setFormData] = useState({
+        avatar:null,
+        name: '',
+        age: 0,
+        bender: false,
+        bending: '',
+        principalTrait: '',
+        ascendantTrait: '',
+        neutralTrait: '',
+        oppositeTrait: '',
+        bodyLevel: '',
+        mindLevel: '',
+        soulLevel: '',
+        martialLevel: '',
+        elementaryLevel: '',
+        speakingLevel: '',
+        skills: '',
+        notes: '',
+        physicDescription: '',
+        mentalDescription: '',
+        story:''
+    });
+    console.log (formData);
+
+
+    const handleChange = (event) => {
+        const { name, value, files } = event.target;
+    
+        // Si le champ est un champ de fichier, mettez à jour l'état avec le fichier
+        if (name === 'avatar') {
+            const avatar = files[0]; // Prenez le premier fichier
+            setUploadAvatar(avatar); // Mettez à jour l'état de l'avatar pour l'affichage immédiat
+            setFormData({ ...formData, [name]: avatar }); // Mettez à jour formData avec le fichier
+        } else {
+            setFormData({ ...formData, [name]: value }); // Sinon, mettez à jour formData avec la valeur normale
+        }
+    };
+    
+    
+
+const benderOrNotBender = () => {
+    const newIsBender = !isBender;
+    setIsBender(newIsBender);
     const bendingList = document.getElementById('disappearBending');
-    if (isBender) {
-      bendingList.classList.add('disappear');
+    if (newIsBender) {
+        bendingList.classList.remove('disappear');
+        setFormData({ ...formData, bender: true }); // Mettre à jour formData avec bender à true
     } else {
-      bendingList.classList.remove('disappear');
+        bendingList.classList.add('disappear');
+        setFormData({ ...formData, bender: false }); // Mettre à jour formData avec bender à false
     }
-  }
+};
+
+const handleBendingChange = (event) => {
+    const value = event.target.value;
+    setSelectionBender(value);
+    setFormData({ ...formData, bending: value });
+};
+
 
 
   const selectingBender = (event) => {
@@ -36,41 +86,88 @@ function CreationSheet () {
     setUploadAvatar(avatar);
   }
 
-  return (
-    <>
-    <Navbar/>
-    <h1>Création de votre nouvelle fiche</h1>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(formData);
+}
 
-    <form id="sheetForm">
+/*    try {
+        await axios.post('http://localhost:5038/backharmonistere/sheetCreation', formData);
+        console.log('Données envoyées avec succès');
+        console.log(formData);
+    } catch (error) {
+        console.error('Erreur lors de l\'envoi des données :', error);
+    }
+}; */
 
-      <div id="firstChapter" className="chapter">
-        <div id='firstChapterForm'>
+const handlePersonalitySelect = (principal, ascendant, neutral, opposite) => {
+    setFormData({
+        ...formData,
+        principalTrait: principal,
+        ascendantTrait: ascendant,
+        neutralTrait: neutral,
+        oppositeTrait: opposite
+    });
+};
 
-        <h2>1/ Identité de votre personnage</h2>
+const handleCharacteristicsSelect = (body, mind, soul, martial, element, speaking) => {
+    setFormData({
+        ...formData,
+        bodyLevel: body,
+        mindLevel: mind,
+        soulLevel: soul,
+        martialLevel: martial,
+        elementaryLevel: element,
+        speakingLevel: speaking
+    });
+};
 
-        <label htmlFor='characterAvatar'>Votre avatar : </label>
-        <input type='file' id='characterName' name='characterName' onChange={handleAvatarChange}/><br/>
-        {uploadAvatar && (<><img src={URL.createObjectURL(uploadAvatar)} alt="Uploaded" width="200" /><br/></>)}
+const handleNotesSheet = (skills, notes, physic, mental, story) => {
+    setFormData({
+        ...formData,
+        skills: skills,
+        notes: notes,
+        physicDescription: physic,
+        mentalDescription: mental,
+        story: story
+    })
+}
 
-        <label htmlFor='characterName'>Le nom de votre personnage : </label>
-        <input type='text' id='characterName' name='characterName' required /><br/>
+    return (
+        <>
+            <Navbar/>
+            <h1>Création de votre nouvelle fiche</h1>
 
-        <label htmlFor='characterAge'>L'âge de votre personnage : </label>
-        <input type='int' id='characterAge' name='characterAge' required /><br/>
+            <form id="sheetForm" onSubmit={handleSubmit}>
 
-        <label htmlFor='benderOrNot'>Votre personnage maîtrise-t-il un élément ? </label>
-        <input type='checkbox' checked={isBender} onChange={benderOrNotBender} id='benderOrNot' name='benderOrNot' /><br/>
+                <div id="firstChapter" className="chapter">
+                    <div id='firstChapterForm'>
 
-        <div id="disappearBending" className="disappear">
-        <label htmlFor='benderSelect'>Choisissez votre élément : </label>
-        <select id="benderSelect" value={selectionBender} onChange={selectingBender}>
-          <option value="earth">Terre</option>
-          <option value="fire">Feu</option>
-          <option value="air">Air</option>
-          <option value="water">Eau</option>
-        </select>
-        </div><br/> 
-        </div>
+                        <h2>1/ Identité de votre personnage</h2>
+
+                        <label htmlFor='characterAvatar'>Votre avatar : </label>
+                        <input type='file' id='characterAvatar' name='avatar' onChange={handleChange}/><br/>
+                        {uploadAvatar && (<><img src={URL.createObjectURL(uploadAvatar)} alt="Uploaded" width="200" /><br/></>)}
+
+                        <label htmlFor='characterName'>Le nom de votre personnage : </label>
+                        <input type='text' id='characterName' name='name' onChange={handleChange} required /><br/>
+
+                        <label htmlFor='characterAge'>L'âge de votre personnage : </label>
+                        <input type='int' id='characterAge' name='age' onChange={handleChange} required /><br/>
+
+                        <label htmlFor='benderOrNot'>Votre personnage maîtrise-t-il un élément ? </label>
+                        <input type='checkbox' checked={isBender} onChange={benderOrNotBender} id='benderOrNot' name='benderOrNot' /><br/>
+
+                        <div id="disappearBending" className="disappear">
+                        <label htmlFor='benderSelect'>Choisissez votre élément : </label>
+                        <select id="benderSelect" value={selectionBender} onChange={handleBendingChange}>
+                        <option value="earth">Terre</option>
+                        <option value="fire">Feu</option>
+                        <option value="air">Air</option>
+                        <option value="water">Eau</option>
+                        </select>
+                        </div><br/> 
+                        </div>
         
         <div className="sideTextForm">
           <p>Voici la partie la plus simple ! Posez simplement les informations de votre personnage, vous ne devriez avoir aucun souci.</p>
@@ -92,7 +189,7 @@ function CreationSheet () {
 
       <div id="secondChapter" className="chapter">
         <div id='secondChapterForm'>
-          <SelectTest/>
+          <SelectTest onPersonalitySelect={handlePersonalitySelect}/>
         </div>
         <div className="sideTextForm">
           <p>Choisissez ici la personnalité de votre personnage. Vous aurez quatre champs d'importance décroissante
@@ -121,7 +218,7 @@ function CreationSheet () {
         <div id="thirdChapter" className="chapter">
           <div id='thirdChapterForm'>
             <h2>3/ Caractéristiques</h2>
-            <SelectCharacteristic/>
+            <SelectCharacteristic onCharacteristicSelect={handleCharacteristicsSelect}/>
           </div>
         <div className="sideTextForm">
           <p>
@@ -157,9 +254,10 @@ function CreationSheet () {
                 Mais si vous trouvez l'inspiration plus tard et que vous possédez un compte, vous pourrez toujours les modifier dans votre espace jeu.
               </p>
             </div> 
-            <FourthChapterSheet/>
+            <FourthChapterSheet onNotesSheet={handleNotesSheet}/>
            </div>
         </div>
+        <button type='submit'>Créer votre fiche</button>
     </form>
     </>
   )

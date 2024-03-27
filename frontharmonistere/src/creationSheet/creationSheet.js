@@ -7,12 +7,14 @@ import SelectTest from './selectTest';
 import SelectCharacteristic from './selectCharacteristic';
 import FourthChapterSheet from './fourthChapterSheet';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function CreationSheet () {
 
     const [isBender, setIsBender] = useState(false);
     const [selectionBender, setSelectionBender] = useState('');
     const [uploadAvatar, setUploadAvatar] = useState (null);
+    const [showModalSheet, setShowModalSheet] = useState(false); // État pour afficher ou masquer la modale
 
     const [formData, setFormData] = useState({
         avatar:null,
@@ -93,9 +95,14 @@ const handleBendingChange = (event) => {
         await axios.post('http://localhost:5038/backharmonistere/sheetCreation', formData);
         console.log('Données envoyées avec succès');
         console.log(formData);
+        setShowModalSheet(true);
     } catch (error) {
         console.error('Erreur lors de l\'envoi des données :', error);
     }
+};
+
+const closeModalSheet = () => {
+    setShowModalSheet(false);
 };
 
 const handlePersonalitySelect = (principal, ascendant, neutral, opposite) => {
@@ -257,6 +264,17 @@ const handleNotesSheet = (skills, notes, physic, mental, story) => {
         </div>
         <button type='submit'>Créer votre fiche</button>
     </form>
+    <Popup open={showModalSheet} onClose={closeModalSheet} modal nested closeOnDocumentClick={false}>
+                {(close) => (
+                    <div className='modal'>
+                        <div className='content'>
+                            <h2>Merci !</h2>
+                            <p>Votre fiche a été créée avec succès.</p>
+                            <Link to="/"><button onClick={close}>Retourner à l'accueil</button></Link> {/* Utilisation de Link pour créer un lien */}
+                        </div>
+                    </div>
+                )}
+            </Popup>
     </>
   )
 }

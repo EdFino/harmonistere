@@ -1,0 +1,44 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .no-scroll {
+    overflow:hidden;
+  }
+  
+
+#homeArt {
+    max-width: 100%;
+    max-height: auto;
+    object-fit: cover;
+}
+
+#mainPageTitle {
+    position: absolute;
+    left: 10%;
+    top: 10%
+}
+
+#mainMenu {
+    background-color: black;
+    padding: 1em;
+    border: 3px double #e6c200;
+    min-width: 16%;
+    position: absolute;
+    top: 40%;
+    right: 3%;
+}
+
+#ulMenu {
+    list-style-type: none;
+    text-align: center;
+    padding-left: 0;
+}
+
+#ulMenu > li {
+    color: #e6c200;
+    text-align: center;
+    padding-top: 1em;
+}

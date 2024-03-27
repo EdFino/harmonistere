@@ -3,7 +3,6 @@ import Navbar from '../navbar/navbar';
 import './creationSheet.css';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
-import SelectPersonnality from '../selectPersonnality';
 import SelectTest from './selectTest';
 import SelectCharacteristic from './selectCharacteristic';
 import FourthChapterSheet from './fourthChapterSheet';
@@ -89,16 +88,15 @@ const handleBendingChange = (event) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
-}
 
-/*    try {
+    try {
         await axios.post('http://localhost:5038/backharmonistere/sheetCreation', formData);
         console.log('Données envoyées avec succès');
         console.log(formData);
     } catch (error) {
         console.error('Erreur lors de l\'envoi des données :', error);
     }
-}; */
+};
 
 const handlePersonalitySelect = (principal, ascendant, neutral, opposite) => {
     setFormData({

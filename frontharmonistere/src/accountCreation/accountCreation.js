@@ -4,6 +4,9 @@ import Navbar from '../navbar/navbar';
 import harmonistereCharacter from '../images/harmonistereCharacter.jpg';
 import harmonistereCharacterTwo from '../images/harmonistereCharacter2.jpg';
 import axios from 'axios';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+import { Link } from 'react-router-dom';
 
 function AccountCreation() {
 
@@ -16,6 +19,8 @@ function AccountCreation() {
         passwordSecond: ''
     });
 
+    const [showModal, setShowModal] = useState(false); // État pour afficher ou masquer la modale
+
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData({ ...formData, [name]: value });
@@ -23,15 +28,20 @@ function AccountCreation() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log (formData);
+        console.log(formData);
 
         try {
             await axios.post('http://localhost:5038/backharmonistere/accountCreation', formData);
             console.log('Données envoyées avec succès');
-            console.log (formData);
+            console.log(formData);
+            setShowModal(true); // Afficher la modale lorsque les données sont envoyées avec succès
         } catch (error) {
             console.error('Erreur lors de l\'envoi des données :', error);
         }
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
     };
 
     const [selectedGender, setSelectedGender] = useState('');
@@ -39,7 +49,6 @@ function AccountCreation() {
     const handleGenderChange = (event) => {
         setSelectedGender(event.target.value);
     };
-
 
     return (
         <div id="accountCreationTotal">
@@ -80,6 +89,18 @@ function AccountCreation() {
             <div className='columnContainerCharacter'>
                 <img src={harmonistereCharacterTwo} alt="Harmonistère d'eau à la droite de l'écran" className="characterColumnImg" />
             </div>
+
+            <Popup open={showModal} onClose={closeModal} modal nested closeOnDocumentClick={false}>
+                {(close) => (
+                    <div className='modal'>
+                        <div className='content'>
+                            <h2>Merci !</h2>
+                            <p>Votre compte a été créé avec succès.</p>
+                            <Link to="/"><button onClick={close}>Retourner à l'accueil</button></Link> {/* Utilisation de Link pour créer un lien */}
+                        </div>
+                    </div>
+                )}
+            </Popup>
         </div>
     )
 }

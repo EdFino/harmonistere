@@ -7,6 +7,9 @@ import axios from 'axios';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import { Link } from 'react-router-dom';
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, registerUser } from "../assets/firebase";
+
 
 function AccountCreation() {
 
@@ -15,30 +18,51 @@ function AccountCreation() {
         age: '',
         gender: '',
         email: '',
-        password: '',
-        passwordSecond: ''
     });
 
-    const [showModal, setShowModal] = useState(false); // État pour afficher ou masquer la modale
+    const [email, setEmail] = useState ('');
+    const [password, setPassword] = useState ('');
+    const [user, loading, error] = useAuthState(auth);
+
+    const [showModal, setShowModal] = useState(false);
+
+    const register = () => {
+        registerUser(email, password)
+    }
 
     const handleChange = (event) => {
         const { name, value } = event.target;
+        if (name === 'email') {
+            setEmail(value);
+        }
         setFormData({ ...formData, [name]: value });
     };
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log (email);
+        console.log(password);
         console.log(formData);
-
+    
         try {
+
+            setShowModal(true);
+
             await axios.post('http://localhost:5038/backharmonistere/accountCreation', formData);
+
+            await registerUser(email, password);
+    
+    
+            // 3. Affichage de la confirmation de création du compte
             console.log('Données envoyées avec succès');
-            console.log(formData);
-            setShowModal(true); // Afficher la modale lorsque les données sont envoyées avec succès
         } catch (error) {
             console.error('Erreur lors de l\'envoi des données :', error);
+            // Gérer les erreurs ici, par exemple afficher un message d'erreur à l'utilisateur
         }
     };
+    
+    
 
     const closeModal = () => {
         setShowModal(false);
@@ -49,6 +73,9 @@ function AccountCreation() {
     const handleGenderChange = (event) => {
         setSelectedGender(event.target.value);
     };
+
+/*     <label htmlFor='passwordSecond'>Veuillez confirmer votre mot de passe : </label>
+    <input type='password' id='passwordCreationConfirm' name='passwordSecond' value={formData.passwordSecond} onChange={handleChange} /><br /> */
 
     return (
         <div id="accountCreationTotal">
@@ -73,13 +100,10 @@ function AccountCreation() {
                             <option value="other">Autre</option>
                         </select><br />
                         <label htmlFor='email'>Votre email : </label>
-                        <input type='email' id='emailCreation' name='email' value={formData.email} onChange={handleChange} /><br />
+                        <input type='email' id='emailCreation' name='email' value={email} onChange={handleChange} /><br />
 
                         <label htmlFor='password'>Votre mot de passe : </label>
-                        <input type='password' id='passwordCreation' name='password' value={formData.password} onChange={handleChange} /><br />
-
-                        <label htmlFor='passwordSecond'>Veuillez confirmer votre mot de passe : </label>
-                        <input type='password' id='passwordCreationConfirm' name='passwordSecond' value={formData.passwordSecond} onChange={handleChange} /><br />
+                        <input type='password' id='passwordCreation' name='password' value={password} onChange={(e) => setPassword(e.target.value)} /><br />
 
                         <button type='submit'>Créer votre compte</button>
                     </form>

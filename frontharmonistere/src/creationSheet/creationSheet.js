@@ -8,9 +8,12 @@ import SelectCharacteristic from './selectCharacteristic';
 import FourthChapterSheet from './fourthChapterSheet';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../assets/firebase';
 
 function CreationSheet () {
 
+    const [user] = useAuthState(auth);
     const [isBender, setIsBender] = useState(false);
     const [selectionBender, setSelectionBender] = useState('');
     const [uploadAvatar, setUploadAvatar] = useState (null);
@@ -141,6 +144,8 @@ const handleNotesSheet = (skills, notes, physic, mental, story) => {
     return (
         <>
             <Navbar/>
+            {user && <p>Vous êtes bien connecté, {user.email}</p>}
+            {!user && <p>Vous n'êtes pas connecté</p>}
             <h1>Création de votre nouvelle fiche</h1>
 
             <form id="sheetForm" onSubmit={handleSubmit}>

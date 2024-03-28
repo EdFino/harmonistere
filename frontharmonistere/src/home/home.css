@@ -42,3 +42,9 @@ body, html {
     text-align: center;
     padding-top: 1em;
 }
+
+#connexionButtonPopup {
+    padding-top: 1em;
+    color: #e6c200;
+    cursor: pointer;
+}

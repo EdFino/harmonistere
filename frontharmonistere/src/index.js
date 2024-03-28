@@ -13,6 +13,7 @@ import CreationSheet from './creationSheet/creationSheet';
 import PlayerSpace from './playerSpace/playerSpace';
 import Session from './session/session';
 import TestCo from './testco';
+import Reset from './reset/reset';
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
   {
   path: 'testco',
   element: <TestCo/>
+  },
+  {
+    path: 'resetPassword',
+    element: <Reset/>
   }
 ]);
 

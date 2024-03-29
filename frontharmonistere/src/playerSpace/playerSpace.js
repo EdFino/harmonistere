@@ -30,17 +30,26 @@ function PlayerSpace () {
     console.log ('chocolat : ', characterList);
 
 
-  return (
-    <>
-    <Navbar/>
-    <h1>Votre espace</h1>
-    <p>Allons dans l'espace fiche, imaginons que c'est beau ici et allons là = </p>
-{/*     <Link to={'/espacefiche'}><button>Votre première fiche : JD, le maître du feu</button></Link> */}
-    {characterList.map ((character, index) => (
-        <Link to={`/espacefiche/${character._id}`}> <button key={index}>{character.name}</button><br/></Link>
-    ))}
-{}    </>
-  )
+    return (
+        <>
+            <Navbar />
+            <h1>Votre espace</h1>
+            {characterList.length === 0 ? (
+                <>
+                    <p>Vous n'avez pas de fiche, souhaitez-vous en créer une ?</p>
+                    <Link to='/creationfiche'><button>Excellente idée, allons-y !</button></Link>
+                </>
+            ) : (
+                <>
+                    {characterList.map((character, index) => (
+                        <Link to={`/espacefiche/${character._id}`} key={index}>
+                            <button>{character.name}</button><br />
+                        </Link>
+                    ))}
+                </>
+            )}
+        </>
+    );
 }
 
 export default PlayerSpace;

@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { auth } from '../assets/firebase';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, Navigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Navbar from '../navbar/navbar';
 import './characterSpace.css';
 import CharacterSheet from './characterSheet';
+import Popup from 'reactjs-popup';
 
 function CharacterSpace () {
 
     const [user] = useAuthState(auth);
     const [sheetData, setSheetData] = useState(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(null);
+    const [sheetDeleted, setSheetDeleted] = useState(false);
 
     const [characterOneName, setCharacterOneName] = useState ('');
     const [characterOneAge, setCharacterOneAge] = useState ('');
@@ -58,16 +61,26 @@ function CharacterSpace () {
                     console.log('Erreur lors de la récupération des données : ', error);
                 });
         }
-    }, [user]); // Déclenchez l'effet chaque fois que la valeur de user change
+    }, [user]);
+
+    const handleDelete = () => {
+        axios.delete(`http://localhost:5038/backharmonistere/deleteSheet/${id}`)
+        .then(response => {
+            console.log ('Fiche supprimée avec succès');
+            setSheetDeleted(true)
+        })
+        .catch(error => {
+            console.log ('La fiche n\'a pas pu être supprimée : ', error);
+        });
+    }
     
 
     console.log (sheetData);
 
-/* Ces valeurs sont fictives, il faudra brancher avec MongoDB pour avoir le reste*/
-
-
-/*Fin des valeurs fictives*/
-
+    const closeModal = () => {
+        setShowDeleteModal(false);
+    };
+    
     return (
         <>
             <Navbar/>
@@ -75,7 +88,8 @@ function CharacterSpace () {
             <h2>{characterOneName}</h2>
             <div id='characterSpace'>
                 <div id='columnCrud' className='columnSheet'>
-                    <p>Ici il y aura les valeurs pour modifier sa fiche</p>
+                    <p>Ici il y aura les fonctions pour modifier ou supprimer sa fiche</p>
+                    <button type='button' onClick={() => setShowDeleteModal(true)}>Supprimer la fiche</button>
                 </div>
                 <div id='characterSheetVisual'>
                     <CharacterSheet
@@ -97,6 +111,21 @@ function CharacterSpace () {
                 <div id='columnPlay' className='columnSheet'>
                     <p>Ici, nous aurons la seconde colonne avec les fonctions de la fiche</p>
                 </div>
+
+                <Popup open={showDeleteModal} onClose={closeModal} modal nested>
+                {(close) => (
+                    <div className='modal'>
+                        <div className='content'>
+                            <p>Êtes-vous certain de vouloir supprimer votre fiche ?</p>
+                            <p>Cette option sera définitive</p>
+                            <button type='button' onClick={handleDelete}>Suppression de la fiche</button>
+                            <button type='button' onClick={closeModal}>Annuler l'opération</button>
+                        </div>
+                    </div>
+                )}
+            </Popup>
+
+            {sheetDeleted && <Navigate to="/espacejoueur" />}
             </div>
         </>  
     )

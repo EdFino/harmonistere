@@ -30,7 +30,7 @@ const router = createBrowserRouter([
     element: <AccountCreation />
   },
   {
-    path: 'espacefiche',
+    path: 'espacefiche/:id',
     element: <CharacterSpace/>
   },
   {

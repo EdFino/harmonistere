@@ -180,10 +180,10 @@ const handleNotesSheet = (skills, notes, physic, mental, story) => {
                         <div id="disappearBending" className="disappear">
                         <label htmlFor='benderSelect'>Choisissez votre élément : </label>
                         <select id="benderSelect" value={selectionBender} onChange={handleBendingChange}>
-                        <option value="earth">Terre</option>
-                        <option value="fire">Feu</option>
-                        <option value="air">Air</option>
-                        <option value="water">Eau</option>
+                        <option value="Terre">Terre</option>
+                        <option value="Feu">Feu</option>
+                        <option value="Air">Air</option>
+                        <option value="Eau">Eau</option>
                         </select>
                         </div><br/> 
                         </div>

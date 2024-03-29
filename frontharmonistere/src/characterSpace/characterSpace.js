@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { auth } from '../assets/firebase';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Navbar from '../navbar/navbar';
 import './characterSpace.css';
@@ -26,10 +27,11 @@ function CharacterSpace () {
     const [characterOneElement, setCharacterOneElement] = useState ('');
     const [characterOneSpeaking, setCharacterOneSpeaking] = useState ('');
 
+    const { id } = useParams();
+
     useEffect(() => {
-        // Logique pour récupérer les données de Sheets ici...
         if (user) {
-            axios.get(`http://localhost:5038/backharmonistere/readSheetsData?email=${user.email}`)
+            axios.get(`http://localhost:5038/backharmonistere/readSheetsData/${id}?email=${user.email}`)
                 .then(response => {
                     setSheetData(response.data);
     
@@ -49,13 +51,7 @@ function CharacterSpace () {
                         setCharacterOneSoul(data.soulLevel);                       
                         setCharacterOneMartial(data.martialLevel);                       
                         setCharacterOneElement(data.elementaryLevel);                       
-                        setCharacterOneSpeaking(data.speakingLevel);                       
-                        setCharacterOneName(data.name);                       
-                        setCharacterOneName(data.name);                       
-                        setCharacterOneName(data.name);                       
-                        setCharacterOneName(data.name);                       
-                        setCharacterOneName(data.name);
-    
+                        setCharacterOneSpeaking(data.speakingLevel);    
                     }
                 })
                 .catch(error => {

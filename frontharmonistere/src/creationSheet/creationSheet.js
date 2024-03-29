@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../navbar/navbar';
 import './creationSheet.css';
 import Popup from 'reactjs-popup';
@@ -42,6 +42,15 @@ function CreationSheet () {
         story:''
     });
     console.log (formData);
+
+    useEffect (() => {
+        if (user) {
+            setFormData(prevFormData => ({
+                ...prevFormData,
+                email: user.email
+            }));
+        }
+    }, [user]);
 
 
     const handleChange = (event) => {

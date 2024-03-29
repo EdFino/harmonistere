@@ -47,11 +47,11 @@ function AccountCreation() {
     
         try {
 
-            setShowModal(true);
-
-            await axios.post('http://localhost:5038/backharmonistere/accountCreation', formData);
+            axios.post('http://localhost:5038/backharmonistere/accountCreation', formData);
 
             await registerUser(email, password);
+            setShowModal(true);
+
     
     
             // 3. Affichage de la confirmation de création du compte

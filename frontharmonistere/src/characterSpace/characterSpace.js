@@ -7,6 +7,7 @@ import Navbar from '../navbar/navbar';
 import './characterSpace.css';
 import CharacterSheet from './characterSheet';
 import Popup from 'reactjs-popup';
+import CharacterSheetVerso from '../characterSheetVerso';
 
 function CharacterSpace () {
 
@@ -29,6 +30,7 @@ function CharacterSpace () {
     const [characterOneMartial, setCharacterOneMartial] = useState ('');
     const [characterOneElement, setCharacterOneElement] = useState ('');
     const [characterOneSpeaking, setCharacterOneSpeaking] = useState ('');
+    const [specialSkills, setSpecialSkills] = useState('');
 
     const { id } = useParams();
 
@@ -54,7 +56,8 @@ function CharacterSpace () {
                         setCharacterOneSoul(data.soulLevel);                       
                         setCharacterOneMartial(data.martialLevel);                       
                         setCharacterOneElement(data.elementaryLevel);                       
-                        setCharacterOneSpeaking(data.speakingLevel);    
+                        setCharacterOneSpeaking(data.speakingLevel);
+                        setSpecialSkills(data.skills);
                     }
                 })
                 .catch(error => {
@@ -92,21 +95,28 @@ function CharacterSpace () {
                     <button type='button' onClick={() => setShowDeleteModal(true)}>Supprimer la fiche</button>
                 </div>
                 <div id='characterSheetVisual'>
-                    <CharacterSheet
-                        name={characterOneName}
-                        age={characterOneAge}
-                        isBender={isOneBender}
-                        bending={characterOneBender}
-                        principalTrait={characterOnePrincipal}
-                        ascendantTrait={characterOneAscendant}
-                        neutralTrait={characterOneNeutral}
-                        oppositeTrait={characterOneOpposite}
-                        bodyLevel={characterOneBody}
-                        mindLevel={characterOneMind}
-                        soulLevel={characterOneSoul}
-                        martialLevel={characterOneMartial}
-                        elementLevel={characterOneElement}
-                        speakingLevel={characterOneSpeaking}/>
+                    <div id='sheetVisualRecto' className='sheetVisualElement'>
+                        <CharacterSheet
+                            name={characterOneName}
+                            age={characterOneAge}
+                            isBender={isOneBender}
+                            bending={characterOneBender}
+                            principalTrait={characterOnePrincipal}
+                            ascendantTrait={characterOneAscendant}
+                            neutralTrait={characterOneNeutral}
+                            oppositeTrait={characterOneOpposite}
+                            bodyLevel={characterOneBody}
+                            mindLevel={characterOneMind}
+                            soulLevel={characterOneSoul}
+                            martialLevel={characterOneMartial}
+                            elementLevel={characterOneElement}
+                            speakingLevel={characterOneSpeaking}
+                            specialSkills={specialSkills}
+                            />
+                    </div>
+                    <div id='sheetVisualVerso' className='sheetVisualElement'>
+                        <CharacterSheetVerso/>
+                    </div>
                 </div>
                 <div id='columnPlay' className='columnSheet'>
                     <p>Ici, nous aurons la seconde colonne avec les fonctions de la fiche</p>

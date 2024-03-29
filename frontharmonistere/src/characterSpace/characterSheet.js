@@ -16,7 +16,8 @@ function CharacterSheet (props) {
             soulLevel, 
             martialLevel,
             elementLevel,
-            speakingLevel} = props;
+            speakingLevel,
+            specialSkills} = props;
 
     const elementList = [{elementName: 'TERRE', importance: ''},
                         {elementName: 'FEU', importance: ''},
@@ -158,37 +159,39 @@ function CharacterSheet (props) {
 
     return (
     <div id="allSheet">
+            <div id='headerSheet'>
 
-        <div id='headerSheet'>
-
-            <div id='personnalInformation'>
-            <h3>{name}</h3>
-            <p>Âge : {age}</p>
-            <p>Maîtrise : {isBender ? bending : 'Aucune'}</p>
+                <div id='personnalInformation'>
+                <h3>{name}</h3>
+                <p>Âge : {age}</p>
+                <p>Maîtrise : {isBender ? bending : 'Aucune'}</p>
+                </div>
+                
+                <div id='personnalityInformation'>
+                    {elementList.map((element, index) => (
+                        <div key={index} className={`elementSheet ${element.importance}`}>{element.elementName}</div>
+                    ))}
+                </div>
             </div>
-            
-            <div id='personnalityInformation'>
-                {elementList.map((element, index) => (
-                    <div key={index} className={`elementSheet ${element.importance}`}>{element.elementName}</div>
-                ))}
+            <div id='characteristicsInformation'>
+                <div className='columnCarac'>
+                    <h3>Inné</h3>
+                    {characteristicsInnéList.map((element, index) => (
+                        <div className='subtitleSheet'><div key={index} className={`caracSheet ${element.class}`}>{element.value}</div>
+                        {element.caracName} </div>
+                    ))}
+                </div>
+                <div className='columnCarac'>
+                    <h3>Acquis</h3>
+                    {characteristicsAcquisList.map((element, index) => (
+                        <div className='subtitleSheet rightSide'><div key={index} className={`caracSheet ${element.class}`}>{element.value}</div>
+                        {element.caracName} </div>
+                    ))}
             </div>
         </div>
-        <div id='characteristicsInformation'>
-            <div className='columnCarac'>
-                <h3>Inné</h3>
-                {characteristicsInnéList.map((element, index) => (
-                    <div className='subtitleSheet'><div key={index} className={`caracSheet ${element.class}`}>{element.value}</div>
-                    {element.caracName} </div>
-                ))}
-            </div>
-            <div className='columnCarac'>
-                <h3>Acquis</h3>
-                {characteristicsAcquisList.map((element, index) => (
-                    <div className='subtitleSheet rightSide'><div key={index} className={`caracSheet ${element.class}`}>{element.value}</div>
-                    {element.caracName} </div>
-                ))}
-            </div>
-
+        <div id='skillsNote'>
+            <h3>Compétences de votre personnage</h3>
+            <p>{specialSkills}</p>
         </div>
     </div>
     )

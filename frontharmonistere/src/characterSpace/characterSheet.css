@@ -7,7 +7,7 @@
     display: flex;
     flex-wrap: wrap;
     border: solid black 1px;
-    max-width: 30%
+    max-width: 30%;
 }
 
 .elementSheet {
@@ -67,4 +67,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+#skillsNote {
+    border: solid black 1px;
+    padding-left: 1em;
+    padding-top: 0.1em;
 }

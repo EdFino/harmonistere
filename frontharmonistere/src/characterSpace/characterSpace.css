@@ -13,18 +13,21 @@
 
 #columnCrud {
     padding: 0.7em;
-    margin-left: 1em;
+    margin-left: 0.5em;
 }
 
 #columnPlay {
     padding: 0.7em;
-    margin-right: 1em;
+    margin-right: 0.5em;
+}
+
+.sheetVisualElement {
+    background-color: white;
+    border: solid black 5px;
+    margin: 2em;
+    padding: 0.5em;
 }
 
 #characterSheetVisual {
     flex-grow: 3;
-    background-color: white;
-    border: solid black 5px;
-    margin: 1em;
-    padding: 0.5em;
 }

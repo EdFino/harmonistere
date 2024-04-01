@@ -17,7 +17,8 @@ function CharacterSheet (props) {
             martialLevel,
             elementLevel,
             speakingLevel,
-            specialSkills} = props;
+            specialSkills,
+            notes} = props;
 
     const elementList = [{elementName: 'TERRE', importance: ''},
                         {elementName: 'FEU', importance: ''},
@@ -189,9 +190,17 @@ function CharacterSheet (props) {
                     ))}
             </div>
         </div>
-        <div id='skillsNote'>
-            <h3>Compétences de votre personnage</h3>
-            <p>{specialSkills}</p>
+        <div id='bottomSheet'>
+            <div id='skillsNote' class='characterInfoText'>
+                <h3>Compétences de votre personnage</h3>
+                <p>{specialSkills}</p>
+            </div>
+            <div id='notes' class='characterInfoText'>
+                <h3>Vos notes</h3>
+                <p>
+                    {notes}
+                </p>
+            </div>
         </div>
     </div>
     )

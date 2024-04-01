@@ -15,6 +15,7 @@ function CharacterSpace () {
     const [sheetData, setSheetData] = useState(null);
     const [showDeleteModal, setShowDeleteModal] = useState(null);
     const [sheetDeleted, setSheetDeleted] = useState(false);
+    const [sheetPresented, setSheetPresented] = useState (false);
 
     const [characterOneName, setCharacterOneName] = useState ('');
     const [characterOneAge, setCharacterOneAge] = useState ('');
@@ -31,6 +32,11 @@ function CharacterSpace () {
     const [characterOneElement, setCharacterOneElement] = useState ('');
     const [characterOneSpeaking, setCharacterOneSpeaking] = useState ('');
     const [specialSkills, setSpecialSkills] = useState('');
+    const [notes, setNotes] = useState('');
+    const [physicalDescription, setPhysicalDescription] = useState('');
+    const [personnalityDescription, setPersonnalityDescription] = useState('');
+    const [storyCharacter, setStoryCharacter] = useState('');
+
 
     const { id } = useParams();
 
@@ -58,6 +64,10 @@ function CharacterSpace () {
                         setCharacterOneElement(data.elementaryLevel);                       
                         setCharacterOneSpeaking(data.speakingLevel);
                         setSpecialSkills(data.skills);
+                        setNotes(data.notes);
+                        setPhysicalDescription(data.physicDescription);
+                        setPersonnalityDescription(data.mentalDescription);
+                        setStoryCharacter(data.story);
                     }
                 })
                 .catch(error => {
@@ -95,6 +105,7 @@ function CharacterSpace () {
                     <button type='button' onClick={() => setShowDeleteModal(true)}>Supprimer la fiche</button>
                 </div>
                 <div id='characterSheetVisual'>
+                {!sheetPresented ? (
                     <div id='sheetVisualRecto' className='sheetVisualElement'>
                         <CharacterSheet
                             name={characterOneName}
@@ -112,11 +123,21 @@ function CharacterSpace () {
                             elementLevel={characterOneElement}
                             speakingLevel={characterOneSpeaking}
                             specialSkills={specialSkills}
+                            notes={notes}
                             />
-                    </div>
-                    <div id='sheetVisualVerso' className='sheetVisualElement'>
-                        <CharacterSheetVerso/>
-                    </div>
+                            </div>)
+                            : (
+                            <div id='sheetVisualVerso' className='sheetVisualElement'>
+                                <CharacterSheetVerso
+                                    name={characterOneName}
+                                    physicalDescription={physicalDescription}
+                                    personnalityDescription={personnalityDescription}
+                                    storyCharacter={storyCharacter}/>
+                            </div>
+                            )
+                            }
+                        <button type='button' onClick={() => {setSheetPresented(!sheetPresented)}}>Verso</button>
+
                 </div>
                 <div id='columnPlay' className='columnSheet'>
                     <p>Ici, nous aurons la seconde colonne avec les fonctions de la fiche</p>

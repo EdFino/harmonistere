@@ -1,0 +1,11 @@
+#allVersoSheet {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.categoryVerso {
+    border: solid 3px black;
+    padding: 0.3em 1em;
+    margin: 2em;
+}

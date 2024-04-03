@@ -11,6 +11,7 @@ function PlayerSpace () {
 
     const [user, error] = useAuthState(auth);
     const [characterList, setCharacterList] = useState([]);
+    const [sessionList, setSessionList] = useState([]);
     const [modalSessionCreation, setModalSessioncreation] = useState(false);
     const [sessionName, setSessionName] = useState('');
     const [formDataSession, setFormDataSession] = useState({});
@@ -21,7 +22,6 @@ function PlayerSpace () {
             axios.get(`http://localhost:5038/backharmonistere/readSheetsData?email=${user.email}`)
                 .then(response => {
                     setCharacterList(response.data);    
-                    // Supposons que vous ayez récupéré les données dans une variable nommée sheetsData
                     if (response.data.length > 0) {
                         const data = response.data[0];
                     }
@@ -29,6 +29,19 @@ function PlayerSpace () {
                 .catch(error => {
                     console.log('Erreur lors de la récupération des données : ', error);
                 });
+
+                axios.get(`http://localhost:5038/backharmonistere/readSessionsData?email=${user.email}`)
+                .then(response => {
+                    if (Array.isArray(response.data) && response.data.length > 0) {
+                        setSessionList(response.data);
+                    } else {
+                        console.log('Aucune session trouvée.');
+                    }
+                })
+                .catch(error => {
+                    console.log('Erreur lors de la récupération des sessions : ', error);
+                });
+            
         }
     }, [user]);
 
@@ -52,7 +65,7 @@ function PlayerSpace () {
             const updatedFormDataSession = {
                 ...formDataSession,
                 sessionName: sessionName,
-                userEmail: user.email
+                MJ: user.email
             };
             console.log (formDataSession)
 
@@ -84,7 +97,6 @@ function PlayerSpace () {
                             {characterList.map((character, index) => (
                                 <Link to={`/espacefiche/${character._id}`} key={index}>
                                     <button>{character.name}</button><br />
-                                    {character.file}
                                 </Link>
                             ))}
                                 <Link to={`/creationfiche`}>
@@ -98,10 +110,20 @@ function PlayerSpace () {
 
                 <div id='sessionSection'>
                     <h2>Vos instances</h2>
-                        <div className='sheetsList'>
-                            <p onClick={modalOpenSession}>Nouvelle instance</p>
-                        </div>
+                    {sessionList.map((sessionLine, index) => (
+                <div key={index}>
+                    <Link to={`/session/${sessionLine._id}`}>
+                        <button>{sessionLine.sessionName}</button>
+                    </Link>
+                    <br />
                 </div>
+            ))
+        }
+        <div className='sheetsList'>
+            <p onClick={modalOpenSession}>Nouvelle instance</p>
+        </div>
+    </div>
+
             </div>
 
             <Popup open={modalSessionCreation} onClose={closeModalSession} modal nested>

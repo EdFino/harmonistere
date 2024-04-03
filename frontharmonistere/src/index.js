@@ -46,7 +46,7 @@ const router = createBrowserRouter([
     element: <PlayerSpace/>
   },
   {
-    path: 'session',
+    path: 'session/:id',
     element: <Session/>
   },
   {

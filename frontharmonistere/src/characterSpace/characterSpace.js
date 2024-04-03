@@ -8,6 +8,7 @@ import './characterSpace.css';
 import CharacterSheet from './characterSheet';
 import Popup from 'reactjs-popup';
 import CharacterSheetVerso from '../characterSheetVerso';
+import DiceLauncher from '../diceLauncher/diceLauncher';
 
 function CharacterSpace () {
 
@@ -16,6 +17,8 @@ function CharacterSpace () {
     const [showDeleteModal, setShowDeleteModal] = useState(null);
     const [sheetDeleted, setSheetDeleted] = useState(false);
     const [sheetPresented, setSheetPresented] = useState (false);
+    const [changeSheet, setChangeSheet] = useState(false);
+    const [diceLauncherReady, setDiceLauncherReady] = useState(false);
 
     const [characterOneName, setCharacterOneName] = useState ('');
     const [characterOneAge, setCharacterOneAge] = useState ('');
@@ -93,6 +96,14 @@ function CharacterSpace () {
     const closeModal = () => {
         setShowDeleteModal(false);
     };
+
+    const editSheet = () => {
+        setChangeSheet(!changeSheet);
+    }
+
+    const diceLauncherSet = () => {
+        setDiceLauncherReady(!diceLauncherReady);
+    }
     
     return (
         <>
@@ -102,6 +113,7 @@ function CharacterSpace () {
             <div id='characterSpace'>
                 <div id='columnCrud' className='columnSheet'>
                     <p>Ici il y aura les fonctions pour modifier ou supprimer sa fiche</p>
+                    <button type='button' onClick={editSheet}>Editer votre fiche</button><br/>
                     <button type='button' onClick={() => setShowDeleteModal(true)}>Supprimer la fiche</button>
                 </div>
                 <div id='characterSheetVisual'>
@@ -124,6 +136,10 @@ function CharacterSpace () {
                             speakingLevel={characterOneSpeaking}
                             specialSkills={specialSkills}
                             notes={notes}
+                            physicalDescription={physicalDescription}
+                            personnalityDescription={personnalityDescription}
+                            storyCharacter={storyCharacter}
+                            changeSheet={changeSheet}
                             />
                             </div>)
                             : (
@@ -140,7 +156,10 @@ function CharacterSpace () {
 
                 </div>
                 <div id='columnPlay' className='columnSheet'>
-                    <p>Ici, nous aurons la seconde colonne avec les fonctions de la fiche</p>
+                    <h3>Lanceur de dés</h3>
+                    <button type='button' onClick={diceLauncherSet}>J'aime le plâtre</button>
+                    {diceLauncherReady ? (
+                    <DiceLauncher/>) : null}
                 </div>
 
                 <Popup open={showDeleteModal} onClose={closeModal} modal nested>

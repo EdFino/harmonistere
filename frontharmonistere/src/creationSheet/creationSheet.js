@@ -14,13 +14,13 @@ import { auth } from '../assets/firebase';
 function CreationSheet () {
 
     const [user] = useAuthState(auth);
-    const [isBender, setIsBender] = useState(false);
+    const [isBender, setIsBender] = useState();
     const [selectionBender, setSelectionBender] = useState('');
     const [uploadAvatar, setUploadAvatar] = useState (null);
     const [showModalSheet, setShowModalSheet] = useState(false); // État pour afficher ou masquer la modale
 
     const [formData, setFormData] = useState({
-        avatar:null,
+        avatar:{},
         name: '',
         age: 0,
         bender: false,
@@ -94,10 +94,11 @@ const handleBendingChange = (event) => {
     console.log (selectionBender);
   }
 
-  function handleAvatarChange (e) {
+  const handleAvatarChange = (e) => {
     const avatar = e.target.files[0];
     setUploadAvatar(avatar);
-  }
+    setFormData({ ...formData, avatar: avatar }); // Mettez à jour formData avec l'avatar sélectionné
+};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -150,6 +151,8 @@ const handleNotesSheet = (skills, notes, physic, mental, story) => {
     })
 }
 
+console.log (formData);
+
     return (
         <>
             <Navbar/>
@@ -165,7 +168,7 @@ const handleNotesSheet = (skills, notes, physic, mental, story) => {
                         <h2>1/ Identité de votre personnage</h2>
 
                         <label htmlFor='characterAvatar'>Votre avatar : </label>
-                        <input type='file' id='characterAvatar' name='avatar' onChange={handleChange}/><br/>
+                        <input type='file' id='characterAvatar' name='avatar' onChange={handleAvatarChange}/><br/>
                         {uploadAvatar && (<><img src={URL.createObjectURL(uploadAvatar)} alt="Uploaded" width="200" /><br/></>)}
 
                         <label htmlFor='characterName'>Le nom de votre personnage : </label>
@@ -189,7 +192,7 @@ const handleNotesSheet = (skills, notes, physic, mental, story) => {
                         </div>
         
         <div className="sideTextForm">
-          <p>Voici la partie la plus simple ! Posez simplement les informations de votre personnage, vous ne devriez avoir aucun souci.</p>
+            <p>Voici la partie la plus simple ! Posez simplement les informations de votre personnage, vous ne devriez avoir aucun souci.</p>
         </div>
 
         <Popup trigger=
@@ -284,7 +287,7 @@ const handleNotesSheet = (skills, notes, physic, mental, story) => {
                         <div className='content'>
                             <h2>Merci !</h2>
                             <p>Votre fiche a été créée avec succès.</p>
-                            <Link to="/"><button onClick={close}>Retourner à l'accueil</button></Link> {/* Utilisation de Link pour créer un lien */}
+                            <Link to="/espacejoueur"><button onClick={close}>Retourner à l'accueil</button></Link>
                         </div>
                     </div>
                 )}

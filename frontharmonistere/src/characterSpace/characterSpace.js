@@ -7,7 +7,7 @@ import Navbar from '../navbar/navbar';
 import './characterSpace.css';
 import CharacterSheet from './characterSheet';
 import Popup from 'reactjs-popup';
-import CharacterSheetVerso from '../characterSheetVerso';
+import CharacterSheetVerso from './characterSheetVerso';
 import DiceLauncher from '../diceLauncher/diceLauncher';
 
 function CharacterSpace () {

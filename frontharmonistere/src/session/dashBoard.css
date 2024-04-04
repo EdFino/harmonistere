@@ -1,0 +1,8 @@
+#adminList {
+    list-style-type: none;
+}
+
+.importantInformation {
+    color: orange;
+    font-style: italic;
+}

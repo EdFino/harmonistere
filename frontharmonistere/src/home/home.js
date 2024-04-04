@@ -2,7 +2,7 @@ import './home.css';
 import { Link } from 'react-router-dom';
 import harmonistereHome from '../images/harmonistereHome.jpg';
 import { React, useState } from 'react';
-import useNoScrollFunction from '../noScrollFunction';
+import useNoScrollFunction from './noScrollFunction';
 import Popup from 'reactjs-popup';
 import { logIn, auth, logOut } from '../assets/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';

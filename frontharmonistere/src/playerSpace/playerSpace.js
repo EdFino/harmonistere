@@ -65,7 +65,8 @@ function PlayerSpace () {
             const updatedFormDataSession = {
                 ...formDataSession,
                 sessionName: sessionName,
-                MJ: user.email
+                MJ: user.email,
+                players: []
             };
             console.log (formDataSession)
 
@@ -110,19 +111,21 @@ function PlayerSpace () {
 
                 <div id='sessionSection'>
                     <h2>Vos instances</h2>
-                    {sessionList.map((sessionLine, index) => (
-                <div key={index}>
-                    <Link to={`/session/${sessionLine._id}`}>
-                        <button>{sessionLine.sessionName}</button>
-                    </Link>
-                    <br />
+                    <div id='allSessionsPlayer'>
+                        {sessionList.map((sessionLine, index) => (
+                            <div key={index}>
+                                <Link to={`/session/${sessionLine._id}`}>
+                                    <button>{sessionLine.sessionName}</button>
+                                </Link>
+                                <br/>
+                            </div>
+                                ))
+                        }
+                        <div className='sheetsList'>
+                            <p onClick={modalOpenSession}>Nouvelle instance</p>
+                        </div>
+                    </div>
                 </div>
-            ))
-        }
-        <div className='sheetsList'>
-            <p onClick={modalOpenSession}>Nouvelle instance</p>
-        </div>
-    </div>
 
             </div>
 

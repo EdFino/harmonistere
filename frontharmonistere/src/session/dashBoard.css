@@ -2,7 +2,15 @@
     list-style-type: none;
 }
 
-.importantInformation {
+.information {
+    cursor: pointer;
+}
+
+.important {
     color: orange;
     font-style: italic;
+}
+
+.good {
+    color: green;
 }

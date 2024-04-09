@@ -1,0 +1,86 @@
+#allSession {
+    display: flex;
+}
+
+h2 {
+ font-size: 15px;
+}
+
+#leftColumnSession {
+    display: flex;
+    flex-direction: column;
+    width: 15vw;
+    flex-grow: 1;
+}
+
+#titleSession {
+    height: 20vh;
+    border: solid black 1px;
+
+}
+
+#avatarSession {
+    color: red;
+    height: 50vh;
+    border: solid black 1px;
+}
+
+#GMMenu {
+    min-height: 20vh;
+    border: solid black 1px;
+
+}
+
+#middleSession {
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border: solid black 1px;
+    flex-grow: 4;
+
+}
+
+#topBarSession {
+    display: flex;
+    border: solid black 1px;
+    width: 100%;
+}
+
+#initiativeFrieze {
+    border: solid black 1px;
+    flex-grow: 3;
+}
+
+#synergyTokenPool {
+    border: solid black 1px;
+    flex-grow: 1;
+}
+
+#displaySpaceSession {
+    border: solid black 1px;
+}
+
+#chatBoxSession {
+    border: solid black 1px;
+    width: 100%;
+    text-align: center;
+}
+
+#rightColumnSession {
+    flex-grow: 1;
+    max-width: 15vw;
+    display: flex;
+    flex-direction: column;
+}
+
+#diceLauncherSession {
+    border: solid black 1px;
+    flex-grow: 1;
+}
+
+#chatLogSession {
+    border: solid blue 1px;
+    flex-grow: 3;
+}

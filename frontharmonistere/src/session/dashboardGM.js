@@ -5,17 +5,26 @@ import axios from 'axios';
 import { useParams, Navigate } from 'react-router-dom';
 import Popup from 'reactjs-popup';
 
-function DashboardMJ () {
+function DashboardGM () {
 
     const [viewDashboard, setViewDashboard] = useState(false);
     const [sessionDeleted, setSessionDeleted] = useState(false);
     const [showDeleteSessionModal, setShowDeleteSessionModal] = useState(false);
+    const [showAddPlayersModal, setshowAddPlayersModal] = useState(false);
 
     const { id } =useParams();
+
+    const urlSession = `http://localhost:5038/backharmonistere/deleteSession/${id}`;
+    console.log (urlSession);
 
     const closeDeleteSessionModal = () => {
         setShowDeleteSessionModal(false);
     };
+
+    const closeAddPlayersModal = () => {
+        setshowAddPlayersModal(false);
+
+    }
 
     const handleDeleteSession = () => {
         axios.delete(`http://localhost:5038/backharmonistere/deleteSession/${id}`)
@@ -36,12 +45,12 @@ function DashboardMJ () {
     <button type='button' onClick={() => {setViewDashboard(!viewDashboard)}}>Administration</button>
         {viewDashboard ? (
             <ul id='adminList'>
-                <li>Rajouter des membres dans le groupe</li>
-                <li className='importantInformation' onClick={() =>{setShowDeleteSessionModal(!showDeleteSessionModal)}}>Supprimer la session</li>
+                <li className='good information' onClick={() =>{setshowAddPlayersModal(!showAddPlayersModal)}}>Rajouter des membres dans le groupe</li>
+                <li className='important information' onClick={() =>{setShowDeleteSessionModal(!showDeleteSessionModal)}}>Supprimer la session</li>
             </ul> ) :
             null}
 
-<Popup open={showDeleteSessionModal} onClose={closeDeleteSessionModal} modal nested>
+    <Popup open={showDeleteSessionModal} onClose={closeDeleteSessionModal} modal nested>
                 {(close) => (
                     <div className='modal'>
                         <div className='content'>
@@ -52,9 +61,20 @@ function DashboardMJ () {
                     </div>
                 )}
             </Popup>
+    
+            <Popup open={showAddPlayersModal} onClose={closeAddPlayersModal} modal nested>
+                {(close) => (
+                    <div className='modal'>
+                        <div className='content'>
+                            <p>Si vous souhaitez inviter vos amis, donnez-leur ce lien :<br/> {urlSession} </p>
+                            <button type='button' onClick={closeAddPlayersModal}>Annuler l'opération</button>
+                        </div>
+                    </div>
+                )}
+            </Popup>
 
             {sessionDeleted && <Navigate to="/espacejoueur" />}
     </>)
 }
 
-export default DashboardMJ;
+export default DashboardGM;

@@ -34,3 +34,11 @@
     background-color: grey;
 }
 
+#allSessionsPlayer {
+    display: flex;
+    align-items: center;
+}
+
+#allSessionsPlayer button {
+    margin: 0.5em;
+}

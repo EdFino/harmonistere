@@ -265,7 +265,7 @@ function CharacterSheet (props) {
     const submitUpdate = async () => {
         try {
             // Envoyer les données au backend pour la mise à jour
-            const response = await axios.get(`/backharmonistere/updateSheet/${id}`, formDataUpdate);
+            const response = await axios.put('/backharmonistere/updateSheet/:id', formDataUpdate);
     
             // Vérifier si la mise à jour a réussi
             if (response.status === 200) {

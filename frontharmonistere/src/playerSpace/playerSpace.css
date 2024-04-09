@@ -34,12 +34,12 @@
     background-color: grey;
 }
 
-#allSessionsPlayer {
+#allSessionsGM {
     display: flex;
     align-items: center;
 }
 
-#allSessionsPlayer button {
+#allSessionsGM button {
     margin: 0.5em;
 }
 

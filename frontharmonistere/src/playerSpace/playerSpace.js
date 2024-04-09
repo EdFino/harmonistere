@@ -12,6 +12,7 @@ function PlayerSpace () {
     const [user, error] = useAuthState(auth);
     const [characterList, setCharacterList] = useState([]);
     const [sessionList, setSessionList] = useState([]);
+    const [sessionPlayerList, setSessionPlayerList] = useState([]);
     const [modalSessionCreation, setModalSessioncreation] = useState(false);
     const [sessionName, setSessionName] = useState('');
     const [rejoinSessionName, setRejoinSessionName] = useState('');
@@ -43,6 +44,15 @@ function PlayerSpace () {
                 })
                 .catch(error => {
                     console.log('Erreur lors de la récupération des sessions : ', error);
+                });
+
+                axios.get(`http://localhost:5038/backharmonistere/userSessions?email=${user.email}`)
+                .then(response => {
+                    setSessionPlayerList(response.data);
+                    console.log('Sessions de l\'utilisateur joli :', response.data);
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la récupération des sessions de l\'utilisateur :', error);
                 });
             
         }
@@ -109,8 +119,7 @@ function PlayerSpace () {
         } catch (error) {
             console.error('Erreur lors du traitement de la demande de rejoindre la session :', error);
         }
-    }
-    
+    }    
 
     return (
         <>
@@ -142,16 +151,30 @@ function PlayerSpace () {
 
                 <div id='sessionSection'>
                     <h2>Vos instances</h2>
-                    <div id='allSessionsPlayer'>
-                        {sessionList.map((sessionLine, index) => (
-                            <div key={index}>
-                                <Link to={`/session/${sessionLine._id}`}>
-                                    <button>{sessionLine.sessionName}</button>
-                                </Link>
-                                <br/>
-                            </div>
+                    <div id='allSessions'>
+                        <h4>Vos parties en tant que MJ</h4>
+                        <div id='allSessionsGM'>
+                            {sessionList.map((sessionLine, index) => (
+                                <div key={index}>
+                                    <Link to={`/session/${sessionLine._id}`}>
+                                        <button>{sessionLine.sessionName}</button>
+                                    </Link>
+                                    <br/>
+                                </div>
                                 ))
                         }
+                        </div>
+                        <div id='allSessionsPlayers'>
+                            {sessionPlayerList.map((sessionPlayerLine, index) => (
+                                <div key={index}>
+                                    <Link to={`/session/${sessionPlayerLine._id}`}>
+                                        <button>{sessionPlayerLine.sessionName}</button>
+                                    </Link>
+                                    <br/>
+                                </div>
+                                ))
+                        }
+                        </div>
                         <div className='sheetsList'>
                             <p onClick={modalOpenSession}>Nouvelle instance</p>
                         </div>

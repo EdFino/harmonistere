@@ -14,7 +14,10 @@ function PlayerSpace () {
     const [sessionList, setSessionList] = useState([]);
     const [modalSessionCreation, setModalSessioncreation] = useState(false);
     const [sessionName, setSessionName] = useState('');
+    const [rejoinSessionName, setRejoinSessionName] = useState('');
+    const [characterNewSession, setCharacterNewSession] = useState ('');
     const [formDataSession, setFormDataSession] = useState({});
+    const [formRejoinSession, setFormRejoinSession] = useState();
 
     useEffect(() => {
         // Logique pour récupérer les données de Sheets ici...
@@ -57,6 +60,14 @@ function PlayerSpace () {
         setSessionName(e.target.value);
     }
 
+    function handleRejoinSessionName (e) {
+        setRejoinSessionName(e.target.value);
+    }
+
+    function handleCharacternewSession (e) {
+        setCharacterNewSession(e.target.value);
+    }
+
     const handleSubmitSession = async (e) => {
         e.preventDefault();
     
@@ -78,8 +89,28 @@ function PlayerSpace () {
         }
     };
 
-    console.log ('chocolat noisette : ', formDataSession);
-
+    function handleRejoinSession() {
+        try {
+            const updatedFormRejoinSession = {
+                sessionID: rejoinSessionName, // Utilisez la variable qui contient l'ID de la session à rejoindre
+                playerCharacter: characterNewSession,
+                playerEmail: user.email
+            };
+            console.log(updatedFormRejoinSession);
+    
+            axios.post('http://localhost:5038/backharmonistere/rejoinSession', updatedFormRejoinSession)
+                .then(response => {
+                    console.log('Vous avez rejoint la session avec succès !');
+                    // Mettre à jour l'état ou effectuer d'autres actions si nécessaire
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la tentative de rejoindre la session :', error);
+                });
+        } catch (error) {
+            console.error('Erreur lors du traitement de la demande de rejoindre la session :', error);
+        }
+    }
+    
 
     return (
         <>
@@ -132,7 +163,8 @@ function PlayerSpace () {
             <Popup open={modalSessionCreation} onClose={closeModalSession} modal nested>
                 {(close) => (
                     <div className='modal'>
-                        <div className='content'>
+                        Vous souhaitez créer une session ou en rejoindre une ?
+                        <div id='modalNewSession' className='content'>
                             <form id='formCreationSession'>
                                 <h3>Création d'une session</h3>
                                 <p>(Vous serez considérés comme le MJ de la session mais vous pourrez transférer ce rôle à une autre personne)</p>
@@ -140,8 +172,24 @@ function PlayerSpace () {
                                 <input type='text' id='sessionName' value={sessionName} onChange={handleChangeSessionName} name='sessionName'></input><br/>
                                 <button type='submit' onClick={handleSubmitSession}>Créons votre session</button>
                             </form>
-                            <Link to="/espacejoueur"><button onClick={closeModalSession}>Retourner à l'accueil</button></Link>
+                            <div id='OU'>
+                                <p>OU</p>
+                            </div>
+                            <div id='rejoinSession'>
+                                <h3>Rejoindre une session</h3>
+                                <p>(Vous rejoindrez cette session en tant que joueur)</p>
+                                <label htmlFor='rejoinSessionName'>Nom de la session à rejoindre : </label>
+                                <input type='text' id='rejoinSessionName' value={rejoinSessionName} onChange={handleRejoinSessionName} name='rejoinSessionName'></input><br/>
+                                <label htmlFor='characterNewSession'>Nom du personnage qui participera à cette aventure : </label>
+                                <select id='characterNewSession' value={characterNewSession} onChange={handleCharacternewSession} name='characterNewSession'>
+                                    {characterList.map((character, index) => (
+                                        <option key={index} value={character.name}>{character.name}</option>
+                            ))}
+                                </select>
+                                <button type='button' onClick={handleRejoinSession}>Rejoindre votre session</button>
+                            </div>
                         </div>
+                        <Link to="/espacejoueur"><button onClick={closeModalSession}>Retourner à l'accueil</button></Link>
                     </div>
                 )}
             </Popup>

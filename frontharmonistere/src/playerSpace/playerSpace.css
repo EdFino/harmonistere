@@ -42,3 +42,13 @@
 #allSessionsPlayer button {
     margin: 0.5em;
 }
+
+#modalNewSession {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#OU, #rejoinSession, #formCreationSession {
+    margin: 1em;
+}

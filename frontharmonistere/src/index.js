@@ -16,7 +16,7 @@ import TestCo from './testco';
 import Reset from './reset/reset';
 
 const router = createBrowserRouter([
-  {
+    {
     path: '/',
     element: <Home />,
     errorElement: <ErrorPage />

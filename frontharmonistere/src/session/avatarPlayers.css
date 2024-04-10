@@ -1,0 +1,8 @@
+#avatarSession {
+    min-height: 50vh;
+    border: solid black 1px;
+}
+
+#avatarList li {
+    list-style-type: none;
+}

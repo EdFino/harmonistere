@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import AvatarPlayers from './avatarPlayers';
+import { useParams } from 'react-router-dom';
 import Navbar from '../navbar/navbar';
 import { auth } from '../assets/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import DashboardGM from './dashboardGM';
-import AvatarPlayers from './avatarPlayers';
+import Popup from 'reactjs-popup';
 import './session.css';
+import TitleSession from './titleSession';
+
 
 function Session () {
 
-
     const [user] = useAuthState(auth);
+    const { id } = useParams()
 
     return (
         <>
@@ -17,14 +21,9 @@ function Session () {
         <div id='allSession'>
             <div id='leftColumnSession'>
 
-                <div id='titleSession'>
-                <h1>Session</h1>
-                {user ? <h2>{user.email}</h2> : <h2>Loading...</h2>}
-                </div>
+                <TitleSession/>
 
-                <div id='avatarSession'>
-                    <AvatarPlayers/>
-                </div>
+                <AvatarPlayers sessionId={id}/>
 
                 <div id='GMMenu'>
                     <DashboardGM/>

@@ -3,7 +3,7 @@
 }
 
 h2 {
- font-size: 15px;
+    font-size: 15px;
 }
 
 #leftColumnSession {
@@ -11,18 +11,8 @@ h2 {
     flex-direction: column;
     width: 15vw;
     flex-grow: 1;
-}
-
-#titleSession {
-    height: 20vh;
-    border: solid black 1px;
-
-}
-
-#avatarSession {
-    color: red;
-    height: 50vh;
-    border: solid black 1px;
+    align-items: center;
+    justify-content: center;
 }
 
 #GMMenu {
@@ -39,7 +29,6 @@ h2 {
     align-items: center;
     border: solid black 1px;
     flex-grow: 4;
-
 }
 
 #topBarSession {

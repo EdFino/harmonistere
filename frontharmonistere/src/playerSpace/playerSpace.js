@@ -86,7 +86,7 @@ function PlayerSpace () {
             const updatedFormDataSession = {
                 ...formDataSession,
                 sessionName: sessionName,
-                MJ: user.email,
+                GM: user.email,
                 players: []
             };
             console.log (formDataSession)
@@ -153,6 +153,9 @@ function PlayerSpace () {
                     <h2>Vos instances</h2>
                     <div id='allSessions'>
                         <h4>Vos parties en tant que MJ</h4>
+                        {sessionList.length === 0 ? (
+                            <p>Vous n'avez pas de partie en tant que Maître du Jeu.</p>
+                        ) : (
                         <div id='allSessionsGM'>
                             {sessionList.map((sessionLine, index) => (
                                 <div key={index}>
@@ -164,6 +167,8 @@ function PlayerSpace () {
                                 ))
                         }
                         </div>
+                        )}
+                        <h4>Vos parties en tant que joueurs</h4>
                         <div id='allSessionsPlayers'>
                             {sessionPlayerList.map((sessionPlayerLine, index) => (
                                 <div key={index}>

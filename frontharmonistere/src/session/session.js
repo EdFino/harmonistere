@@ -21,7 +21,7 @@ function Session () {
         <div id='allSession'>
             <div id='leftColumnSession'>
 
-                <TitleSession/>
+                <TitleSession sessionId={id}/>
 
                 <AvatarPlayers sessionId={id}/>
 

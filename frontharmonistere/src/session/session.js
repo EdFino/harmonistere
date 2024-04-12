@@ -8,13 +8,27 @@ import DashboardGM from './dashboardGM';
 import Popup from 'reactjs-popup';
 import './session.css';
 import TitleSession from './titleSession';
-
+import axios from 'axios';
 
 function Session () {
 
     const [user] = useAuthState(auth);
     const { id } = useParams()
+    const [charactersInSession, setCharactersInSession] = useState([]);
 
+    useEffect(() => {
+        if (user) {
+                axios.get(`http://localhost:5038/backharmonistere/charactersInSession/${id}`)
+                .then(response => {
+                    setCharactersInSession(response.data.characters);
+                })
+                .catch(error => {
+                    console.log('Erreur lors de la récupération des données : ', error);
+                });
+        }
+    }, [id, user]);
+
+    console.log ('je suis le papa :', charactersInSession);
     return (
         <>
         <Navbar/>
@@ -23,10 +37,12 @@ function Session () {
 
                 <TitleSession sessionId={id}/>
 
-                <AvatarPlayers sessionId={id}/>
+                <AvatarPlayers
+                    charactersInSession={charactersInSession}/>
 
                 <div id='GMMenu'>
-                    <DashboardGM/>
+                    <DashboardGM
+                        charactersInSession={charactersInSession}/>
                     <h2>Nous aurons un menu pour pouvoir gérer les ennemis</h2>
                     <h2>Ainsi que de prendre des notes</h2>
                     <h2>Ainsi bien sûr que de gérer la frise d'initiative</h2>

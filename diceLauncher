@@ -1,0 +1,22 @@
+let selectedDice = [];
+
+function addDie(sides) {
+    selectedDice.push(sides);
+    document.getElementById('selected-dice').innerText = `Dés sélectionnés: ${selectedDice.join(', ')}`;
+}
+
+function rollDice() {
+    let results = selectedDice.map(sides => Math.ceil(Math.random() * sides));
+    document.getElementById('results').innerText = `Résultats: ${results.join(', ')}`;
+
+    calculateOutcome(results);
+    selectedDice = []; // Reset après le lancement
+    document.getElementById('selected-dice').innerText = `Dés sélectionnés:`;
+}
+
+function calculateOutcome(results) {
+    let successes = results.filter(result => result >= 7).length;
+    let failures = results.filter(result => result <= 3).length;
+
+    document.getElementById('summary').innerText = `Réussites: ${successes}, Échecs: ${failures}`;
+}

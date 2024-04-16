@@ -11,6 +11,9 @@ import axios from 'axios';
 import ChatBox from './chatbox';
 import SynergyTokenPool from './synergyTokenPool';
 import DiceLauncher from '../diceLauncher/diceLauncher.js';
+import io from 'socket.io-client';
+
+const socket = io.connect("http://localhost:3001");
 
 function Session() {
     const [user] = useAuthState(auth);
@@ -34,6 +37,10 @@ function Session() {
                 });
         }
     }, [id]);
+
+    const sendResultsToSocket = (data) => {
+        socket.emit("send_dice_results", data);
+    };
 
 /*     const findCharacterNameByEmail = (email) => {
         const player = charactersInSession.find(player => player.emailPlayer === email);
@@ -79,7 +86,7 @@ function Session() {
                 <div id='rightColumnSession'>
                     <SynergyTokenPool/>
                     <div id='diceLauncherSession'>
-                        <DiceLauncher/>
+                        <DiceLauncher sendResultsToSocket={sendResultsToSocket}/>
                     </div>
 
                     <div id='chatLogSession'>

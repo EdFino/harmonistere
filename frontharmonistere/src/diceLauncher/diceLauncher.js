@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const DiceLauncher = () => {
+const DiceLauncher = ({ sendResultsToSocket }) => {
+
   const [selectedDice, setSelectedDice] = useState([]);
   const [results, setResults] = useState([]);
   const [summary, setSummary] = useState('');
@@ -49,6 +50,25 @@ const DiceLauncher = () => {
       }
     });
 
+    const successes = rollResults.filter((result, index) => {
+        return selectedDice[index] === 'Malus' ? result === 6 : result >= 7;
+      }).length;
+  
+      const failures = rollResults.filter((result) => result <= 3).length;
+
+      if (typeof sendResultsToSocket === 'function') {
+        console.log("C'est parti, je me lance !");
+        const diceResults = {
+          results: rollResults,
+          successes: successes,
+          failures: failures
+        };
+        console.log('Voici le grand bordel : ', diceResults)
+        sendResultsToSocket(diceResults);
+    } else {
+        console.log("Aucune fonction personnalisée n'a été fournie !");
+      }
+
     setResults(rollResults);
     calculateOutcome(rollResults);
   };
@@ -74,14 +94,14 @@ const DiceLauncher = () => {
       <img src="dés/fermer.png" alt="Échec" className="failure-icon" />
     );
 
-    setSummary(
-      <div>
-        {successIcons}
-        {failureIcons}
-        <p>Réussites: {successes}, Échecs: {failures}</p>
-      </div>
-    );
+    setSummary({
+      successIcons,
+      failureIcons,
+      successes,
+      failures
+    });
   };
+
 
   return (
     <div>
@@ -94,7 +114,11 @@ const DiceLauncher = () => {
       <button onClick={resetDice}>Réinitialiser les dés</button>
       <p>Dés sélectionnés: {selectedDice.join(', ')}</p>
       <p>Résultats: {results.join(', ')}</p>
-      <div id="summary">{summary}</div>
+      <div id="summary">
+        {summary.successIcons}
+        {summary.failureIcons}
+        <p>Réussites: {summary.successes}, Échecs: {summary.failures}</p>
+      </div>
     </div>
   );
 };

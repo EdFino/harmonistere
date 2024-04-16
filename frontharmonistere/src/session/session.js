@@ -9,6 +9,8 @@ import './session.css';
 import TitleSession from './titleSession';
 import axios from 'axios';
 import ChatBox from './chatbox';
+import SynergyTokenPool from './synergyTokenPool';
+import DiceLauncher from '../diceLauncher/diceLauncher.js';
 
 function Session() {
     const [user] = useAuthState(auth);
@@ -65,24 +67,19 @@ function Session() {
                         <div id='initiativeFrieze'>
                             <h2>Coucou, c'est la frise</h2>
                         </div>
-                        <div id='synergyTokenPool'>
-                            <h2>Plein de petits jetons d'initiative</h2>
-                        </div>
                     </div>
                     <div id='displaySpaceSession'>
                         <h2>C'est ici que je veux tout mon espace d'affichage</h2>
                     </div>
 
-                    <div id='chatBoxSession'>
-                        <h2>Oui, je mets la chatbox ici, elle sera dépliante</h2>
-                        <ChatBox
-                            pseudoCharacter={pseudoCharacter}/>
-                    </div>
+                    <ChatBox
+                        pseudoCharacter={pseudoCharacter}/>
                 </div>
 
                 <div id='rightColumnSession'>
+                    <SynergyTokenPool/>
                     <div id='diceLauncherSession'>
-                        <h3>Ici, nous aurons le joli lanceur de dés</h3>
+                        <DiceLauncher/>
                     </div>
 
                     <div id='chatLogSession'>

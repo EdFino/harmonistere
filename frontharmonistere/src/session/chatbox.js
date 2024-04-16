@@ -16,6 +16,7 @@ const ChatBox = ({ pseudoCharacter }) => {
     const [pseudoChat, setPseudoChat] = useState(storedPseudo);
     const [message, setMessage] = useState('');
     const [messageHistory, setMessageHistory] = useState([]);
+    const [visibleCB, setVisibleCB] = useState(false);
     const inputRef = useRef(null);
 
     useEffect(() => {
@@ -61,32 +62,43 @@ const ChatBox = ({ pseudoCharacter }) => {
         }
     };
 
+    function handleVisibleCB () {
+        setVisibleCB(!visibleCB);
+    }
+
     console.log ('tu las oui ou merde ?! ', localStorage);
 
     return (
-        <>
-            <div className="chatbox-container">
-                <div className="allMessages">
-                    {messageHistory.map((msg, index) => (
-                        <div key={index} className="oneMessage">
-                            <p>{msg.sender}: {msg.message}</p>
+        <div id='chatBoxSession'>
+            <button onClick={handleVisibleCB}>ChatBox</button>
+            {visibleCB && (
+                <div>
+                    <div className="chatbox-container">
+                        <div className="allMessages">
+                            {messageHistory.map((msg, index) => (
+                                <div key={index} className="oneMessage">
+                                    <p>{msg.sender}: {msg.message}</p>
+                                </div>
+                            ))}
+                            <div ref={inputRef}></div>
                         </div>
-                    ))}
-                    <div ref={inputRef}></div>
+                    </div>
+                    <div className="input-area">
+                        <input
+                            className="message-input"
+                            placeholder='Message...'
+                            value={message}
+                            onChange={(event) => setMessage(event.target.value)}
+                            onKeyPress={handleInputKeyPress}
+                        />
+                        <button type='button' className="send-button" onClick={handleSendButtonClick}>Envoyer le message</button>
+                    </div>
                 </div>
-            </div>
-            <div className="input-area">
-                <input
-                    className="message-input"
-                    placeholder='Message...'
-                    value={message}
-                    onChange={(event) => setMessage(event.target.value)}
-                    onKeyPress={handleInputKeyPress}
-                />
-                <button type='button' className="send-button" onClick={handleSendButtonClick}>Envoyer le message</button>
-            </div>
-        </>
+            )}
+        </div>
     );
+    
+    
 };
 
 export default ChatBox;

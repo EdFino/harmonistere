@@ -1,0 +1,24 @@
+#synergyTokenPool {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5em;
+    align-items: center;
+    height: 10%;
+}
+
+#synergyTokenPool h4 {
+    justify-self: start;
+    color: red;
+    margin: 0;
+}
+
+#synergyTokenPool h2 {
+    color: blue;
+    justify-self: start;
+    font-size: 3em;
+    margin: 0;
+}
+
+.synergyTokenModifier {
+    margin: 0 1em;
+}

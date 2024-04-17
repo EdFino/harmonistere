@@ -12,10 +12,11 @@ const scrollToBottom = (element) => {
 const ChatBox = ({ pseudoCharacter }) => {
 
     const storedPseudo = JSON.parse(localStorage.getItem('pseudoCharacter'));
+    const storedBoxMessages = JSON.parse(localStorage.getItem('chatboxMessages'));
 
-    const [pseudoChat, setPseudoChat] = useState(storedPseudo);
+    const [pseudoChat, setPseudoChat] = useState(storedPseudo || '');
     const [message, setMessage] = useState('');
-    const [messageHistory, setMessageHistory] = useState([]);
+    const [messageHistory, setMessageHistory] = useState(storedBoxMessages || []);
     const [visibleCB, setVisibleCB] = useState(false);
     const inputRef = useRef(null);
 
@@ -31,6 +32,9 @@ const ChatBox = ({ pseudoCharacter }) => {
     useEffect(() => {
         const receiveMessageHandler = (data) => {
             setMessageHistory(prevMessages => [...prevMessages, { sender: data.sender, message: data.message }]);
+            if (messageHistory.length > 30) {
+                messageHistory.shift();
+            }
             scrollToBottom(inputRef.current);
         };
     
@@ -43,12 +47,20 @@ const ChatBox = ({ pseudoCharacter }) => {
     }, []);
 
     const sendMessage = () => {
-        if (!message.trim()) return; // Ne pas envoyer de message vide
+        if (!message.trim()) return;
         socket.emit("send_message", { message, sender: pseudoChat });
         setMessageHistory(prevMessages => [...prevMessages, { sender: pseudoChat, message }]);
+        if (messageHistory.length > 30) {
+            messageHistory.shift();
+          }
         setMessage('');
         scrollToBottom(inputRef.current);
     };
+
+    useEffect(() => {
+        localStorage.setItem('chatboxMessages', JSON.stringify(messageHistory));
+        console.log('voyons voir lhistorique des messages...', localStorage);
+      }, [messageHistory]);
 
     const handleSendButtonClick = () => {
         sendMessage();

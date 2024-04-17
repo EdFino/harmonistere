@@ -31,6 +31,7 @@ io.on('connection', (socket) => {
 
     socket.on("send_dice_results", (data) => {
         console.log(data);
+        io.emit("receive_dice_results", data);
     });
 })
 

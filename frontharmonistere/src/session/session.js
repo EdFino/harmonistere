@@ -12,6 +12,7 @@ import ChatBox from './chatbox';
 import SynergyTokenPool from './synergyTokenPool';
 import DiceLauncher from '../diceLauncher/diceLauncher.js';
 import io from 'socket.io-client';
+import ChatLog from './chatlog.js';
 
 const socket = io.connect("http://localhost:3001");
 
@@ -84,13 +85,15 @@ function Session() {
                 </div>
 
                 <div id='rightColumnSession'>
+
                     <SynergyTokenPool/>
+
                     <div id='diceLauncherSession'>
                         <DiceLauncher sendResultsToSocket={sendResultsToSocket}/>
                     </div>
 
                     <div id='chatLogSession'>
-                        <h3>Nous pouvons enfin voir le résultat de tout le monde</h3>
+                        <ChatLog/>
                     </div>
 
                 </div>

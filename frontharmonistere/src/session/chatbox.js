@@ -29,8 +29,6 @@ const ChatBox = ({ pseudoCharacter }) => {
     }, [pseudoChat]);
 
     useEffect(() => {
-        console.log ('je suis encore et toujours là ! ', storedPseudo);
-        console.log('tu as sauvegardé le pseudo ?', localStorage);
         const receiveMessageHandler = (data) => {
             setMessageHistory(prevMessages => [...prevMessages, { sender: data.sender, message: data.message }]);
             scrollToBottom(inputRef.current);

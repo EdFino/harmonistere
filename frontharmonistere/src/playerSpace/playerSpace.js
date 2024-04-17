@@ -20,6 +20,9 @@ function PlayerSpace () {
     const [formDataSession, setFormDataSession] = useState({});
     const [formRejoinSession, setFormRejoinSession] = useState();
 
+    localStorage.clear();
+
+
     useEffect(() => {
         // Logique pour récupérer les données de Sheets ici...
         if (user) {

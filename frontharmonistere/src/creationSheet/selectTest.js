@@ -70,43 +70,48 @@ const SelectTest = ({onPersonalitySelect}) => {
         <div id='firstChapterForm'>
             <h2>2/ Personnalité</h2>
             <div>
-                <label htmlFor='principal'>Choisissez votre trait principal : </label>
-                <select id="principal" name="principal" value={selectedElementsPrincipal} onChange={handleSelectChangePrincipal}>
+                <label htmlFor='principalTrait'>Choisissez votre trait principal : </label>
+                <select id="principalTrait" name="principalTrait" {...register("principalTrait")}>
                     <option value=''>Choisissez un élément dans la liste : </option>
                     {personnalityElementsList.map((element, index) => (
                         <option key={index} value={element}>{element}</option>
                     ))}
                 </select>
+                {errors.principalTrait && <><span className='invalid-feedback'>{errors.principalTrait.message}</span><br/></>}
+
             </div>
 
             <div>
-                <label htmlFor='ascendant'>Choisissez votre ascendant : </label>
-                <select id="ascendant" name="ascendant" value={selectedElementsAscendant} onChange={handleSelectChangeAscendant}>
+                <label htmlFor='ascendantTrait'>Choisissez votre ascendant : </label>
+                <select id="ascendantTrait" name="ascendantTrait" {...register("ascendantTrait")}>
                     <option value=''>Choisissez un élément dans la liste : </option>
                     {availableElementsAscendant.map((element, index) => (
                         <option key={index} value={element}>{element}</option>
                     ))}
                 </select>
+                {errors.ascendantTrait && <><span className='invalid-feedback'>{errors.ascendantTrait.message}</span><br/></>}
             </div>
 
             <div>
                 <label htmlFor='neutralTrait'>Choisissez votre trait neutre : </label>
-                <select id="neutralTrait" name="neutralTrait" value={selectedElementsNeutral} onChange={handleSelectChangeNeutral}>
+                <select id="neutralTrait" name="neutralTrait" {...register("neutralTrait")}>
                     <option value=''>Choisissez un élément dans la liste : </option>
                     {availableElementsNeutral.map((element, index) => (
                         <option key={index} value={element}>{element}</option>
                     ))}
                 </select>
+                {errors.neutralTrait && <><span className='invalid-feedback'>{errors.neutralTrait.message}</span><br/></>}
             </div>
 
             <div>
                 <label htmlFor='oppositeTrait'>Choisissez votre trait contraire : </label>
-                <select id="oppositeTrait" name="oppositeTrait" value={selectedElementsOpposite} onChange={handleSelectChangeOpposite}>
+                <select id="oppositeTrait" name="oppositeTrait" {...register("oppositeTrait")}>
                     <option value=''>Choisissez un élément dans la liste : </option>
                     {availableElementsOpposite.map((element, index) => (
                         <option key={index} value={element}>{element}</option>
                     ))}
                 </select>
+                {errors.oppositeTrait && <><span className='invalid-feedback'>{errors.oppositeTrait.message}</span><br/></>}
             </div>
 
             <button type='button' onClick={handleReset}>Réinitialiser</button>

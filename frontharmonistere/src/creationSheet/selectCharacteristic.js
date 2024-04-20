@@ -61,44 +61,55 @@ const characList= [
   return (
     <div id='characForm'>
         <div id='inne'>
-            <label htmlFor='body'>Corps</label>
-            <select id="body" name="body" value={bodyValue} onChange={bodySelectChange}>
+            <label htmlFor='bodyLevel'>Corps</label>
+            <select id="bodyLevel" name="bodyLevel" {...register("bodyLevel")}>
                 {characList.map((element, index) => (
                 <option key={index} value={element.value}>{element.description}</option>
                 ))}
             </select>
-            <label htmlFor='spirit'>Mental</label>
-            <select id="spirit" name="spirit" value={mindValue} onChange={mindSelectChange}>
+            {errors.bodyLevel && <><span className='invalid-feedback'>{errors.bodyLevel.message}</span><br/></>}
+
+            <label htmlFor='mindLevel'>Mental</label>
+            <select id="mindLevel" name="mindLevel" {...register("mindLevel")}>
                 {characList.map((element, index) => (
                     <option key={index} value={element.value}>{element.description}</option>
                 ))}
             </select>
-            <label htmlFor='soul'>Âme</label>
-            <select id="soul" name="soul" value={soulValue} onChange={soulSelectChange}>
+            {errors.mindLevel && <><span className='invalid-feedback'>{errors.mindLevel.message}</span><br/></>}
+
+            <label htmlFor='soulLevel'>Âme</label>
+            <select id="soulLevel" name="soulLevel" {...register("soulLevel")}>
                 {characList.map((element, index) => (
                     <option key={index} value={element.value}>{element.description}</option>
                 ))}
             </select>
+            {errors.soulLevel && <><span className='invalid-feedback'>{errors.soulLevel.message}</span><br/></>}
+
         </div>
         <div id='acquis'>
-            <label htmlFor='martialArts'>Arts martiaux</label>
-                <select id="martialArts" name="martialArts" value={martialValue} onChange={martialSelectChange}>
+            <label htmlFor='martialArtsLevel'>Arts martiaux</label>
+                <select id="martialArtsLevel" name="martialArtsLevel" {...register("martialArtsLevel")}>
                     {characList.map((element, index) => (
                     <option key={index} value={element.value}>{element.description}</option>
                     ))}
                 </select>
-                <label htmlFor='elementaryArts'>Arts élémentaires</label>
-                <select id="elementaryArts" name="elementaryArts" value={elementaryValue} onChange={elementarySelectChange}>
+                {errors.martialArtsLevel && <><span className='invalid-feedback'>{errors.martialArtsLevel.message}</span><br/></>}
+
+                <label htmlFor='elementaryArtsLevel'>Arts élémentaires</label>
+                <select id="elementaryArtsLevel" name="elementaryArtsLevel" {...register("elementaryArtsLevel")}>
                     {characList.map((element, index) => (
                         <option key={index} value={element.value}>{element.description}</option>
                     ))}
                 </select>
-                <label htmlFor='publicSpeaking'>Arts oratoires</label>
-                <select id="publicSpeaking" name="publicSpeaking" value={speakingValue} onChange={speakingSelectChange}>
+                {errors.elementaryArtsLevel && <><span className='invalid-feedback'>{errors.elementaryArtsLevel.message}</span><br/></>}
+
+                <label htmlFor='speakingLevel'>Arts oratoires</label>
+                <select id="speakingLevel" name="speakingLevel" {...register("speakingLevel")}>
                     {characList.map((element, index) => (
                         <option key={index} value={element.value}>{element.description}</option>
                     ))}
                 </select>
+                {errors.speakingLevel && <><span className='invalid-feedback'>{errors.speakingLevel.message}</span><br/></>}
         </div>
         <button type='button' onClick={handlecontrolLevel}>Clique</button>
     </div>

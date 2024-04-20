@@ -33,3 +33,10 @@
 #contenuAccountCreation {
     flex-basis: 60%;
 }
+
+  
+  .invalid-feedback {
+    color: red;
+    font-size: 0.8em;
+  }
+  

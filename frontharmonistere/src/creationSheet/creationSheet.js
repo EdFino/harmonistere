@@ -10,6 +10,9 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../assets/firebase';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup" ;
 
 function CreationSheet () {
 
@@ -17,7 +20,7 @@ function CreationSheet () {
     const [isBender, setIsBender] = useState();
     const [selectionBender, setSelectionBender] = useState('');
     const [uploadAvatar, setUploadAvatar] = useState (null);
-    const [showModalSheet, setShowModalSheet] = useState(false); // État pour afficher ou masquer la modale
+    const [showModalSheet, setShowModalSheet] = useState(false);
 
     const [formData, setFormData] = useState({
         avatar:{},

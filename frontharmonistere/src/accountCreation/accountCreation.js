@@ -6,76 +6,92 @@ import harmonistereCharacterTwo from '../images/harmonistereCharacter2.jpg';
 import axios from 'axios';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, registerUser } from "../assets/firebase";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup" ;
 
+const schema = yup.object({
+
+    pseudoPlayer: yup.string()
+        .required('Attention : vous devez avoir un pseudo !')
+        .max(20, 'Attention : votre pseudo ne doit pas comporter plus de 20 caractères'),
+
+    agePlayer: yup.number('Attention, veuillez ne mettre que des chiffres')
+        .positive('Attention : Votre âge doit être positif, bien évidemment...')
+        .integer('Attention, veuillez ne pas mettre de virgule')
+        .required('Attention : Vous devez mentionner votre âge.'),
+
+    genderPlayer: yup.string()
+        .required('Attention : Vous devez sélectionner votre genre.'),
+    
+    emailPlayer: yup.string()
+        .email('Attention : Veuillez entrer une adresse email valide.')
+        .required('Attention : Vous devez mentionner votre adresse email.'),
+    
+    passwordPlayer: yup.string()
+        .required('Attention : Vous devez entrer un mot de passe.')
+        .min(8, 'Attention : Votre mot de passe doit comporter au moins 8 caractères.'),
+
+  })
+  .required()
 
 function AccountCreation() {
+    const { register, handleSubmit, formState: { errors, isSubmitted, isSubmitSuccessful } } = useForm({
+        mode: 'onSubmit',
+        resolver: yupResolver(schema)
+    });   
 
-    const [formData, setFormData] = useState({
-        pseudo: '',
-        age: '',
-        gender: '',
-        email: '',
-    });
-
-    const [email, setEmail] = useState ('');
-    const [password, setPassword] = useState ('');
-    const [user, loading, error] = useAuthState(auth);
-
-    const [showModal, setShowModal] = useState(false);
-
-    const register = () => {
-        registerUser(email, password)
-    }
-
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        if (name === 'email') {
-            setEmail(value);
-        }
-        setFormData({ ...formData, [name]: value });
-    };
-    
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log (email);
-        console.log(password);
-        console.log(formData);
-    
+    async function isEmailUnique(email) {
         try {
-
-            axios.post('http://localhost:5038/backharmonistere/accountCreation', formData);
-
-            await registerUser(email, password);
-            setShowModal(true);
-
-    
-    
-            // 3. Affichage de la confirmation de création du compte
-            console.log('Données envoyées avec succès');
+            const response = await axios.get(`http://localhost:5038/backharmonistere/checkEmail?email=${email}`);
+            return response.data.isUnique;
         } catch (error) {
-            console.error('Erreur lors de l\'envoi des données :', error);
-            // Gérer les erreurs ici, par exemple afficher un message d'erreur à l'utilisateur
+            console.error('Erreur lors de la vérification de l\'unicité de l\'e-mail :', error);
+            return false;
         }
-    };
+    }
     
-    
+    const onSubmit = async (data) => {
+    console.log(data);
+
+    try {
+
+        const emailIsUnique = await isEmailUnique(data.emailPlayer);
+        
+        if (!emailIsUnique) {
+            alert('Cet e-mail est déjà utilisé.');
+            return;
+        }
+
+        const { passwordPlayer, ...dataWithoutPassword } = data;
+
+            await axios.post('http://localhost:5038/backharmonistere/accountCreation', dataWithoutPassword);
+            setShowModal(true);
+            await registerUser(data.emailPlayer, data.passwordPlayer);
+            console.log('Formulaire soumis', isSubmitted);
+            console.log('Formulaire parfait', isSubmitSuccessful);
+    } catch (error) {
+            if (error.response && error.response.status === 400) {
+                const errorMessage = error.response.data;
+                if (errorMessage === 'Email déjà utilisé') {
+                    alert('Cet e-mail est déjà utilisé.');
+                } else {
+                    console.error('Erreur lors de la soumission du formulaire :', error);
+                }
+            } else {
+                console.error('Erreur lors de la soumission du formulaire :', error);
+            }
+        }
+};
 
     const closeModal = () => {
         setShowModal(false);
     };
 
-    const [selectedGender, setSelectedGender] = useState('');
-
-    const handleGenderChange = (event) => {
-        setSelectedGender(event.target.value);
-    };
-
-/*     <label htmlFor='passwordSecond'>Veuillez confirmer votre mot de passe : </label>
-    <input type='password' id='passwordCreationConfirm' name='passwordSecond' value={formData.passwordSecond} onChange={handleChange} /><br /> */
+    const [showModal, setShowModal] = useState(false);
 
     return (
         <div id="accountCreationTotal">
@@ -87,23 +103,32 @@ function AccountCreation() {
                 <Navbar width="50%" />
                 <h1 id="accountCreationTitle">Formulaire de création de compte</h1>
                 <div id="AccountForm">
-                    <form onSubmit={handleSubmit}>
-                        <label htmlFor='pseudo'>Votre pseudo : </label>
-                        <input type='text' id='pseudoPlayer' name='pseudo' value={formData.pseudo} onChange={handleChange} /><br />
-                        <label htmlFor='age'>Votre âge : </label>
-                        <input type='text' id='agePlayer' name='age' value={formData.age} onChange={handleChange} /><br />
-                        <label htmlFor="gender">Votre genre : </label>
-                        <select id="genderSelect" name="gender" value={formData.gender} onChange={handleChange}>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <label htmlFor='pseudoPlayer'>Votre pseudo : </label>
+                        <input type='text' id='pseudoPlayer' name='pseudoPlayer' {...register("pseudoPlayer")}/><br />
+                        {errors.pseudoPlayer && <><span className='invalid-feedback'>{errors.pseudoPlayer.message}</span><br/></>}
+
+                        <label htmlFor='agePlayer'>Votre âge : </label>
+                        <input type='number' id='agePlayer' name='agePlayer' {...register("agePlayer")}/><br />
+                        {errors.agePlayer && <><span className='invalid-feedback'>{errors.agePlayer.message}</span><br/></>}
+
+                        <label htmlFor="genderPlayer">Votre genre : </label>
+                        <select id="genderPlayer" name="genderPlayer" {...register("genderPlayer")}>
                             <option value="">Sélectionnez votre genre</option>
                             <option value="female">Femme</option>
                             <option value="male">Homme</option>
                             <option value="other">Autre</option>
                         </select><br />
-                        <label htmlFor='email'>Votre email : </label>
-                        <input type='email' id='emailCreation' name='email' value={email} onChange={handleChange} /><br />
+                        {errors.genderPlayer && <><span className='invalid-feedback'>{errors.genderPlayer.message}</span><br/></>}
 
-                        <label htmlFor='password'>Votre mot de passe : </label>
-                        <input type='password' id='passwordCreation' name='password' value={password} onChange={(e) => setPassword(e.target.value)} /><br />
+                        <label htmlFor='emailPlayer'>Votre email : </label>
+                        <input type='email' id='emailPlayer' name='emailPlayer' {...register("emailPlayer")}/><br />
+                        {errors.emailPlayer && <><span className='invalid-feedback'>{errors.emailPlayer.message}</span><br/></>}
+
+                        <label htmlFor='passwordPlayer'>Votre mot de passe : </label>
+                        <input type='password' id='passwordPlayer' name='passwordPlayer' {...register("passwordPlayer")}/><br />
+                        {errors.passwordPlayer && <><span className='invalid-feedback'>{errors.passwordPlayer.message}</span><br/></>}
+
 
                         <button type='submit'>Créer votre compte</button>
                     </form>

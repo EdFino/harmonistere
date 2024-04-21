@@ -42,7 +42,7 @@ function AccountCreation() {
     const { register, handleSubmit, formState: { errors, isSubmitted, isSubmitSuccessful } } = useForm({
         mode: 'onSubmit',
         resolver: yupResolver(schema)
-    });   
+    });
 
     async function isEmailUnique(email) {
         try {

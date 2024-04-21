@@ -8,6 +8,10 @@
     display: none;
 }
 
+/* .appear {
+    display: inline;
+} */
+
 .helpPopup {
     align-self: start;
     border: solid 1px black;

@@ -1,41 +1,6 @@
 import React, { useState } from 'react'
 
-function FourthChapterSheet ({onNotesSheet}) {
-
-    const [specialSkills, setSpecialSkills] = useState('');
-
-    function handleSkillsChange (e) {
-        setSpecialSkills(e.target.value);
-    }
-
-    const [notes, setNotes] = useState('');
-
-    function handleNotesChange (e) {
-        setNotes(e.target.value);
-    }
-
-    const [physicDescription, setphysicDescription] = useState('');
-
-    function handlePhysicChange (e) {
-        setphysicDescription(e.target.value);
-    }
-
-    const [personnalityDescription, setPersonnalityDescription] = useState('');
-
-    function handlePersonnalityChange (e) {
-        setPersonnalityDescription(e.target.value);
-    }
-
-    const [history, setHistory] = useState('');
-
-    function handleHistoryChange (e) {
-        setHistory(e.target.value);
-    }
-
-    const handleNotesSelection = () => {
-        onNotesSheet(skills, notes, physicDescription, mentalDescription, story);
-    };
-
+function FourthChapterSheet ({onNotesSheet, register, errors, watch}) {
 
     return (
         <div id='textarea-group'>
@@ -108,7 +73,6 @@ function FourthChapterSheet ({onNotesSheet}) {
                 {errors.story && <><span className='invalid-feedback'>{errors.story.message}</span><br/></>}
 
             </div>
-            <button type='button' onClick={handleNotesSelection}>Confirmez vos écrits</button>
         </div>
     )
 }

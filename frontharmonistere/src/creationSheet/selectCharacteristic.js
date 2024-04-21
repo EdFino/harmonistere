@@ -1,46 +1,6 @@
 import React, { useState } from 'react';
 
-function SelectCharacteristic ({onCharacteristicSelect}) {
-
-    const [bodyValue, setBodyValue] = useState('0');
-    const [mindValue, setMindValue] = useState('0');
-    const [soulValue, setSoulValue] = useState('0');
-    const [martialValue, setMartialValue] = useState('0');
-    const [elementaryValue, setElementaryValue] = useState('0');
-    const [speakingValue, setSpeakingValue] = useState('0');
-
-
-        const bodySelectChange = (e) => {
-        const bodyValue = e.target.value;
-        setBodyValue(bodyValue);
-        };
-
-        const mindSelectChange = (e) => {
-        const mindValue = e.target.value;
-        setMindValue(mindValue);
-        };
-
-        const soulSelectChange = (e) => {
-        const soulValue = e.target.value;
-        setSoulValue(soulValue);
-        };
-
-        const martialSelectChange = (e) => {
-        const martialValue = e.target.value;
-        setMartialValue(martialValue);
-        };
-
-    
-        const elementarySelectChange = (e) => {
-        const elementaryValue = e.target.value;
-        setElementaryValue(elementaryValue);
-        };
-
-        const speakingSelectChange = (e) => {
-        const speakingValue = e.target.value;
-        setSpeakingValue(speakingValue);
-        };
-
+function SelectCharacteristic ({onCharacteristicSelect, register, errors, watch}) {
 
 const characList= [
     {value:'0', description:'Neutre'},
@@ -49,16 +9,7 @@ const characList= [
     {value:'2', description:'Bonus critique +2'}
 ]
 
-  const handlecontrolLevel = () => {
-    const limitLevel = 0;
-    const playerChoices = parseInt(bodyValue, 10) + parseInt(mindValue, 10) + parseInt(soulValue, 10) + parseInt(martialValue, 10) + parseInt(elementaryValue, 10) + parseInt(speakingValue, 10)
-    console.log (bodyValue, mindValue, soulValue, martialValue, elementaryValue, speakingValue, playerChoices);
-    if (playerChoices > limitLevel) {
-        return console.log ('Vous avez été trop généreux avec vous-même, arrêtez ça...')
-    } else {onCharacteristicSelect(bodyValue, mindValue, soulValue, martialValue, elementaryValue, speakingValue)}
-  }
-
-  return (
+    return (
     <div id='characForm'>
         <div id='inne'>
             <label htmlFor='bodyLevel'>Corps</label>
@@ -68,6 +19,7 @@ const characList= [
                 ))}
             </select>
             {errors.bodyLevel && <><span className='invalid-feedback'>{errors.bodyLevel.message}</span><br/></>}
+
 
             <label htmlFor='mindLevel'>Mental</label>
             <select id="mindLevel" name="mindLevel" {...register("mindLevel")}>
@@ -111,7 +63,6 @@ const characList= [
                 </select>
                 {errors.speakingLevel && <><span className='invalid-feedback'>{errors.speakingLevel.message}</span><br/></>}
         </div>
-        <button type='button' onClick={handlecontrolLevel}>Clique</button>
     </div>
     );
 }

@@ -8,19 +8,19 @@ import SelectCharacteristic from './selectCharacteristic';
 import FourthChapterSheet from './fourthChapterSheet';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../assets/firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup" ;
 
 const schema = yup.object().shape({
-    characterAvatar: yup
+    /* characterAvatar: yup
         .mixed()
         .test('fileType', 'Le fichier doit être une image', (value) => {
             if (!value) return true; // Laisser passer s'il n'y a pas de fichier
             return value && value[0].type.startsWith('image/');
-    }),
+    }), */
     characterName: yup
         .string()
         .required('Attention : vous personnage doit avoir un nom !')
@@ -34,145 +34,130 @@ const schema = yup.object().shape({
     benderOrNot: yup.boolean().required(),
 
     benderSelect: yup.string().when('benderOrNot', {
-        is: true,
-        then: yup.string().required('Attention : Vous devez sélectionner un élément à maîtriser.'),
+        is: (value) => value === true,
+        then: (schema) => schema.required('Attention : Vous devez sélectionner un élément à maîtriser.'),
     }),
 
-    principalTrait: yup.string.required ("Attention : vous devez choisir un trait principal à votre personnage"),
-    ascendantTrait: yup.string.required ("Attention : vous devez choisir un trait ascendant à votre personnage"),
-    neutralTrait: yup.string.required ("Attention : vous devez choisir un trait neutre à votre personnage"),
-    bodyLevel: yup.string.required ("Attention : vous devez choisir un niveau pour le corps de votre personnage"),
-    mindLevel: yup.string.required ("Attention : vous devez choisir un niveau pour l'esprit de votre personnage"),
-    soulLevel: yup.string.required ("Attention : vous devez choisir un niveau pour l'âme de votre personnage"),
-    martialArtsLevel: yup.string.required ("Attention : vous devez choisir un niveau pour les arts martiaux de votre personnage"),
-    elementaryArtsLevel: yup.string.required ("Attention : vous devez choisir un niveau pour les arts élémentaires de votre personnage"),
-    speakingLevel: yup.string.required ("Attention : vous devez choisir un niveau pour l\'éloquence de votre personnage"),
+    principalTrait: yup.string().required ("Attention : vous devez choisir un trait principal à votre personnage"),
+    ascendantTrait: yup.string().required ("Attention : vous devez choisir un trait ascendant à votre personnage"),
+    neutralTrait: yup.string().required ("Attention : vous devez choisir un trait neutre à votre personnage"),
+    oppositeTrait: yup.string().required ("Attention : vous devez choisir un trait opposé à votre personnage"),
+    bodyLevel: yup.string().required ("Attention : vous devez choisir un niveau pour le corps de votre personnage"),
+    mindLevel: yup.string().required ("Attention : vous devez choisir un niveau pour l'esprit de votre personnage"),
+    soulLevel: yup.string().required ("Attention : vous devez choisir un niveau pour l'âme de votre personnage"),
+    martialArtsLevel: yup.string().required ("Attention : vous devez choisir un niveau pour les arts martiaux de votre personnage"),
+    elementaryArtsLevel: yup.string().required ("Attention : vous devez choisir un niveau pour les arts élémentaires de votre personnage"),
+    speakingLevel: yup.string().required ("Attention : vous devez choisir un niveau pour l\'éloquence de votre personnage"),
     skills: yup.string(),
     notes: yup.string(),
     physicDescription: yup.string(),
     mentalDescription: yup.string(),
-    story: yup.string()
-
-    // autres règles de validation...
+    story: yup.string(),
+    sum: yup.number().test(
+    'sum',
+    'La somme des valeurs doit être inférieure ou égale à 0',
+    function (value) {
+    const parent = this.parent || {};
+    const playerChoices = [
+        parseInt(parent.bodyLevel),
+        parseInt(parent.mindLevel),
+        parseInt(parent.soulLevel),
+        parseInt(parent.martialArtsLevel),
+        parseInt(parent.elementaryArtsLevel),
+        parseInt(parent.speakingLevel)
+    ].reduce((acc, curr) => acc + curr, 0);
+    return playerChoices <= 0;
+})
 });
 
 function CreationSheet () {
 
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { register, handleSubmit, watch, setValue, formState: { errors, isSubmitted, isSubmitSuccessful } } = useForm({
+        mode: 'onSubmit',
         resolver: yupResolver(schema)
     });
 
     const [user] = useAuthState(auth);
-    const [isBender, setIsBender] = useState();
-    const [selectionBender, setSelectionBender] = useState('');
-    const [uploadAvatar, setUploadAvatar] = useState (null);
     const [showModalSheet, setShowModalSheet] = useState(false);
 
-/*     useEffect (() => {
-        if (user) {
-            setFormData(prevFormData => ({
-                ...prevFormData,
-                email: user.email
-            }));
-        }
-    }, [user]); */
+const characterNameValue = watch("characterName");
+console.log("Valeur du champ characterName :", characterNameValue);
 
+const characterAgeValue = watch("characterAge");
+console.log("Valeur du champ characterAge :", characterAgeValue);
 
-    const handleChange = (event) => {
-        const { name, value, files } = event.target;
-    
-        // Si le champ est un champ de fichier, mettez à jour l'état avec le fichier
-        if (name === 'characterAvatar') {
-            const avatar = files[0]; // Prenez le premier fichier
-            setUploadAvatar(avatar); // Mettez à jour l'état de l'avatar pour l'affichage immédiat
-            setFormData({ ...formData, [name]: avatar }); // Mettez à jour formData avec le fichier
-        } else {
-            setFormData({ ...formData, [name]: value }); // Sinon, mettez à jour formData avec la valeur normale
-        }
-    };
+const benderOrNotValue = watch("benderOrNot");
+console.log("Valeur du champ benderOrNot :", benderOrNotValue);
 
-const benderOrNotBender = () => {
-    const newIsBender = !isBender;
-    setIsBender(newIsBender);
-    const bendingList = document.getElementById('disappearBending');
-    if (newIsBender) {
-        bendingList.classList.remove('disappear');
-        setFormData({ ...formData, bender: true }); // Mettre à jour formData avec bender à true
-    } else {
-        bendingList.classList.add('disappear');
-        setFormData({ ...formData, bender: false }); // Mettre à jour formData avec bender à false
-    }
-};
+const benderSelectValue = watch("benderSelect");
+console.log("Valeur du champ benderSelect :", benderSelectValue);
 
-const handleBendingChange = (event) => {
-    const value = event.target.value;
-    setSelectionBender(value);
-    setFormData({ ...formData, bending: value });
-};
+const principalTraitValue = watch("principalTrait");
+console.log("Valeur du champ principalTrait :", principalTraitValue);
 
+const ascendantTraitValue = watch("ascendantTrait");
+console.log("Valeur du champ ascendantTrait :", ascendantTraitValue);
 
+const neutralTraitValue = watch("neutralTrait");
+console.log("Valeur du champ neutralTrait :", neutralTraitValue);
 
-  const selectingBender = (event) => {
-    setSelectionBender(event.target.value);
-    console.log (selectionBender);
-  }
+const oppositeTraitValue = watch("oppositeTrait");
+console.log("Valeur du champ oppositeTrait :", oppositeTraitValue);
 
-  const handleAvatarChange = (e) => {
-    const avatar = e.target.files[0];
-    setUploadAvatar(avatar);
-    setFormData({ ...formData, characterAvatar: avatar }); // Mettez à jour formData avec l'avatar sélectionné
-};
+const bodyLevelValue = watch("bodyLevel");
+console.log("Valeur du champ bodyLevel :", bodyLevelValue);
 
-  const onSubmit = async (e) => {
+const mindLevelValue = watch("mindLevel");
+console.log("Valeur du champ mindLevel :", mindLevelValue);
+
+const soulLevelValue = watch("soulLevel");
+console.log("Valeur du champ soulLevel :", soulLevelValue);
+
+const martialArtsLevelValue = watch("martialArtsLevel");
+console.log("Valeur du champ martialArtsLevel :", martialArtsLevelValue);
+
+const elementaryArtsLevelValue = watch("elementaryArtsLevel");
+console.log("Valeur du champ elementaryArtsLevel :", elementaryArtsLevelValue);
+
+const speakingLevelValue = watch("speakingLevel");
+console.log("Valeur du champ speakingLevel :", speakingLevelValue);
+
+const skillsValue = watch("skills");
+console.log("Valeur du champ skills :", skillsValue);
+
+const notesValue = watch("notes");
+console.log("Valeur du champ notes :", notesValue);
+
+const physicDescriptionValue = watch("physicDescription");
+console.log("Valeur du champ physicDescription :", physicDescriptionValue);
+
+const mentalDescriptionValue = watch("mentalDescription");
+console.log("Valeur du champ mentalDescription :", mentalDescriptionValue);
+
+const storyValue = watch("story");
+console.log("Valeur du champ story :", storyValue);
+
+  const onSubmit = async (data) => {
 
     try {
-        await axios.post('http://localhost:5038/backharmonistere/sheetCreation', formData);
+        const totalData = {... data, email: user.email}
+        await axios.post('http://localhost:5038/backharmonistere/sheetCreation', totalData);
         console.log('Données envoyées avec succès');
-        console.log(formData);
+        console.log(totalData);
         setShowModalSheet(true);
     } catch (error) {
         console.error('Erreur lors de l\'envoi des données :', error);
     }
 };
 
+console.log(errors);
+console.log(errors.sum)
+
+/* console.log (errors.sum);
+console.log (errors.sum.message); */
 const closeModalSheet = () => {
     setShowModalSheet(false);
 };
-
-const handlePersonalitySelect = (principalTrait, ascendantTrait, neutralTrait, oppositeTrait) => {
-    setFormData({
-        ...formData,
-        principalTrait: principalTrait,
-        ascendantTrait: ascendantTrait,
-        neutralTrait: neutralTrait,
-        oppositeTrait: oppositeTrait
-    });
-};
-
-const handleCharacteristicsSelect = (bodyLevel, mindLevel, soulLevel, martialArtsLevel, elementaryArtsLevel, speakingLevel) => {
-    setFormData({
-        ...formData,
-        bodyLevel: bodyLevel,
-        mindLevel: mindLevel,
-        soulLevel: soulLevel,
-        martialArtsLevel: martialArtsLevel,
-        elementaryArtsLevel: elementaryArtsLevel,
-        speakingLevel: speakingLevel
-    });
-};
-
-const handleNotesSheet = (skills, notes, physicDescription, mentalDescription, story) => {
-    setFormData({
-        ...formData,
-        skills: skills,
-        notes: notes,
-        physicDescription: physicDescription,
-        mentalDescription: mentalDescription,
-        story: story
-    })
-}
-
-console.log (formData);
 
     return (
         <>
@@ -187,11 +172,10 @@ console.log (formData);
                     <div id='firstChapterForm'>
 
                         <h2>1/ Identité de votre personnage</h2>
-
+{/* 
                         <label htmlFor='characterAvatar'>Votre avatar : </label>
                         <input type='file' id='characterAvatar' name='characterAvatar' {...register("characterAvatar")}/><br/>
-                        {uploadAvatar && (<><img src={URL.createObjectURL(uploadAvatar)} alt="Uploaded" width="200" /><br/></>)}
-                        {errors.characterAvatar && <><span className='invalid-feedback'>{errors.characterAvatar.message}</span><br/></>}
+                        {errors.characterAvatar && <><span className='invalid-feedback'>{errors.characterAvatar.message}</span><br/></>} */}
 
                         <label htmlFor='characterName'>Le nom de votre personnage : </label>
                         <input type='text' id='characterName' name='characterName' {...register("characterName")}/><br/>
@@ -202,11 +186,12 @@ console.log (formData);
                         {errors.characterAge && <><span className='invalid-feedback'>{errors.characterAge.message}</span><br/></>}
 
                         <label htmlFor='benderOrNot'>Votre personnage maîtrise-t-il un élément ? </label>
-                        <input type='checkbox' checked={isBender} onChange={benderOrNotBender} id='benderOrNot' name='benderOrNot' {...register("benderOrNotBender")} /><br/>
+                        <input type='checkbox' id='benderOrNot' name='benderOrNot' {...register("benderOrNot")} /><br/>
                         
-                        <div id="disappearBending" className="disappear">
+                        <div id="disappearBending" className={benderOrNotValue ? 'appear' : "disappear"}>
                             <label htmlFor='benderSelect'>Choisissez votre élément : </label>
                             <select id="benderSelect" name='benderSelect' {...register("benderSelect")}>
+                                <option value=''>Choisissez votre élément</option>
                                 <option value="Terre">Terre</option>
                                 <option value="Feu">Feu</option>
                                 <option value="Air">Air</option>
@@ -236,9 +221,11 @@ console.log (formData);
       <div id="secondChapter" className="chapter">
         <div id='secondChapterForm'>
           <SelectTest
-            onPersonalitySelect={handlePersonalitySelect}
             register={register}
-            errors={errors}/>
+            errors={errors}
+            watch={watch}
+            setValue={setValue}/>
+
         </div>
         <div className="sideTextForm">
           <p>Choisissez ici la personnalité de votre personnage. Vous aurez quatre champs d'importance décroissante
@@ -268,9 +255,10 @@ console.log (formData);
           <div id='thirdChapterForm'>
             <h2>3/ Caractéristiques</h2>
             <SelectCharacteristic
-                onCharacteristicSelect={handleCharacteristicsSelect}
                 register={register}
-                errors={errors}/>
+                errors={errors}
+                watch={watch}/>
+                {errors.sum && <span className='invalid-feedback'>{errors.sum.message}</span>}
           </div>
         <div className="sideTextForm">
           <p>
@@ -307,9 +295,9 @@ console.log (formData);
               </p>
             </div> 
             <FourthChapterSheet
-                onNotesSheet={handleNotesSheet}
                 register={register}
-                errors={errors}/>
+                errors={errors}
+                watch={watch}/>
            </div>
         </div>
         <button type='submit'>Créer votre fiche</button>

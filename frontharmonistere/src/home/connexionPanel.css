@@ -1,0 +1,83 @@
+#connexionPanelTotal {
+    position: absolute; /* Position absolue pour le formulaire */
+    top: 80%; /* Centre verticalement */
+    left: 50%; /* Centre horizontalement */
+    transform: translate(-50%, -50%); /* Décalage pour centrer l'élément */
+    z-index: 5; /* Assure que le formulaire est au-dessus de l'image de fond */
+}
+
+#popupConnexionImage {
+    width: 25vw;
+    height: auto;
+}
+
+#newFormAuth {
+    background-image: url('../images/Pop-up\ 1.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 20em; /* Largeur spécifique */
+    height: auto; /* Hauteur spécifique */
+    z-index: 5;
+    padding: 25px
+    }
+
+#titleAuthForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.arrowDeco {
+    height: 1em;
+    padding: 1em;
+}
+
+#authFormText {
+    position: relative;
+    top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #233463;
+}
+
+/* Style général du champ d'entrée */
+input[type="email"], input[type="password"] {
+    border: none; /* Supprime les bordures */
+    border-bottom: 1px solid black; /* Ajoute une bordure noire en bas */
+    background-color: #FAF4E7; /* Couleur de fond */
+    padding: 3px 0px; /* Espacement intérieur */
+    margin: 1em 0;
+    min-width: 80%;
+  }
+  
+  /* Lorsque le champ d'entrée est en focus */
+input[type="email"]:focus, input[type="password"]:focus {
+    outline: none; /* Supprime l'outline */
+}
+
+
+#buttonAuthForm {
+    background: #77B7C9 0% 0% no-repeat padding-box;
+    border-radius: 35px;
+    color: #233463;
+    font-weight: bold;
+    max-width: 80%;
+    margin: 1.5em 0;
+    padding: 1em 5.8em;
+    border: none;
+}
+
+#bottomAuthForm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+    font-style: italic;
+}
+
+#passwordReset {
+    font-weight: bold;
+}

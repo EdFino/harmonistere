@@ -7,6 +7,7 @@ import Popup from 'reactjs-popup';
 import { logIn, auth, logOut } from '../assets/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import ConnexionPanel from './connexionPanel';
+import greatTitle from '../images/Harmonistère.png';
 
 function Home() {
     useNoScrollFunction();
@@ -18,8 +19,7 @@ function Home() {
         return (
             <div className="App">
                 <img id="homeArt" src={harmonistereHome} alt="Ecran de la page principale" />
-                <h1 id="mainPageTitle">HARMONISTERE</h1>
-                <div id="mainMenu">
+                <img id="greatTitleHarmonistere" src={greatTitle} alt="Grand titre harmonistère" />
                     <ul id="ulMenu">
                         <Popup trigger=
         {
@@ -44,10 +44,7 @@ function Home() {
                         <li><Link to={'lanceur'}>Lanceur de dés</Link></li>
                         <li><Link to={'/testco'}>Test de connexion</Link></li>
                     </ul>
-                </div>
-                <div id='connexionPanel'>
                     <ConnexionPanel/>
-                </div>
             </div>
         );
     }

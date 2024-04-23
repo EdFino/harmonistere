@@ -22,7 +22,7 @@ const io = new Server(server, {
 });
 
 io.on('connection', (socket) => {
-    console.log(`User connected : ${socket.id}`)
+console.log(`User connected : ${socket.id}`)
 
     socket.on("send_message", (data) => {
         console.log(data);
@@ -170,17 +170,22 @@ app.get('/backharmonistere/readSheetsData/:id', (request, response) => {
             response.status(500).send('La connexion à la base de données MongoDB n\'est pas établie');
             return;
         }
-
+    
         const formData = request.body;
-        database.collection('Players').insertOne(formData, (error, result) => {
-            if (error) {
-                console.error('Erreur lors de l\'enregistrement des données :', error);
+    
+        // Insertion des données dans la base de données
+        database.collection('Players').insertOne(formData, (insertError, insertResult) => {
+            if (insertError) {
+                console.error('Erreur lors de l\'enregistrement des données :', insertError);
                 response.status(500).send('Erreur lors de l\'enregistrement des données');
                 return;
             }
             response.json('Données enregistrées avec succès');
         });
     });
+    
+    
+    
 
     // Route POST pour enregistrer les données du formulaire de création de fiche
     app.post('/backharmonistere/sheetCreation', multer().none(), (request, response) => {
@@ -287,6 +292,31 @@ app.get('/backharmonistere/updateSheet/:id', (req, res) => {
         console.log('Chocolat Taïga');
     });
 });
+
+app.get('/backharmonistere/checkEmail', async (request, response) => {
+    if (!database) {
+      response.status(500).send('La connexion à la base de données MongoDB n\'est pas établie');
+      return;
+    }
+  
+    const email = request.query.email;
+    console.log ('voici lemail a verifier', email)
+  
+    try {
+      // Recherche dans la base de données MongoDB si l'email existe déjà
+      const existingUser = await database.collection('Players').findOne({ emailPlayer: email });
+  
+      // Si aucun utilisateur avec cet email n'est trouvé, alors l'email est unique
+      const isUnique = !existingUser;
+      if (isUnique){console.log ('Tout est bon, ladresse est unique')}
+  
+      response.json({ isUnique: isUnique });
+    } catch (error) {
+      console.error('Erreur lors de la vérification de l\'unicité de l\'e-mail :', error);
+      response.status(500).send('Erreur lors de la vérification de l\'unicité de l\'e-mail');
+    }
+  });
+  
 
 // Route PUT pour mettre à jour les données d'une fiche spécifique
 app.put('/backharmonistere/updateSheet/:id', multer().none(), (req, res) => {

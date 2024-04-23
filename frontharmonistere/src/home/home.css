@@ -4,11 +4,6 @@ body, html {
     padding: 0;
   }
 
-  .no-scroll {
-    overflow:hidden;
-  }
-  
-
 #homeArt {
     max-width: 100%;
     max-height: auto;

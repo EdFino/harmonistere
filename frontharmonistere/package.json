@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/yup": "^0.32.0",
     "axios": "^1.6.8",
+    "dompurify": "^3.1.0",
     "dotenv": "^16.4.5",
     "firebase": "^10.9.0",
     "mongodb": "^6.5.0",

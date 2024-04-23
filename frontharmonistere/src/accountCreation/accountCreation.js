@@ -6,12 +6,13 @@ import harmonistereCharacterTwo from '../images/harmonistereCharacter2.jpg';
 import axios from 'axios';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
-import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, registerUser } from "../assets/firebase";
+import { useForm } from 'react-hook-form'
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup" ;
+import DOMPurify from 'dompurify';
 
 const schema = yup.object({
 
@@ -67,6 +68,10 @@ function AccountCreation() {
         }
 
         const { passwordPlayer, ...dataWithoutPassword } = data;
+
+        data.pseudoPlayer = DOMPurify.sanitize(data.pseudoPlayer);
+        data.emailPlayer = DOMPurify.sanitize(data.emailPlayer);
+        data.passwordPlayer = DOMPurify.sanitize(data.passwordPlayer);
 
             await axios.post('http://localhost:5038/backharmonistere/accountCreation', dataWithoutPassword);
             setShowModal(true);

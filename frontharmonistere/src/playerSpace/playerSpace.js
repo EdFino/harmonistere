@@ -6,25 +6,36 @@ import { auth } from '../assets/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import './playerSpace.css';
 import Popup from 'reactjs-popup';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup" ;
+import DOMPurify from 'dompurify';
+
+const schema = yup.object({
+    sessionName: yup.string().required().max(30, "Attention : le nom de votre instance doit prendre moins de 30 caractères"),
+})
+
 
 function PlayerSpace () {
+
+    const { register, handleSubmit, formState: { errors, isSubmitted, isSubmitSuccessful } } = useForm({
+        mode: 'onSubmit',
+        resolver: yupResolver(schema)
+    });
 
     const [user, error] = useAuthState(auth);
     const [characterList, setCharacterList] = useState([]);
     const [sessionList, setSessionList] = useState([]);
     const [sessionPlayerList, setSessionPlayerList] = useState([]);
     const [modalSessionCreation, setModalSessioncreation] = useState(false);
-    const [sessionName, setSessionName] = useState('');
     const [rejoinSessionName, setRejoinSessionName] = useState('');
     const [characterNewSession, setCharacterNewSession] = useState ('');
-    const [formDataSession, setFormDataSession] = useState({});
     const [formRejoinSession, setFormRejoinSession] = useState();
 
     localStorage.clear();
 
 
     useEffect(() => {
-        // Logique pour récupérer les données de Sheets ici...
         if (user) {
             axios.get(`http://localhost:5038/backharmonistere/readSheetsData?email=${user.email}`)
                 .then(response => {
@@ -69,10 +80,6 @@ function PlayerSpace () {
         setModalSessioncreation(false);
     }
 
-    function handleChangeSessionName (e) {
-        setSessionName(e.target.value);
-    }
-
     function handleRejoinSessionName (e) {
         setRejoinSessionName(e.target.value);
     }
@@ -81,22 +88,22 @@ function PlayerSpace () {
         setCharacterNewSession(e.target.value);
     }
 
-    const handleSubmitSession = async (e) => {
-        e.preventDefault();
+    const onSubmit = async (data) => {
     
         try {
 
-            const updatedFormDataSession = {
-                ...formDataSession,
-                sessionName: sessionName,
+            data.sessionName = DOMPurify.sanitize(data.sessionName);
+
+            const formDataSession = {
+                ...data,
                 GM: user.email,
                 players: []
             };
             console.log (formDataSession)
 
-            await axios.post('http://localhost:5038/backharmonistere/sessionCreation', updatedFormDataSession);
+            await axios.post('http://localhost:5038/backharmonistere/sessionCreation', formDataSession);
             console.log('Données session envoyées avec succès');
-            console.log(updatedFormDataSession);
+            console.log(formDataSession);
         } catch (error) {
             console.error('Erreur lors de l\'envoi des données de session :', error);
         }
@@ -197,12 +204,14 @@ function PlayerSpace () {
                     <div className='modal'>
                         Vous souhaitez créer une session ou en rejoindre une ?
                         <div id='modalNewSession' className='content'>
-                            <form id='formCreationSession'>
+                            <form id='formCreationSession' onSubmit={handleSubmit(onSubmit)}>
                                 <h3>Création d'une session</h3>
                                 <p>(Vous serez considérés comme le MJ de la session mais vous pourrez transférer ce rôle à une autre personne)</p>
                                 <label htmlFor='sessionName'>Nom de session : </label>
-                                <input type='text' id='sessionName' value={sessionName} onChange={handleChangeSessionName} name='sessionName'></input><br/>
-                                <button type='submit' onClick={handleSubmitSession}>Créons votre session</button>
+                                <input type='text' id='sessionName' name='sessionName' {...register("sessionName")}></input><br/>
+                                {errors.sessionName && <><span className='invalid-feedback'>{errors.sessionName.message}</span><br/></>}
+
+                                <button type='submit' >Créons votre session</button>
                             </form>
                             <div id='OU'>
                                 <p>OU</p>

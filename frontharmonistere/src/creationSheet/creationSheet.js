@@ -13,6 +13,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup" ;
+import DOMPurify from 'dompurify';
 
 const schema = yup.object().shape({
     /* characterAvatar: yup
@@ -80,67 +81,18 @@ function CreationSheet () {
     const [user] = useAuthState(auth);
     const [showModalSheet, setShowModalSheet] = useState(false);
 
-const characterNameValue = watch("characterName");
-console.log("Valeur du champ characterName :", characterNameValue);
-
-const characterAgeValue = watch("characterAge");
-console.log("Valeur du champ characterAge :", characterAgeValue);
-
-const benderOrNotValue = watch("benderOrNot");
-console.log("Valeur du champ benderOrNot :", benderOrNotValue);
-
-const benderSelectValue = watch("benderSelect");
-console.log("Valeur du champ benderSelect :", benderSelectValue);
-
-const principalTraitValue = watch("principalTrait");
-console.log("Valeur du champ principalTrait :", principalTraitValue);
-
-const ascendantTraitValue = watch("ascendantTrait");
-console.log("Valeur du champ ascendantTrait :", ascendantTraitValue);
-
-const neutralTraitValue = watch("neutralTrait");
-console.log("Valeur du champ neutralTrait :", neutralTraitValue);
-
-const oppositeTraitValue = watch("oppositeTrait");
-console.log("Valeur du champ oppositeTrait :", oppositeTraitValue);
-
-const bodyLevelValue = watch("bodyLevel");
-console.log("Valeur du champ bodyLevel :", bodyLevelValue);
-
-const mindLevelValue = watch("mindLevel");
-console.log("Valeur du champ mindLevel :", mindLevelValue);
-
-const soulLevelValue = watch("soulLevel");
-console.log("Valeur du champ soulLevel :", soulLevelValue);
-
-const martialArtsLevelValue = watch("martialArtsLevel");
-console.log("Valeur du champ martialArtsLevel :", martialArtsLevelValue);
-
-const elementaryArtsLevelValue = watch("elementaryArtsLevel");
-console.log("Valeur du champ elementaryArtsLevel :", elementaryArtsLevelValue);
-
-const speakingLevelValue = watch("speakingLevel");
-console.log("Valeur du champ speakingLevel :", speakingLevelValue);
-
-const skillsValue = watch("skills");
-console.log("Valeur du champ skills :", skillsValue);
-
-const notesValue = watch("notes");
-console.log("Valeur du champ notes :", notesValue);
-
-const physicDescriptionValue = watch("physicDescription");
-console.log("Valeur du champ physicDescription :", physicDescriptionValue);
-
-const mentalDescriptionValue = watch("mentalDescription");
-console.log("Valeur du champ mentalDescription :", mentalDescriptionValue);
-
-const storyValue = watch("story");
-console.log("Valeur du champ story :", storyValue);
-
   const onSubmit = async (data) => {
 
     try {
-        const totalData = {... data, email: user.email}
+        const totalData = {... data, email: user.email};
+
+        data.characterName = DOMPurify.sanitize(data.characterName);
+        data.skills = DOMPurify.sanitize(data.skills);
+        data.notes = DOMPurify.sanitize(data.notes);
+        data.physicDescription = DOMPurify.sanitize(data.physicDescription);
+        data.mentalDescription = DOMPurify.sanitize(data.mentalDescription);
+        data.story = DOMPurify.sanitize(data.characterName);
+
         await axios.post('http://localhost:5038/backharmonistere/sheetCreation', totalData);
         console.log('Données envoyées avec succès');
         console.log(totalData);
@@ -150,11 +102,6 @@ console.log("Valeur du champ story :", storyValue);
     }
 };
 
-console.log(errors);
-console.log(errors.sum)
-
-/* console.log (errors.sum);
-console.log (errors.sum.message); */
 const closeModalSheet = () => {
     setShowModalSheet(false);
 };
@@ -188,7 +135,7 @@ const closeModalSheet = () => {
                         <label htmlFor='benderOrNot'>Votre personnage maîtrise-t-il un élément ? </label>
                         <input type='checkbox' id='benderOrNot' name='benderOrNot' {...register("benderOrNot")} /><br/>
                         
-                        <div id="disappearBending" className={benderOrNotValue ? 'appear' : "disappear"}>
+                        <div id="disappearBending" className={watch('benderOrNot') ? 'appear' : "disappear"}>
                             <label htmlFor='benderSelect'>Choisissez votre élément : </label>
                             <select id="benderSelect" name='benderSelect' {...register("benderSelect")}>
                                 <option value=''>Choisissez votre élément</option>

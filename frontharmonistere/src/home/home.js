@@ -6,6 +6,7 @@ import useNoScrollFunction from './noScrollFunction';
 import Popup from 'reactjs-popup';
 import { logIn, auth, logOut } from '../assets/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import ConnexionPanel from './connexionPanel';
 
 function Home() {
     useNoScrollFunction();
@@ -43,6 +44,9 @@ function Home() {
                         <li><Link to={'lanceur'}>Lanceur de dés</Link></li>
                         <li><Link to={'/testco'}>Test de connexion</Link></li>
                     </ul>
+                </div>
+                <div id='connexionPanel'>
+                    <ConnexionPanel/>
                 </div>
             </div>
         );

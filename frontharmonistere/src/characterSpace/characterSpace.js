@@ -49,7 +49,6 @@ function CharacterSpace () {
                 .then(response => {
                     setSheetData(response.data);
     
-                    // Supposons que vous ayez récupéré les données dans une variable nommée sheetsData
                     if (response.data.length > 0) {
                         const data = response.data[0];
                         setCharacterOneName(data.name);  

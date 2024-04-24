@@ -1,0 +1,11 @@
+.buttonHarmonistere {
+    background: #77B7C9 0% 0% no-repeat padding-box;
+    border-radius: 35px;
+    color: #233463;
+    font-weight: bold;
+    min-width: 81%;
+    margin: 1.5em 0;
+    padding: 1em 5.8em;
+    border: none;
+    cursor: pointer;
+}

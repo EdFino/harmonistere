@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import popUp1 from '../images/Pop-up 1.png';
 import leftArrow from '../images/Deco Titre gauche.png';
 import rightArrow from '../images/Deco Titre droite.png';
-import { logIn } from '../assets/firebase';
+import { auth, logIn } from '../assets/firebase';
 import { Link } from 'react-router-dom';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import style from '../style/kitUI.module.css';
 import './connexionPanel.css';
 
 
@@ -11,11 +13,19 @@ function ConnexionPanel () {
 
     const [email, setEmail] = useState ('');
     const [password, setPassword] = useState ('');
+    const [user, error] = useAuthState (auth);
+
+    function handleSubmit (e) {
+        e.preventDefault();
+        logIn(email, password);
+    }
+
+    console.log (email, password);
 
     return (
 
         <div id='connexionPanelTotal'>
-                <form id='newFormAuth'>
+                <form id='newFormAuth' onSubmit={handleSubmit}>
                 <div id='authFormText'>
 
                     <div id='titleAuthForm'>
@@ -28,7 +38,7 @@ function ConnexionPanel () {
 
                     <input type='password' id='passwordPlayer' name='passwordPlayer' placeholder='Mot de passe' onChange={(e) => setPassword(e.target.value)} required /><br/>
 
-                    <button id='buttonAuthForm' type='submit' onClick={() => logIn(email, password)}>Se connecter</button><br/>
+                    <button id='buttonAuthForm' className={style.buttonHarmonistere} type='submit'>Se connecter</button><br/>
                     <div id='bottomAuthForm'>
                         <p>Pas de compte ?&nbsp;</p> <Link to='/resetPassword'><span id='passwordReset'>Créez-en un</span></Link>
                     </div>

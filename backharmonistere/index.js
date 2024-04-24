@@ -513,18 +513,17 @@ app.delete('/backharmonistere/deleteCharacterSession/:id', (req, res) => {
 });
 
 app.get('/backharmonistere/welcomeUser', async (req, res) => {
-    const { email } = req.query;
-    if (!email) {
+    const { emailPlayer } = req.query;
+    if (!emailPlayer) {
         return res.status(400).json({ error: "Veuillez fournir un email" });
     }
 
     try {
-        console.log ('tu me cherches ?');
-        const player = await database.collection('Players').findOne({ email });
+        const player = await database.collection('Players').findOne({ emailPlayer });
         if (!player) {
             return res.status(404).json({ error: "Joueur non trouvé" });
         }
-        res.status(200).json(player.pseudo);
+        res.status(200).json(player.pseudoPlayer);
     } catch (err) {
         console.error('Erreur lors de la recherche du joueur :', err);
         res.status(500).json({ error: "Erreur lors de la recherche du joueur" });

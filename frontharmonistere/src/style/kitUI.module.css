@@ -4,8 +4,54 @@
     color: #233463;
     font-weight: bold;
     min-width: 81%;
-    margin: 1.5em 0;
+    margin-top: 1.5em;
+    margin-bottom: 5px;
     padding: 1em 5.8em;
     border: none;
     cursor: pointer;
+}
+
+.buttonHarmonistere:hover {
+    background: #233463;
+    color: #FEF2E2;
+}
+
+.inputHarmonistere {
+    border: none;
+    border-bottom: 1px solid rgba(35, 52, 99, 0.35);
+    color: rgba(35, 52, 99, 0.59);
+    background-color: #FAF4E7;
+    padding: 2px 0px;
+    margin: 0.7em 1em;
+    min-width: 80%;
+    font-size: 0.8em;
+}
+
+.optionHarmonistere {
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+.optionHarmonistere:focus {
+    background-color: #FAF4E7;
+}
+
+.inputSelectHarmonistere {
+    border: none;
+    border-bottom: 1px solid rgba(35, 52, 99, 1);
+    color: rgba(35, 52, 99, 0.59);
+    background-color: #FAF4E7;
+    padding: 2px 0px;
+    margin: 1em 0;
+    min-width: 80%;
+    font-size: 0.8em;
+}
+
+.inputHarmonistere:hover {
+    border-bottom: 2px solid rgba(35, 52, 99, 1);;
+}
+
+.inputHarmonistere:focus {
+    outline: none;
 }

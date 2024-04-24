@@ -15,7 +15,7 @@ function WelcomePlayer () {
 
     useEffect(() => {
         if (user.email) {
-        axios.get(`http://localhost:5038/backharmonistere/welcomeUser?email=${user.email}`)
+        axios.get(`http://localhost:5038/backharmonistere/welcomeUser?emailPlayer=${user.email}`)
             .then (response => {
                 setPlayerName(response.data);
             })

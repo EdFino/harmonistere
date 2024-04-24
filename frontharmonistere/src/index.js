@@ -6,7 +6,6 @@ import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ErrorPage from './errorPage/errorPage';
 import Univers from './univers/univers';
-import AccountCreation from './accountCreation/accountCreation';
 import CharacterSpace from './characterSpace/characterSpace';
 import DiceLauncher from './diceLauncher/diceLauncher';
 import CreationSheet from './creationSheet/creationSheet';
@@ -24,10 +23,6 @@ const router = createBrowserRouter([
   {
       path: 'univers',
       element: <Univers />
-  },
-  {
-    path: 'creationdecompte',
-    element: <AccountCreation />
   },
   {
     path: 'espacefiche/:id',

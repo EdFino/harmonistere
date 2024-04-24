@@ -1,0 +1,41 @@
+#contenuAccountCreation {
+    background-image: url('../images/Pop-up\ 2.png');
+    background-size: contain;
+    background-position: center;
+    width: 17em;
+    height: auto;
+    background-repeat: no-repeat;
+    z-index: 5;
+    padding: 50px 50px 30px 50px;
+    font-size: 1.2em;
+}
+
+#accountForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #233463;
+}
+
+#bottomAccountForm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-style: italic;
+}
+
+#connectUnderline {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#connectUnderline:hover {
+    border-bottom: 2px solid #212122;
+}
+
+.invalid-feedback {
+    color: red;
+    font-size: 0.6em;
+  }

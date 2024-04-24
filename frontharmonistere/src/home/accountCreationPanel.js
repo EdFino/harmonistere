@@ -1,8 +1,4 @@
 import React, { useState } from 'react';
-import './accountCreation.css';
-import Navbar from '../navbar/navbar';
-import harmonistereCharacter from '../images/harmonistereCharacter.jpg';
-import harmonistereCharacterTwo from '../images/harmonistereCharacter2.jpg';
 import axios from 'axios';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
@@ -13,6 +9,8 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup" ;
 import DOMPurify from 'dompurify';
+import style from '../style/kitUI.module.css';
+import './accountCreationPanel.css';
 
 const schema = yup.object({
 
@@ -39,7 +37,7 @@ const schema = yup.object({
   })
   .required()
 
-function AccountCreation() {
+function AccountCreationPanel({loadingAuthCreation}) {
     const { register, handleSubmit, formState: { errors, isSubmitted, isSubmitSuccessful } } = useForm({
         mode: 'onSubmit',
         resolver: yupResolver(schema)
@@ -99,50 +97,65 @@ function AccountCreation() {
     const [showModal, setShowModal] = useState(false);
 
     return (
-        <div id="accountCreationTotal">
-            <div className='columnContainerCharacter'>
-                <img src={harmonistereCharacter} alt="Harmonistère à la gauche de l'écran" className="characterColumnImg" />
-            </div>
 
-            <div id="contenuAccountCreation">
-                <Navbar width="50%" />
-                <h1 id="accountCreationTitle">Formulaire de création de compte</h1>
-                <div id="AccountForm">
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <label htmlFor='pseudoPlayer'>Votre pseudo : </label>
-                        <input type='text' id='pseudoPlayer' name='pseudoPlayer' {...register("pseudoPlayer")}/><br />
-                        {errors.pseudoPlayer && <><span className='invalid-feedback'>{errors.pseudoPlayer.message}</span><br/></>}
+        <div id="contenuAccountCreation">
+            <form id="accountForm" onSubmit={handleSubmit(onSubmit)}>
+                <input
+                    type='text'
+                    id='pseudoPlayer'
+                    className={style.inputHarmonistere}
+                    name='pseudoPlayer'
+                    placeholder='Pseudo'
+                    {...register("pseudoPlayer")}/>
+                    <br />
+                {errors.pseudoPlayer && <><span className='invalid-feedback'>{errors.pseudoPlayer.message}</span><br/></>}
 
-                        <label htmlFor='agePlayer'>Votre âge : </label>
-                        <input type='number' id='agePlayer' name='agePlayer' {...register("agePlayer")}/><br />
-                        {errors.agePlayer && <><span className='invalid-feedback'>{errors.agePlayer.message}</span><br/></>}
+                <input
+                    type='number'
+                    id='agePlayer'
+                    className={style.inputHarmonistere}
+                    name='agePlayer'
+                    placeholder='Âge'
+                    {...register("agePlayer")}/>
+                    <br />
+                {errors.agePlayer && <><span className='invalid-feedback'>{errors.agePlayer.message}</span><br/></>}
 
-                        <label htmlFor="genderPlayer">Votre genre : </label>
-                        <select id="genderPlayer" name="genderPlayer" {...register("genderPlayer")}>
-                            <option value="">Sélectionnez votre genre</option>
-                            <option value="female">Femme</option>
-                            <option value="male">Homme</option>
-                            <option value="other">Autre</option>
-                        </select><br />
-                        {errors.genderPlayer && <><span className='invalid-feedback'>{errors.genderPlayer.message}</span><br/></>}
+                <select
+                    id="genderPlayer"
+                    name="genderPlayer"
+                    className={style.inputSelectHarmonistere}
+                    {...register("genderPlayer")}>
+                    <option value="" disabled selected hidden>Genre</option>
+                    <option value="female" className={style.optionHarmonistere}>Femme</option>
+                    <option value="male" className={style.optionHarmonistere}>Homme</option>
+                    <option value="other" className={style.optionHarmonistere}>Autre</option>
+                </select><br />
+                {errors.genderPlayer && <><span className='invalid-feedback'>{errors.genderPlayer.message}</span><br/></>}
 
-                        <label htmlFor='emailPlayer'>Votre email : </label>
-                        <input type='email' id='emailPlayer' name='emailPlayer' {...register("emailPlayer")}/><br />
-                        {errors.emailPlayer && <><span className='invalid-feedback'>{errors.emailPlayer.message}</span><br/></>}
+                <input
+                    type='email'
+                    id='emailPlayer'
+                    className={style.inputHarmonistere}
+                    name='emailPlayer'
+                    placeholder='E-mail'
+                    {...register("emailPlayer")}/><br />
+                {errors.emailPlayer && <><span className='invalid-feedback'>{errors.emailPlayer.message}</span><br/></>}
 
-                        <label htmlFor='passwordPlayer'>Votre mot de passe : </label>
-                        <input type='password' id='passwordPlayer' name='passwordPlayer' {...register("passwordPlayer")}/><br />
-                        {errors.passwordPlayer && <><span className='invalid-feedback'>{errors.passwordPlayer.message}</span><br/></>}
+                <input
+                    type='password'
+                    id='passwordPlayer'
+                    className={style.inputHarmonistere}
+                    name='passwordPlayer'
+                    placeholder='Mot de passe'
+                    {...register("passwordPlayer")}/><br />
+                {errors.passwordPlayer && <><span className='invalid-feedback'>{errors.passwordPlayer.message}</span><br/></>}
 
+                <button className={style.buttonHarmonistere}type='submit'>S'inscrire</button>
 
-                        <button type='submit'>Créer votre compte</button>
-                    </form>
+                <div id='bottomAccountForm'>
+                    <p>Déjà un compte ?&nbsp;</p><span onClick={loadingAuthCreation} id='connectUnderline'>Connectez-vous</span>
                 </div>
-            </div>
-
-            <div className='columnContainerCharacter'>
-                <img src={harmonistereCharacterTwo} alt="Harmonistère d'eau à la droite de l'écran" className="characterColumnImg" />
-            </div>
+            </form>
 
             <Popup open={showModal} onClose={closeModal} modal nested closeOnDocumentClick={false}>
                 {(close) => (
@@ -155,8 +168,7 @@ function AccountCreation() {
                     </div>
                 )}
             </Popup>
-        </div>
-    )
+        </div>    )
 }
 
-export default AccountCreation;
+export default AccountCreationPanel;

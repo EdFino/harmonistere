@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import popUp1 from '../images/Pop-up 1.png';
 import leftArrow from '../images/Deco Titre gauche.png';
 import rightArrow from '../images/Deco Titre droite.png';
 import { auth, logIn } from '../assets/firebase';
@@ -9,7 +8,7 @@ import style from '../style/kitUI.module.css';
 import './connexionPanel.css';
 
 
-function ConnexionPanel () {
+function ConnexionPanel ({loadingAccountCreation}) {
 
     const [email, setEmail] = useState ('');
     const [password, setPassword] = useState ('');
@@ -21,6 +20,8 @@ function ConnexionPanel () {
     }
 
     console.log (email, password);
+
+    console.log(loadingAccountCreation);
 
     return (
 
@@ -34,13 +35,16 @@ function ConnexionPanel () {
                         <img id="rightTitleDeco" className='arrowDeco' src={rightArrow} alt="Flèche décorative à droite" />
                     </div>
 
-                    <input type='email' id='emailPlayer' name='emailPlayer' placeholder='E-mail' onChange={(e) => setEmail(e.target.value)} required /><br/>
+                    <input type='email' id='emailPlayer' className={style.inputHarmonistere} name='emailPlayer' placeholder='E-mail' onChange={(e) => setEmail(e.target.value)} required /><br/>
 
-                    <input type='password' id='passwordPlayer' name='passwordPlayer' placeholder='Mot de passe' onChange={(e) => setPassword(e.target.value)} required /><br/>
+                    <input type='password' id='passwordPlayer' className={style.inputHarmonistere} name='passwordPlayer' placeholder='Mot de passe' onChange={(e) => setPassword(e.target.value)} required /><br/>
 
                     <button id='buttonAuthForm' className={style.buttonHarmonistere} type='submit'>Se connecter</button><br/>
                     <div id='bottomAuthForm'>
-                        <p>Pas de compte ?&nbsp;</p> <Link to='/resetPassword'><span id='passwordReset'>Créez-en un</span></Link>
+                    <Link to='/resetPassword'><span id='resetUnderline'>Mot de passe oublié ?</span></Link>
+                        <div id='linkNewAccount'>
+                            <p>Pas de compte ?&nbsp;</p><span id='toAccount' onClick={loadingAccountCreation}>Créez-en un</span>
+                        </div>
                     </div>
                 </div>
             </form>

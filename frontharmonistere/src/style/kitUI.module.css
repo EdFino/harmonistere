@@ -55,3 +55,26 @@
 .inputHarmonistere:focus {
     outline: none;
 }
+
+.navbarHarmonistere {
+    list-style-type: none;
+    text-align: center;
+    padding-left: 0;
+    display: flex;
+    position: absolute;
+    top: 1%;
+    right: 3%;
+    color: #FAF4E7;
+}
+
+.navbarLiHarmonistere {
+    text-decoration: none;
+    color: inherit;
+    text-align: center;
+    padding: 1em;
+    font-size: 1em;
+}
+
+.navbarLiHarmonistere:active {
+    font-weight: bold;
+}

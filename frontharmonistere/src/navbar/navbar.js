@@ -1,16 +1,30 @@
 import React from 'react';
-import logo from '../images/logo.jpg';
 import './navbar.css';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import { auth } from '../assets/firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import kit from '../style/kitUI.module.css';
 
-    function Navbar(props) {
-        return (
-            <div id="navbar" style={{width: props.width}}>
-                <Link to={'/'}><img id="logo" src={logo} alt="Logo de l'application" />
-                <span id="returnHome">Home</span></Link>
-            </div>
+function Navbar() {
 
+    const [user] = useAuthState(auth);
+
+    return (
+        <ul id="communNavbar" className={kit.navbarHarmonistere}>
+            {user && <li className={kit.navbarLiHarmonistere}>
+                <NavLink exact to="/univers" activeClassName="active">Univers</NavLink>
+            </li>}
+            <li className={kit.navbarLiHarmonistere}>
+                <NavLink exact activeClassName="active" to={'/creationfiche'}>Créer une fiche</NavLink>
+            </li>
+            {user && <li className={kit.navbarLiHarmonistere}>
+                <NavLink exact activeClassName="active" to="/espacejoueur">Votre espace joueur</NavLink>
+            </li>}
+            <li className={kit.navbarLiHarmonistere}>
+                <NavLink exact activeClassName="active" to={'/lanceur'}>Lanceur de dés</NavLink>
+            </li>
+        </ul>
     );
-    }
+}
 
 export default Navbar;

@@ -8,7 +8,7 @@ import './characterSpace.css';
 import CharacterSheet from './characterSheet';
 import Popup from 'reactjs-popup';
 import CharacterSheetVerso from './characterSheetVerso';
-import DiceLauncher from '../diceLauncher/diceLauncher';
+import DiceLauncherMini from '../diceLauncher/diceLauncherMini';
 
 function CharacterSpace () {
 
@@ -158,7 +158,7 @@ function CharacterSpace () {
                     <h3>Lanceur de dés</h3>
                     <button type='button' onClick={diceLauncherSet}>J'aime le plâtre</button>
                     {diceLauncherReady ? (
-                    <DiceLauncher/>) : null}
+                    <DiceLauncherMini/>) : null}
                 </div>
 
                 <Popup open={showDeleteModal} onClose={closeModal} modal nested>

@@ -7,12 +7,13 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ErrorPage from './errorPage/errorPage';
 import Univers from './univers/univers';
 import CharacterSpace from './characterSpace/characterSpace';
-import DiceLauncher from './diceLauncher/diceLauncher';
+import DiceLauncherMini from './diceLauncher/diceLauncherMini';
 import CreationSheet from './creationSheet/creationSheet';
 import PlayerSpace from './playerSpace/playerSpace';
 import Session from './session/session';
 import TestCo from './testco';
 import Reset from './reset/reset';
+import DiceLauncherPage from './diceLauncher/diceLauncherPage';
 
 const router = createBrowserRouter([
     {
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
   },
   {
     path: 'lanceur',
-    element: <DiceLauncher/>
+    element: <DiceLauncherPage/>
   },
   {
     path: 'creationfiche',

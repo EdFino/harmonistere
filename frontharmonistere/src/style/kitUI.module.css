@@ -1,3 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@font-face {
+  font-family: 'Righteous';
+  src: url('../fonts/RIGHTEOUS/Righteous.ttf') format('truetype');
+}
+
+
+body {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+}
+
+.basicContainer {
+  margin-left: 10px;
+}
+
+.cornerLeftTitle {
+    font-family: 'Righteous';
+    font-size: 3em;
+    margin : 0 1em;
+    color: #FAF4E7;
+}
+
+.homeBackground {
+  background-image: url('../images/diceLauncherBackground.png.webp');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center; /* Assure que l'image est centrée */
+  min-height: 100vh; /* Assure que le conteneur prend au moins la hauteur de la fenêtre */
+}
+
+.blueHarmonistereTitle {
+  font-family: 'Righteous';
+  color: #5EA7CE;
+  text-align: center;
+  font-size: 3em;
+}
+
 .buttonHarmonistere {
     background: #77B7C9 0% 0% no-repeat padding-box;
     border-radius: 35px;
@@ -9,6 +47,7 @@
     padding: 1em 5.8em;
     border: none;
     cursor: pointer;
+    text-align: center;
 }
 
 .buttonHarmonistere:hover {
@@ -55,3 +94,103 @@
 .inputHarmonistere:focus {
     outline: none;
 }
+
+.diceLauncherBackground {
+  display: flex;
+  flex-direction: column;
+  background-image: url('../images/Pop-up 1.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: auto;
+  width: 660px;
+  height: 709px;
+}
+
+.dices {
+    display: flex;
+    justify-content: center; /* Centre horizontalement les boutons */
+    margin-bottom: 1em;
+}
+
+.diceButton {
+    display: inline-block;
+    width: 7em; /* Largeur des boutons */
+    height: 4em; /* Hauteur des boutons */
+    border-radius: 20px; /* Bord arrondi */
+    text-align: center;
+    font-weight: 700;
+    font-size: 1em; /* Taille de la police */
+    letter-spacing: 0.03em; /* Espacement entre les lettres */
+    color: #233463;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    margin-right: 1em; /* Espacement entre les boutons */
+    cursor: pointer;
+}
+
+
+  .centerComponent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%; 
+    width: 100%; 
+    margin: auto; 
+    margin-top: auto; 
+    margin-bottom: auto; 
+    padding: 0; 
+  }
+  
+  .selectedDice {
+    min-height: 50px; 
+    color: #233463;
+}
+
+  .rollReset{
+    display: flex;
+    flex-direction: row;
+    /* justify-content: center; */
+  }
+
+  .rollResetButton {
+    background-color: #A0D6E5 ;
+    border-radius: 35px;
+    color: #233463;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    letter-spacing: 0.03em;
+    margin-bottom: 0.5em;
+    margin-left : 1em;
+    padding: 0.5em 1.5em;
+    min-height: 3.5em;
+    border: none;
+    cursor: pointer;
+    /* text-align: center; */
+  }
+
+  .successFailureDiv {
+    display: flex;
+    justify-content: center; /* Centre horizontalement les éléments dans le conteneur */
+    align-items: center; /* Centre verticalement les éléments */
+    flex-wrap: wrap; /* Permet aux éléments de passer à la ligne si nécessaire */
+    margin-top: 2em; /* Espace du haut pour séparer des autres contenus */
+  }
+  
+  .successIcons, .failureIcons {
+    display: flex;
+    justify-content: center; /* Centre les icônes dans chaque groupe */
+    align-items: center;
+    flex: 1 0 auto; /* Donne une flexibilité avec une base automatique */
+    padding: 0 10px; /* Un peu de padding pour ne pas coller les icônes aux bords */
+  }
+  
+  .successIcons img, .failureIcons img {
+    margin: 0 5px; /* Ajoute une marge autour de chaque icône */
+  }
+  
+  .successIcons img:last-child, .failureIcons img:last-child {
+    margin-right: 0; /* Supprime la marge à droite de la dernière icône */
+  }
+  
+

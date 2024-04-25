@@ -10,7 +10,7 @@ import TitleSession from './titleSession';
 import axios from 'axios';
 import ChatBox from './chatbox';
 import SynergyTokenPool from './synergyTokenPool';
-import DiceLauncher from '../diceLauncher/diceLauncher.js';
+import DiceLauncherMini from '../diceLauncher/diceLauncherMini.js';
 import io from 'socket.io-client';
 import ChatLog from './chatlog.js';
 
@@ -89,7 +89,7 @@ function Session() {
                     <SynergyTokenPool/>
 
                     <div id='diceLauncherSession'>
-                        <DiceLauncher sendResultsToSocket={sendResultsToSocket}/>
+                        <DiceLauncherMini sendResultsToSocket={sendResultsToSocket}/>
                     </div>
 
                     <div id='chatLogSession'>

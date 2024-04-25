@@ -34,7 +34,6 @@ const ChatLog = () => {
   // Effet pour mettre à jour le localStorage lorsque logMessages change
   useEffect(() => {
     localStorage.setItem('logMessages', JSON.stringify(logMessages));
-    console.log('voyons voir le log...', localStorage);
   }, [logMessages]);
 
   return (

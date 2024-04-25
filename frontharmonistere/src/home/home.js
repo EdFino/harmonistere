@@ -45,6 +45,7 @@ function Home() {
                     <ul id="ulMenu">
                         {user && <li id='deconnectLi'onClick={logOut}>Déconnexion</li>}
                         {user && <li><Link to="/univers">Univers</Link></li>}
+                        {!user && <li id='inscriptionLi' onClick={loadingAccountCreation}>Inscription</li>}
                         <li><Link to={'/creationfiche'}>Créer une fiche</Link></li>
                         {user && <li><Link to="/espacejoueur">Votre espace joueur</Link></li>}
                         <li><Link to={'lanceur'}>Lanceur de dés</Link></li>

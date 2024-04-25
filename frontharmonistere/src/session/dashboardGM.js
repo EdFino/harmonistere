@@ -17,8 +17,6 @@ function DashboardGM ({charactersInSession}) {
     const { id } =useParams();
 
     const urlSession = `http://localhost:5038/backharmonistere/deleteSession/${id}`;
-    console.log (urlSession);
-    console.log ('Pikachu suppression', characterDeletion);
 
     const closeDeleteSessionModal = () => {
         setShowDeleteSessionModal(false);
@@ -34,7 +32,6 @@ function DashboardGM ({charactersInSession}) {
 
     function handleDeletionCharacter (e) {
         setCharacterDeletion(e.target.value);
-        console.log ('Oui, tu seras bien supprimé !', characterDeletion);
     }
 
     const handleDeleteSession = () => {
@@ -59,10 +56,6 @@ function DashboardGM ({charactersInSession}) {
             console.log('Erreur lors de la suppression du personnage : ', error);
         });
     }
-    
-
-    console.log(viewDashboard);
-    console.log ('est-ce que tu vas fonctionner ? ', charactersInSession);
 
 
     return (

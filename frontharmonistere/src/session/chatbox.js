@@ -21,13 +21,12 @@ const ChatBox = ({ pseudoCharacter }) => {
     const [visibleCB, setVisibleCB] = useState(false);
     const inputRef = useRef(null);
 
-     useEffect(() => {
+    useEffect(() => {
         setPseudoChat(storedPseudo || pseudoCharacter);
     }, [pseudoCharacter]);
 
     useEffect(() => {
         localStorage.setItem('pseudoCharacter', JSON.stringify(pseudoChat));
-        console.log ('je suis vivant ! ', pseudoCharacter);
     }, [pseudoChat]);
 
     useEffect(() => {
@@ -60,7 +59,6 @@ const ChatBox = ({ pseudoCharacter }) => {
 
     useEffect(() => {
         localStorage.setItem('chatboxMessages', JSON.stringify(messageHistory));
-        console.log('voyons voir lhistorique des messages...', localStorage);
       }, [messageHistory]);
 
     const handleSendButtonClick = () => {
@@ -76,8 +74,6 @@ const ChatBox = ({ pseudoCharacter }) => {
     function handleVisibleCB () {
         setVisibleCB(!visibleCB);
     }
-
-    console.log ('tu las oui ou merde ?! ', localStorage);
 
     return (
         <div id='chatBoxSession'>

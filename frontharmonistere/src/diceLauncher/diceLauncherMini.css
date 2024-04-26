@@ -1,0 +1,47 @@
+
+
+
+#malus {
+    background-color: #D5D5D5;
+}
+
+#neutre {
+    background-color: #F5DCAB;
+}
+
+#bonus {
+    background-color: #96DE9B;
+}
+
+#critique {
+    background-color: #FFA7A7;
+}
+
+
+#selectedDices .dice-text::after {
+    content: "|";
+    color: #E3CCAF; 
+    margin: 0.5em; 
+  }
+
+#reset {
+    background-color: transparent;
+    border: 2px solid #A0D6E5;
+}
+
+@keyframes diceShake {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+      transform: translateX(-3px);
+    }
+    20%, 40%, 60%, 80% {
+      transform: translateX(3px);
+    }
+  }
+  
+  .diceShake {
+    animation: diceShake 0.7s; /* Durée de l'animation */
+    animation-timing-function: ease-in-out;
+  }

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../style/kitUI.module.css';
 import '../diceLauncher/diceLauncherMini.css';
+import happyIcon from '../images/happy.png';
+import sadIcon from '../images/sad.png';
 
 
 
@@ -99,11 +101,11 @@ const DiceLauncherMini = ({ sendResultsToSocket }) => {
     const failures = rollResults.filter((result) => result <= 3).length;
 
     const successIcons = Array(successes).fill(
-      <img src="dés/coche.png" alt="Réussite" className="success-icon" />
+      <img src={happyIcon} alt="Réussite" className="success-icon" />
     );
 
     const failureIcons = Array(failures).fill(
-      <img src="dés/fermer.png" alt="Échec" className="failure-icon" />
+      <img src={sadIcon} alt="Échec" className="failure-icon" />
     );
 
     setSummary({
@@ -123,7 +125,6 @@ const DiceLauncherMini = ({ sendResultsToSocket }) => {
         <button className={styles.diceButton} onClick={() => addDie(10)} id='bonus'>Bonus</button>
         <button className={styles.diceButton} onClick={() => addDie(12)} id='critique'>Critique</button>
       </div>
-      <br />
       <p className={styles.selectedDice} id='selectedDices'>
        {selectedDice.map((die, index) => (
          <span className={index < selectedDice.length - 1 ? "dice-text" : ""} key={index}>
@@ -135,9 +136,6 @@ const DiceLauncherMini = ({ sendResultsToSocket }) => {
         <button className={styles.rollResetButton} onClick={rollDice} id='roll'>Lancer</button>
         <button className={styles.rollResetButton} onClick={resetDice} id='reset'>Réinitialiser</button>
       </div>                  
-      <br />
-      
-      
       <>
       <div className={styles.successFailureDiv}>
         <p className={styles.successFailureText}>Résultat :</p>

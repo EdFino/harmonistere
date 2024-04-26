@@ -4,6 +4,12 @@
   src: url('../fonts/RIGHTEOUS/Righteous.ttf') format('truetype');
 }
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
 
 body {
     font-family: 'Poppins', sans-serif;
@@ -34,6 +40,8 @@ body {
   color: #5EA7CE;
   text-align: center;
   font-size: 3em;
+  position: relative;
+  top: 1.2em;
 }
 
 .buttonHarmonistere {
@@ -107,9 +115,7 @@ body {
 }
 
 .dices {
-    display: flex;
-    justify-content: center; /* Centre horizontalement les boutons */
-    margin-bottom: 1em;
+  
 }
 
 .diceButton {
@@ -129,39 +135,48 @@ body {
 }
 
 
-  .centerComponent {
+
+.centerComponent {
+    flex-grow: 1;
+    position: relative;
+    top: 1.2em;
     display: flex;
-    justify-content: center;
+    justify-content:center;
     align-items: center;
     flex-direction: column;
-    height: 100%; 
-    width: 100%; 
-    margin: auto; 
-    margin-top: auto; 
-    margin-bottom: auto; 
-    padding: 0; 
-  }
-  
-  .selectedDice {
-    min-height: 50px; 
-    color: #233463;
+    
 }
 
-  .rollReset{
+.centerComponent > * {
+    margin: 1.7em; /* Ajuster la marge entre les éléments */
+}
+  
+.selectedDice {
+    display: flex;
+    align-items: center;
+    min-height: 50px; 
+    color: #233463;
+    margin: 0;
+
+}
+
+.rollReset{
     display: flex;
     flex-direction: row;
-    /* justify-content: center; */
-  }
+    justify-content: center;
+}
 
-  .rollResetButton {
+
+.rollResetButton {
+    display: flex;
+    align-items: center;
     background-color: #A0D6E5 ;
     border-radius: 35px;
     color: #233463;
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
     letter-spacing: 0.03em;
-    margin-bottom: 0.5em;
-    margin-left : 1em;
+    margin : 0 1em;
     padding: 0.5em 1.5em;
     min-height: 3.5em;
     border: none;
@@ -169,28 +184,36 @@ body {
     /* text-align: center; */
   }
 
-  .successFailureDiv {
-    display: flex;
-    justify-content: center; /* Centre horizontalement les éléments dans le conteneur */
-    align-items: center; /* Centre verticalement les éléments */
-    flex-wrap: wrap; /* Permet aux éléments de passer à la ligne si nécessaire */
-    margin-top: 2em; /* Espace du haut pour séparer des autres contenus */
-  }
-  
-  .successIcons, .failureIcons {
-    display: flex;
-    justify-content: center; /* Centre les icônes dans chaque groupe */
-    align-items: center;
-    flex: 1 0 auto; /* Donne une flexibilité avec une base automatique */
-    padding: 0 10px; /* Un peu de padding pour ne pas coller les icônes aux bords */
-  }
-  
+.diceButton:hover, .rollResetButton:hover {
+    filter: brightness(0.8);
+    transform: scale(1.1); 
+}
+.successFailureDiv {
+  display: flex;
+  align-items: center;
+  justify-content: start; /* Garantit que le texte reste toujours à la même place */
+  min-height: 107px;
+  margin-left: 4em;
+}
+
+.successFailureText {
+  position: absolute;
+  left: 5em;
+  font-size: 1em;
+  font-weight: light;
+  color: #233463;
+  margin: 0;
+}
+
+.successIcons, .failureIcons {
+  display: flex;
+  justify-content: space-between; /* Distribue un espace égal entre les icônes */
+  ;
+}
+
+
   .successIcons img, .failureIcons img {
-    margin: 0 5px; /* Ajoute une marge autour de chaque icône */
-  }
-  
-  .successIcons img:last-child, .failureIcons img:last-child {
-    margin-right: 0; /* Supprime la marge à droite de la dernière icône */
+   
   }
   
 

@@ -1,7 +1,12 @@
 #welcomingPanel {
-        color: #233463;
-        font-size: 1.2em;
-        font-weight: bold;
-        position: relative;
-        bottom: 5em;
+    background-image: url('../images/Pop-up_3.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #233463;
+    font-size: 1.2em;
+    font-weight: bold;
+    position: relative;
+    bottom: 5em;
+    padding: 2.5em;
     }

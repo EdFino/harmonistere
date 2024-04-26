@@ -57,9 +57,7 @@ function AccountCreationPanel({loadingAuthCreation}) {
     console.log(data);
 
     try {
-
         const emailIsUnique = await isEmailUnique(data.emailPlayer);
-        
         if (!emailIsUnique) {
             alert('Cet e-mail est déjà utilisé.');
             return;

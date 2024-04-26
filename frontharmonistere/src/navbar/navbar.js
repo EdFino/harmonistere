@@ -11,6 +11,9 @@ function Navbar() {
 
     return (
         <ul id="communNavbar" className={kit.navbarHarmonistere}>
+            <li className={kit.navbarLiHarmonistere}>
+                <NavLink exact activeClassName="active" to={'/'}>Accueil</NavLink>
+            </li>
             {user && <li className={kit.navbarLiHarmonistere}>
                 <NavLink exact to="/univers" activeClassName="active">Univers</NavLink>
             </li>}

@@ -148,7 +148,7 @@ function PlayerSpace () {
                         <div id='allSheetsPlayer'>
                             {characterList.map((character, index) => (
                                 <Link to={`/espacefiche/${character._id}`} key={index}>
-                                    <button>{character.name}</button><br />
+                                    <button>{character.characterName}</button><br />
                                 </Link>
                             ))}
                                 <Link to={`/creationfiche`}>

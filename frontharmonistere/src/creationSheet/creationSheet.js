@@ -14,14 +14,19 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup" ;
 import DOMPurify from 'dompurify';
+import FirstIdentitySheet from './firstIdentitySheet';
+import SecondPersonnalitySheet from './secondPersonnalitySheet';
+import ThirdCaracSheet from './thirdCaracSheet';
+import FourthDescriptionSheet from './fourthDescriptionsSheet';
+import FinalStepForm from './finalStepForm';
 
-const schema = yup.object().shape({
-    /* characterAvatar: yup
+/*const schema = yup.object().shape({
+     characterAvatar: yup
         .mixed()
         .test('fileType', 'Le fichier doit être une image', (value) => {
             if (!value) return true; // Laisser passer s'il n'y a pas de fichier
             return value && value[0].type.startsWith('image/');
-    }), */
+    }), 
     characterName: yup
         .string()
         .required('Attention : vous personnage doit avoir un nom !')
@@ -69,33 +74,41 @@ const schema = yup.object().shape({
     ].reduce((acc, curr) => acc + curr, 0);
     return playerChoices <= 0;
 })
-});
+});*/
 
 function CreationSheet () {
 
-    const { register, handleSubmit, watch, setValue, formState: { errors, isSubmitted, isSubmitSuccessful } } = useForm({
-        mode: 'onSubmit',
-        resolver: yupResolver(schema)
-    });
-
     const [user] = useAuthState(auth);
     const [showModalSheet, setShowModalSheet] = useState(false);
+    const [formData, setFormData] = useState({});
+    const [stepForm, setStepForm] = useState (1);
 
-  const onSubmit = async (data) => {
+    const handleFormData = (data) => {
+        setFormData({ ...formData, ...data });
+    };
+
+    const nextStep = () => {
+        setStepForm(stepForm +1);
+    }
+
+    const previousStep = () => {
+        setStepForm(stepForm -1);
+    }
+
+  const onFinalSubmit = async (formData) => {
 
     try {
-        const totalData = {... data, email: user.email};
+        const totalFormData = {... formData, email: user.email};
 
-        data.characterName = DOMPurify.sanitize(data.characterName);
-        data.skills = DOMPurify.sanitize(data.skills);
-        data.notes = DOMPurify.sanitize(data.notes);
-        data.physicDescription = DOMPurify.sanitize(data.physicDescription);
-        data.mentalDescription = DOMPurify.sanitize(data.mentalDescription);
-        data.story = DOMPurify.sanitize(data.characterName);
+        formData.characterName = DOMPurify.sanitize(formData.characterName);
+        formData.skills = DOMPurify.sanitize(formData.skills);
+        formData.physicDescription = DOMPurify.sanitize(formData.physicDescription);
+        formData.mentalDescription = DOMPurify.sanitize(formData.mentalDescription);
+        formData.story = DOMPurify.sanitize(formData.characterName);
 
-        await axios.post('http://localhost:5038/backharmonistere/sheetCreation', totalData);
+        await axios.post('http://localhost:5038/backharmonistere/sheetCreation', totalFormData);
         console.log('Données envoyées avec succès');
-        console.log(totalData);
+        console.log(totalFormData);
         setShowModalSheet(true);
     } catch (error) {
         console.error('Erreur lors de l\'envoi des données :', error);
@@ -106,132 +119,74 @@ const closeModalSheet = () => {
     setShowModalSheet(false);
 };
 
+console.log('Voici le formulaire', formData);
+
+console.log ('nous en sommes à létape : ', stepForm);
+
     return (
         <>
             <Navbar/>
             {user && <p>Vous êtes bien connecté, {user.email}</p>}
             {!user && <p>Vous n'êtes pas connecté</p>}
-            <h1>Création de votre nouvelle fiche</h1>
+            <h1>Harmonistère</h1>
+            <h2>Créer une fiche</h2>
 
-            <form id="sheetForm" onSubmit={handleSubmit(onSubmit)}>
+                <div id="chapters">
+                    {stepForm === 1 &&
+                    <FirstIdentitySheet
+                        formData={formData}
+                        handleFormData={handleFormData}
+                        nextStep={nextStep}
+                    />}
+                    {stepForm === 2 &&
+                    <SecondPersonnalitySheet
+                        formData={formData}
+                        handleFormData={handleFormData}
+                        nextStep={nextStep}
+                        previousStep={previousStep}
+                    />}
+                    {stepForm === 3 &&
+                    <ThirdCaracSheet
+                        formData={formData}
+                        handleFormData={handleFormData}
+                        nextStep={nextStep}
+                        previousStep={previousStep}
+                    />}
+                    {stepForm === 4 &&
+                    <FourthDescriptionSheet
+                        formData={formData}
+                        handleFormData={handleFormData}
+                        nextStep={nextStep}
+                        previousStep={previousStep}
+                    />}
+                    {stepForm === 5 &&
+                    <FinalStepForm
+                        formData={formData}
+                        onFinalSubmit={onFinalSubmit}
+                        previousStep={previousStep}
+                    />}
+                </div>
 
-                <div id="firstChapter" className="chapter">
-                    <div id='firstChapterForm'>
-
-                        <h2>1/ Identité de votre personnage</h2>
-{/* 
-                        <label htmlFor='characterAvatar'>Votre avatar : </label>
-                        <input type='file' id='characterAvatar' name='characterAvatar' {...register("characterAvatar")}/><br/>
-                        {errors.characterAvatar && <><span className='invalid-feedback'>{errors.characterAvatar.message}</span><br/></>} */}
-
-                        <label htmlFor='characterName'>Le nom de votre personnage : </label>
-                        <input type='text' id='characterName' name='characterName' {...register("characterName")}/><br/>
-                        {errors.characterName && <><span className='invalid-feedback'>{errors.characterName.message}</span><br/></>}
-
-                        <label htmlFor='characterAge'>L'âge de votre personnage : </label>
-                        <input type='number' id='characterAge' name='characterAge' {...register("characterAge")} /><br/>
-                        {errors.characterAge && <><span className='invalid-feedback'>{errors.characterAge.message}</span><br/></>}
-
-                        <label htmlFor='benderOrNot'>Votre personnage maîtrise-t-il un élément ? </label>
-                        <input type='checkbox' id='benderOrNot' name='benderOrNot' {...register("benderOrNot")} /><br/>
-                        
-                        <div id="disappearBending" className={watch('benderOrNot') ? 'appear' : "disappear"}>
-                            <label htmlFor='benderSelect'>Choisissez votre élément : </label>
-                            <select id="benderSelect" name='benderSelect' {...register("benderSelect")}>
-                                <option value=''>Choisissez votre élément</option>
-                                <option value="Terre">Terre</option>
-                                <option value="Feu">Feu</option>
-                                <option value="Air">Air</option>
-                                <option value="Eau">Eau</option>
-                            </select>
-                        </div><br/> 
-                    </div>
-        
-        <div className="sideTextForm">
-            <p>Voici la partie la plus simple ! Posez simplement les informations de votre personnage, vous ne devriez avoir aucun souci.</p>
-        </div>
-
-        <Popup trigger=
-        {
-        <div id='firstHelp' className='helpPopup'>
-          ?
-        </div>}
-        position="left center">
-          <p>Vous ne devriez pas avoir trop de soucis pour cette partie. Sachez cependant que si vous décidez de ne pas joueur
-            un harmonistère, vous ne serez pas pénalisés au niveau des règles, elles ont été écrites avec l'idée que tout le monde
-            soit sur un pied d'égalité, même les personnages qui ne sont pas doués pour l'action.
-          </p>
-        </Popup>
-
-      </div>
-
-      <div id="secondChapter" className="chapter">
+      {/* <div id="secondChapter" className="chapter">
         <div id='secondChapterForm'>
-          <SelectTest
-            register={register}
-            errors={errors}
-            watch={watch}
+        <SelectTest
+                        formData={formData}
+            handleFormData={handleFormData}
+                        nextStep={nextStep}
             setValue={setValue}/>
 
-        </div>
-        <div className="sideTextForm">
-          <p>Choisissez ici la personnalité de votre personnage. Vous aurez quatre champs d'importance décroissante
-            (Principal, Ascendant, Neutre, Trait contraire) sur lequel vous pourrez poser une fois chaque élément.</p>
-          </div>
-        <Popup trigger=
-        {
-        <div id='secondHelp' className='helpPopup'>
-          ?
-        </div>}
-        position="left center">
-          <p>
-            Principal : Le trait le plus important de votre personnage, l'élément qui le caractérise le plus, l'état émotionnel dans lequel il se sent le plus à l'aise.<br/>
-            Ascendant : Le trait secondaire qui le définit selon une relative importance.<br/>
-            Neutre : Correspond à l'élément avec lequel il n'a pas énormément d'affinités. Votre personnage n'est pas connu pour réagir ainsi.<br/>
-            Trait opposé : Votre personnage est tout sauf cet élément. C'est plutôt inhabituel de le voir ainsi. Comprenez que l'élément que vous poserez n'est pas obligatoirement l'inverse de celui que vous aurez mis en principal.<br/>
-            Terre : L'élément de la résilience, du rationnalisme, du concret, de la force tranquille, du calme, de l'ordre.
-            Feu : L'élément de la passion, de la force, du courage, de la vitalité, de l'intimidation, du défi.
-            Air : L'élément de la spiritualité, de l'introspection, de l'adaptation, du voyage, de la curiosité.
-            Eau : L'élément du lien, de l'empathie, de la diplomatie, du changement, de la vie, de l'amour.
+        </div> */}
 
-          </p>
-        </Popup>
-        </div>
 
-        <div id="thirdChapter" className="chapter">
+{/*         <div id="thirdChapter" className="chapter">
           <div id='thirdChapterForm'>
             <h2>3/ Caractéristiques</h2>
             <SelectCharacteristic
                 register={register}
                 errors={errors}
                 watch={watch}/>
-                {errors.sum && <span className='invalid-feedback'>{errors.sum.message}</span>}
+                
           </div>
-        <div className="sideTextForm">
-          <p>
-            Vous pouvez maintenant déterminer les qualités et défauts de votre personnage à travers ces six caractéristiques.
-            Vous commencez par défaut en neutre partout, et si vous cherchez à poser un bonus quelque part, il faudra contrebalancer par un défaut.
-            Quant à un bonus critique, il faudra deux défauts pour se le procurer.
-          </p>
-          </div>
-        <Popup trigger=
-        {
-        <div id='thirdHelp' className='helpPopup'>
-          ?
-        </div>}
-        position="left center">
-          <p>
-          Les caractéristiques sont exprès décrites vagues. Vous pouvez ainsi vous les approprier et décider comment interpréter un bonus ou un malus à votre personnage.<br/>
-          Corps : A rapport à vos capacités physiques : votre force brute, votre endurance, votre agilité, voire même une haute taille ou un beau visage, sont comptés dedans.<br/>
-          Esprit : Vous pouvez compter dans esprit tout ce qui touche de près ou de loin à l'intellect : les capacités de déduction et de raisonnement, la mémoire, l'intelligence vive, la ruse ou les connaissances.<br/>
-          Âme : L'âme comporte des qualités qu'on lie à la volonté, le sang-froid ou l'aura que dégage votre personnage.<br/>
-          Arts martiaux : Cette caractéristique fait évidemment référence à votre qualité au corps-à-corps ; à vous de décider ensuite ce qui fait de votre personnage un guerrier redoutable.<br/>
-          Arts élémentaires : Un harmonistère digne de ce nom investira soigneusement dans cette caractéristique qui détermine son aptitude à maîtriser son élément.<br/>
-          Arts oratoires : Concerne l'éloquence de votre personnage, sa capacité à parler, être écouté, et cru.
-
-          </p>
-        </Popup>
-        </div>
         
         <div id="fourthChapter" className="chapter">
           <div id='fourthChapterForm'>
@@ -246,9 +201,7 @@ const closeModalSheet = () => {
                 errors={errors}
                 watch={watch}/>
            </div>
-        </div>
-        <button type='submit'>Créer votre fiche</button>
-    </form>
+        </div> */}
     <Popup open={showModalSheet} onClose={closeModalSheet} modal nested closeOnDocumentClick={false}>
                 {(close) => (
                     <div className='modal'>

@@ -1,0 +1,7 @@
+#subNavbarSheet {
+    display: flex;
+}
+
+#subNavbarSheet li {
+    padding: 1em;
+}

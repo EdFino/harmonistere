@@ -14,7 +14,7 @@ const DiceLauncherMini = ({ sendResultsToSocket }) => {
 
   const [selectedDice, setSelectedDice] = useState([]);
   const [results, setResults] = useState([]);
-  const [summary, setSummary] = useState('');
+  const [summary, setSummary] = useState([]);
 
   const addDie = (sides) => {
     if (selectedDice.length >= 3) {
@@ -92,33 +92,22 @@ const DiceLauncherMini = ({ sendResultsToSocket }) => {
     }, 800);
   };
 
+
+
   const resetDice = () => {
     setSelectedDice([]);
     setResults([]);
-    setSummary('');
+    setSummary([]);
   };
 
   const calculateOutcome = (rollResults) => {
-    const successes = rollResults.filter((result, index) => {
-      return selectedDice[index] === 'Malus' ? result === 6 : result >= 7;
-    }).length;
-
-    const failures = rollResults.filter((result) => result <= 3).length;
-
-    const successIcons = Array(successes).fill(
-      <img src={happyIcon} alt="Réussite" className="success-icon" />
-    );
-
-    const failureIcons = Array(failures).fill(
-      <img src={sadIcon} alt="Échec" className="failure-icon" />
-    );
-
-    setSummary({
-      successIcons,
-      failureIcons,                     
-      successes,
-      failures
+    const outcomeData = selectedDice.map((die, index) => {
+      const result = rollResults[index];
+      const type = die.name === 'Malus' ? (result === 6 ? 'success' : 'failure') : (result >= 7 ? 'success' : 'failure');
+      return { name: die.name, result, type };
     });
+  
+    setSummary(outcomeData);
   };
 
 
@@ -141,10 +130,17 @@ const DiceLauncherMini = ({ sendResultsToSocket }) => {
       </div>                  
       <>
       <div className={styles.successFailureDiv}>
-        <p className={styles.successFailureText}>Résultat :</p>
-        <span className={styles.successIcons}>{summary.successIcons}</span>
-        <span className={styles.failureIcons}>{summary.failureIcons}</span>
-      </div>
+      <p className={styles.successFailureText}>Résultat :</p>
+  {summary.map((outcome, index) => (
+    <span key={index}>
+      {outcome.type === 'success' ? (
+        <img src={happyIcon} alt="Réussite" className={styles.successIcon} />
+      ) : (
+        <img src={sadIcon} alt="Échec" className={styles.failureIcon} />
+      )}
+    </span>
+  ))}
+</div>
       </>
     </div>
   );

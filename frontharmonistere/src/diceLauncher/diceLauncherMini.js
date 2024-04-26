@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../style/kitUI.module.css';
 import '../diceLauncher/diceLauncherMini.css';
-import happyIcon from '../images/happy.png';
-import sadIcon from '../images/sad.png';
+import happyIcon from '../images/happy.svg';
+import sadIcon from '../images/sad.svg';
+import neutralIcon from '../images/neutralIcon.svg'
 import dMalus from '../images/dMalussvg.svg';
 import dNeutre from '../images/dNeutresvg.svg';
 import dBonus from '../images/dBonussvg.svg';
@@ -92,6 +93,10 @@ const DiceLauncherMini = ({ sendResultsToSocket }) => {
     }, 800);
   };
 
+  const removeDie = (indexToRemove) => {
+    const updatedSelectedDice = selectedDice.filter((_, index) => index !== indexToRemove);
+    setSelectedDice(updatedSelectedDice);
+  };
 
 
   const resetDice = () => {
@@ -103,13 +108,19 @@ const DiceLauncherMini = ({ sendResultsToSocket }) => {
   const calculateOutcome = (rollResults) => {
     const outcomeData = selectedDice.map((die, index) => {
       const result = rollResults[index];
-      const type = die.name === 'Malus' ? (result === 6 ? 'success' : 'failure') : (result >= 7 ? 'success' : 'failure');
+      let type;
+      if (die.name === 'Malus') {
+        type = (result === 4 || result === 5) ? 'neutral' : (result === 6 ? 'success' : 'failure');
+      } else {
+        type = (result >= 4 && result <= 6) ? 'neutral' : (result >= 7 ? 'success' : 'failure');
+      }
       return { name: die.name, result, type };
     });
   
     setSummary(outcomeData);
   };
 
+console.log(summary)
 
   return (
     <div className={`${styles.centerComponent} centerComponent`}>
@@ -121,7 +132,13 @@ const DiceLauncherMini = ({ sendResultsToSocket }) => {
       </div>
       <p className={styles.selectedDice} id='selectedDices'>
        {selectedDice.map((die, index) => (
-       <img key={index} src={die.icon} alt={die.name} className={`${index < selectedDice.length - 1 ? "dice-icon" : ""}`} />
+       <img
+       key={index}
+       src={die.icon}
+       alt={die.name}
+       className={styles.selectedDiceIcon}
+       onClick={() => removeDie(index)}
+     />
        ))}
       </p>
       <div className={styles.rollReset}>
@@ -131,15 +148,18 @@ const DiceLauncherMini = ({ sendResultsToSocket }) => {
       <>
       <div className={styles.successFailureDiv}>
       <p className={styles.successFailureText}>Résultat :</p>
-  {summary.map((outcome, index) => (
-    <span key={index}>
-      {outcome.type === 'success' ? (
-        <img src={happyIcon} alt="Réussite" className={styles.successIcon} />
-      ) : (
-        <img src={sadIcon} alt="Échec" className={styles.failureIcon} />
-      )}
-    </span>
-  ))}
+      {summary.map((outcome, index) => (
+  <span key={index}>
+    {outcome.type === 'success' ? (
+      <img src={happyIcon} alt="Réussite" className={styles.successIcon} />
+    ) : outcome.type === 'failure' ? (
+      <img src={sadIcon} alt="Échec" className={styles.failureIcon} />
+    ) : outcome.type === 'neutral' ? (
+      <img src={neutralIcon} alt="Neutral" className={styles.neutralIcon} />
+    ) : null /* Rien à rendre pour les autres types de résultats */
+    }
+  </span>
+))}
 </div>
       </>
     </div>

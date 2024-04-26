@@ -1,9 +1,1 @@
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
-<svg fill="#5EA7CE" width="256px" height="256px" viewBox="0 0 24.00 24.00" xmlns="http://www.w3.org/2000/svg" stroke="#5EA7CE" stroke-width="0.00024000000000000003">
-<g id="SVGRepo_bgCarrier" stroke-width="0"/>
-<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.144"/>
-<g id="SVGRepo_iconCarrier">
-<path d="M12,1A11,11,0,1,0,23,12,11.013,11.013,0,0,0,12,1Zm0,20a9,9,0,1,1,9-9A9.01,9.01,0,0,1,12,21ZM8,11V9a1,1,0,0,1,2,0v2a1,1,0,0,1-2,0Zm8-2v2a1,1,0,0,1-2,0V9a1,1,0,0,1,2,0ZM8,14h8a4,4,0,0,1-8,0Z"/>
-</g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79.17 92.81"><defs><style>.cls-1{fill:#9ccc98;}.cls-2{fill:#fff;}.cls-3{fill:#fdfefd;}</style></defs><g id="Calque_2" data-name="Calque 2"><g id="Calque_1-2" data-name="Calque 1"><path class="cls-1" d="M38.53,0C49.39.09,58.45,1.29,67.05,5c9.75,4.24,12.67,8.35,12,18.75-1.2,19.63-4.84,38.56-17.67,54.43a36.46,36.46,0,0,1-5.83,6C41,95.51,37.71,96.24,22.49,83,10,72.11,5.05,57,2.23,41.16,1.05,34.53.75,27.77.08,21.07-.56,14.59,2.63,10.89,7.46,7.81,17.44,1.45,28.67.3,38.53,0Z"/><path class="cls-2" d="M20.33,50.84a7.5,7.5,0,0,1,5.13.24,48.43,48.43,0,0,0,28.58,0c1.39-.41,3.05-1.42,4.11,0s-.23,2.88-.84,4.13C55.18,59.67,52.9,64,49.08,67.37c-5.82,5.09-12.9,5.15-18.71,0C25.42,63,22.72,57.2,20.33,50.84Z"/><path class="cls-3" d="M15,35.18c6.28-8.89,11.38-9.55,19.75-2.57C31.54,35.13,22.34,36.33,15,35.18Z"/><path class="cls-3" d="M44,33.58c8.35-8,13-7.59,20.9,1.7C57.75,36.34,51.18,34.94,44,33.58Z"/></g></g></svg>

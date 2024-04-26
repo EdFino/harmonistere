@@ -9,10 +9,7 @@ import dNeutre from '../images/dNeutresvg.svg';
 import dBonus from '../images/dBonussvg.svg';
 import dCritique from '../images/dCritiquesvg.svg';
 
-
-
 const DiceLauncherMini = ({ sendResultsToSocket }) => {
-
   const [selectedDice, setSelectedDice] = useState([]);
   const [results, setResults] = useState([]);
   const [summary, setSummary] = useState([]);
@@ -42,7 +39,6 @@ const DiceLauncherMini = ({ sendResultsToSocket }) => {
         break;
     }
   
-
     setSelectedDice([...selectedDice, dieInfo]);
   };
 
@@ -62,7 +58,7 @@ const DiceLauncherMini = ({ sendResultsToSocket }) => {
       }
     });
 
-  const element = document.querySelector('.centerComponent'); // S'assurez que cela cible le conteneur racine correct
+    const element = document.querySelector('.centerComponent'); // S'assurez que cela cible le conteneur racine correct
     element.classList.add('diceShake');
     setTimeout(() => {
       element.classList.remove('diceShake');
@@ -98,7 +94,6 @@ const DiceLauncherMini = ({ sendResultsToSocket }) => {
     setSelectedDice(updatedSelectedDice);
   };
 
-
   const resetDice = () => {
     setSelectedDice([]);
     setResults([]);
@@ -120,8 +115,6 @@ const DiceLauncherMini = ({ sendResultsToSocket }) => {
     setSummary(outcomeData);
   };
 
-console.log(summary)
-
   return (
     <div className={`${styles.centerComponent} centerComponent`}>
       <div className={styles.dices} id='dices'>
@@ -131,39 +124,41 @@ console.log(summary)
         <button className={styles.diceButton} onClick={() => addDie(12)} id='critique'>Critique</button>
       </div>
       <p className={styles.selectedDice} id='selectedDices'>
-       {selectedDice.map((die, index) => (
-       <img
-       key={index}
-       src={die.icon}
-       alt={die.name}
-       className={styles.selectedDiceIcon}
-       onClick={() => removeDie(index)}
-     />
-       ))}
+        {selectedDice.map((die, index) => (
+          <img
+            key={index}
+            src={die.icon}
+            alt={die.name}
+            className={styles.selectedDiceIcon}
+            onClick={() => removeDie(index)}
+          />
+        ))}
       </p>
       <div className={styles.rollReset}>
         <button className={styles.rollResetButton} onClick={rollDice} id='roll'>Lancer</button>
         <button className={styles.rollResetButton} onClick={resetDice} id='reset'>Réinitialiser</button>
       </div>                  
       <>
-      <div className={styles.successFailureDiv}>
-      <p className={styles.successFailureText}>Résultat :</p>
-      {summary.map((outcome, index) => (
-  <span key={index}>
-    {outcome.type === 'success' ? (
-      <img src={happyIcon} alt="Réussite" className={styles.successIcon} />
-    ) : outcome.type === 'failure' ? (
-      <img src={sadIcon} alt="Échec" className={styles.failureIcon} />
-    ) : outcome.type === 'neutral' ? (
-      <img src={neutralIcon} alt="Neutral" className={styles.neutralIcon} />
-    ) : null /* Rien à rendre pour les autres types de résultats */
-    }
-  </span>
-))}
-</div>
+        <div className={styles.successFailureDiv}>
+          <p className={styles.successFailureText}>Résultat :</p>
+          <div className={styles.successFailureIcons}>
+            {summary.map((outcome, index) => (
+              <span key={index}>
+                {outcome.type === 'success' ? (
+                  <img src={happyIcon} alt="Réussite" className={styles.successIcon} />
+                ) : outcome.type === 'failure' ? (
+                  <img src={sadIcon} alt="Échec" className={styles.failureIcon} />
+                ) : outcome.type === 'neutral' ? (
+                  <img src={neutralIcon} alt="Neutral" className={styles.neutralIcon} />
+                ) : null /* Rien à rendre pour les autres types de résultats */
+                }
+              </span>
+            ))}
+          </div>
+        </div>
       </>
     </div>
   );
 };
 
-export default DiceLauncherMini; 
+export default DiceLauncherMini;

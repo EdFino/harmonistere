@@ -17,7 +17,7 @@ function SynergyTokenPool () {
     <div id='synergyTokenPool'>
         <h4>Jetons de synergie</h4>
         <h2>{tokenPool}</h2>
-        <div buttonSynergyTokens>
+        <div id='buttonSynergyTokens'>
             <button className='synergyTokenModifier' onClick={minusSynergyToken}>-1</button>
             <button className='synergyTokenModifier' onClick={plusSynergyToken}>+1</button>
         </div>

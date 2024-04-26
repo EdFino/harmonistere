@@ -1,5 +1,5 @@
 import './home.css';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import harmonistereHome from '../images/imageHome.png';
 import degradeHome from '../images/degrade.png';
 import React, { useState, useEffect } from 'react';
@@ -10,6 +10,7 @@ import ConnexionPanel from './connexionPanel';
 import greatTitle from '../images/Harmonistère.png';
 import WelcomePlayer from './welcomePlayer';
 import AccountCreationPanel from './accountCreationPanel';
+import kit from '../style/kitUI.module.css';
 
 function Home() {
 
@@ -42,12 +43,21 @@ function Home() {
                 <img id="homeArt" src={harmonistereHome} alt="Ecran de la page principale" />
                 <img id="degradeArt" src={degradeHome} alt="Dégradé de la page principale" />
                 <img id="greatTitleHarmonistere" src={greatTitle} alt="Grand titre harmonistère" />
-                    <ul id="ulMenu">
-                        {user && <li id='deconnectLi'onClick={logOut}>Déconnexion</li>}
-                        {user && <li><Link to="/univers">Univers</Link></li>}
-                        <li><Link to={'/creationfiche'}>Créer une fiche</Link></li>
-                        {user && <li><Link to="/espacejoueur">Votre espace joueur</Link></li>}
-                        <li><Link to={'lanceur'}>Lanceur de dés</Link></li>
+                    <ul id="homeNavbar" className={kit.navbarHarmonistere}>
+                        {user && <li id='deconnectLi' className={kit.navbarLiHarmonistere} onClick={logOut}>Déconnexion</li>}
+                        {user && <li className={kit.navbarLiHarmonistere}>
+                            <NavLink exact to="/univers" activeClassName="active">Univers</NavLink>
+                        </li>}
+                        {!user && <li id='inscriptionLi' className={kit.navbarLiHarmonistere} onClick={loadingAccountCreation}>Inscription</li>}
+                        <li className={kit.navbarLiHarmonistere}>
+                            <NavLink exact activeClassName="active" to={'/creationfiche'}>Créer une fiche</NavLink>
+                        </li>
+                        {user && <li className={kit.navbarLiHarmonistere}>
+                            <NavLink exact activeClassName="active" to="/espacejoueur">Votre espace joueur</NavLink>
+                            </li>}
+                        <li className={kit.navbarLiHarmonistere}>
+                            <NavLink exact activeClassName="active" to={'/lanceur'}>Lanceur de dés</NavLink>
+                        </li>
                     </ul>
                     <div id='connexionPanelTotal'>
                         {newAccount && <AccountCreationPanel loadingAuthCreation={loadingAuthCreation} />}

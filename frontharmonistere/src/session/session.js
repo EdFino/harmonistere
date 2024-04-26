@@ -25,13 +25,10 @@ function Session() {
     useEffect(() => {
         if (user) {
             const email = user.email;
-            console.log ('tu le trouves ton email ?', email);
             axios.get(`http://localhost:5038/backharmonistere/charactersInSession/${id}/${email}`)
                 .then(response => {
                     setCharactersInSession(response.data.characters);
                     setPseudoCharacter(response.data.connectedPlayerPseudo);
-                    console.log(response.data.characters)
-                    console.log('Ton personnage est... ', pseudoCharacter);
                 })
                 .catch(error => {
                     console.log('Erreur lors de la récupération des données : ', error);
@@ -47,8 +44,6 @@ function Session() {
         const player = charactersInSession.find(player => player.emailPlayer === email);
         return player ? player.character : ''; // Si le joueur est trouvé, renvoyer le nom de son personnage, sinon une chaîne vide
     }; */
-
-    console.log('je suis le papa :', charactersInSession);
     
     return (
         <>

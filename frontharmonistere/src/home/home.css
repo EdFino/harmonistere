@@ -33,27 +33,7 @@ body, html {
     margin-bottom: 7em;
 }
 
-
-#ulMenu {
-    list-style-type: none;
-    text-align: center;
-    padding-left: 0;
-    display: flex;
-    position: absolute;
-    top: 1%;
-    right: 3%;
-    color: #FAF4E7;
-}
-
-#ulMenu li {
-    text-decoration: none;
-    color: inherit;
-    text-align: center;
-    padding: 1em;
-    font-size: 1em;
-}
-
-#deconnectLi {
+#deconnectLi, #inscriptionLi {
     cursor: pointer;
 }
 
@@ -69,4 +49,8 @@ a:visited {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 5;
+}
+
+.active {
+    font-weight: bold;
 }

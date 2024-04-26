@@ -155,9 +155,13 @@ body {
     display: flex;
     align-items: center;
     min-height: 50px; 
-    color: #233463;
-    margin: 0;
+}
 
+.selectedDice img {
+  width: 2em; /* Ajustez selon la taille désirée */ /* Ajustez selon la taille désirée */
+  margin-right: 10px; /* Ajoute un espace entre les icônes */
+  image-rendering: crisp-edges;
+  image-rendering: auto;
 }
 
 .rollReset{

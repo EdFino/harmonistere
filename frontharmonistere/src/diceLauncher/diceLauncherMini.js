@@ -3,6 +3,10 @@ import styles from '../style/kitUI.module.css';
 import '../diceLauncher/diceLauncherMini.css';
 import happyIcon from '../images/happy.png';
 import sadIcon from '../images/sad.png';
+import dMalus from '../images/dMalussvg.svg';
+import dNeutre from '../images/dNeutresvg.svg';
+import dBonus from '../images/dBonussvg.svg';
+import dCritique from '../images/dCritiquesvg.svg';
 
 
 
@@ -18,31 +22,32 @@ const DiceLauncherMini = ({ sendResultsToSocket }) => {
       return;
     }
 
-    let dieName;
+    let dieInfo;
     switch (sides) {
       case 6:
-        dieName = 'Malus';
+        dieInfo = { name: 'Malus', icon: dMalus };
         break;
       case 8:
-        dieName = 'Neutre';
+        dieInfo = { name: 'Neutre', icon: dNeutre };
         break;
       case 10:
-        dieName = 'Bonus';
+        dieInfo = { name: 'Bonus', icon: dBonus }; // Ici, vous avez oublié de fermer l'accolade
         break;
       case 12:
-        dieName = 'Critique';
+        dieInfo = { name: 'Critique', icon: dCritique };
         break;
       default:
-        dieName = 'Inconnu'; // Au cas où
+        dieInfo = { name: 'Inconnu', icon: '' };
         break;
     }
+  
 
-    setSelectedDice([...selectedDice, dieName]);
+    setSelectedDice([...selectedDice, dieInfo]);
   };
 
   const rollDice = () => {
-    const rollResults = selectedDice.map((dieName) => {
-      switch (dieName) {
+    const rollResults = selectedDice.map((die) => {  // `die` est maintenant un objet, pas juste un nom
+      switch (die.name) {  // Utiliser `die.name` pour accéder au nom du dé
         case 'Malus':
           return Math.ceil(Math.random() * 6);
         case 'Neutre':
@@ -127,10 +132,8 @@ const DiceLauncherMini = ({ sendResultsToSocket }) => {
       </div>
       <p className={styles.selectedDice} id='selectedDices'>
        {selectedDice.map((die, index) => (
-         <span className={index < selectedDice.length - 1 ? "dice-text" : ""} key={index}>
-          {die}
-         </span>
-        ))}
+       <img key={index} src={die.icon} alt={die.name} className={`${index < selectedDice.length - 1 ? "dice-icon" : ""}`} />
+       ))}
       </p>
       <div className={styles.rollReset}>
         <button className={styles.rollResetButton} onClick={rollDice} id='roll'>Lancer</button>

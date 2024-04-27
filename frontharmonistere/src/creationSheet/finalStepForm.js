@@ -13,4 +13,4 @@ const FinalStepForm = ({formData, onFinalSubmit, previousStep}) => {
   )
 }
 
-export default FinalStepForm
+export default FinalStepForm;

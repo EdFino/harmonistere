@@ -1,7 +1,27 @@
 #subNavbarSheet {
     display: flex;
+    list-style-type: none;
+    align-items: center;
+    justify-content: start;
 }
 
 #subNavbarSheet li {
-    padding: 1em;
+    margin: 0 0.7em 0.2em 0;
+    color: #5EA7CE;
+    padding: 0.2em;
+}
+
+.stepFormWeak {
+    opacity: 0.55;
+}
+
+.stepFormBold {
+    opacity: 1;
+    font-weight: bold;
+}
+
+.sheetCreationArrow {
+    width: 5em;
+    position: relative;
+    top: 3px;
 }

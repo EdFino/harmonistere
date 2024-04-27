@@ -10,7 +10,7 @@
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    width: 20em;
+    width: 23em;
     height: auto;
     z-index: 5;
     padding: 25px;
@@ -23,8 +23,9 @@
 }
 
 .arrowDeco {
-    height: 1em;
+    height: 50px;
     padding: 1em;
+    z-index: 6;
 }
 
 #authFormText {
@@ -42,7 +43,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
+    font-size: 12px;
     font-style: italic;
     margin-top: 10px;
     margin-bottom: 0.8em;

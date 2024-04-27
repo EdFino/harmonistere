@@ -15,24 +15,24 @@ import './accountCreationPanel.css';
 const schema = yup.object({
 
     pseudoPlayer: yup.string()
-        .required('Attention : vous devez avoir un pseudo !')
-        .max(20, 'Attention : votre pseudo ne doit pas comporter plus de 20 caractères'),
+        .required('N\' oubliez pas votre pseudo !')
+        .max(20, 'Le pseudo ne doit pas dépasser 20 caractères'),
 
-    agePlayer: yup.number('Attention, veuillez ne mettre que des chiffres')
-        .positive('Attention : Votre âge doit être positif, bien évidemment...')
-        .integer('Attention, veuillez ne pas mettre de virgule')
-        .required('Attention : Vous devez mentionner votre âge.'),
+    agePlayer: yup.number()
+        .positive('Votre âge doit être positif...')
+        .integer('veuillez ne pas mettre de virgule')
+        .required('Vous devez mentionner votre âge.'),
 
     genderPlayer: yup.string()
-        .required('Attention : Vous devez sélectionner votre genre.'),
+        .required('N\'oubliez pas votre genre.'),
     
     emailPlayer: yup.string()
-        .email('Attention : Veuillez entrer une adresse email valide.')
-        .required('Attention : Vous devez mentionner votre adresse email.'),
+        .email('Veuillez entrer une adresse email valide.')
+        .required('Vous devez mentionner votre adresse email.'),
     
     passwordPlayer: yup.string()
-        .required('Attention : Vous devez entrer un mot de passe.')
-        .min(8, 'Attention : Votre mot de passe doit comporter au moins 8 caractères.'),
+        .required('Vous devez entrer un mot de passe.')
+        .min(8, 'Votre mot de passe doit comporter au moins 8 caractères.'),
 
   })
   .required()

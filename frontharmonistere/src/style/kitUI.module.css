@@ -38,10 +38,16 @@ body {
 .blueHarmonistereTitle {
   font-family: 'Righteous';
   color: #5EA7CE;
-  text-align: center;
   font-size: 3em;
+  text-align: center;
   position: relative;
   top: 1.2em;
+}
+
+.blueHarmonistereSheetTitle {
+    font-family: 'Righteous';
+    color: #5EA7CE;
+    font-size: 3em;
 }
 
 .buttonHarmonistere {
@@ -68,7 +74,7 @@ body {
     border-bottom: 1px solid rgba(35, 52, 99, 0.35);
     color: rgba(35, 52, 99, 0.59);
     background-color: #FAF4E7;
-    padding: 2px 0px;
+    padding: 1px 0px;
     margin: 0.7em 1em;
     min-width: 80%;
     font-size: 0.8em;
@@ -223,7 +229,15 @@ body {
     padding-left: 0;
     display: flex;
     position: absolute;
+    z-index: 5;
+}
+
+.beigeNavbarHarmonistere {
     color: #FAF4E7;
+}
+
+.blueNavbarHarmonistere {
+    color: #233463;
 }
 
 .navbarLiHarmonistere {

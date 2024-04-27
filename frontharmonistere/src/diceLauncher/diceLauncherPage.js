@@ -14,10 +14,11 @@ function DiceLauncherPage() {
                 <h1 className={styles.cornerLeftTitle}>
                 <a href="./">Harmonistère</a>
                 </h1>
-                <Navbar />
+                <Navbar
+                    light={true}/>
             </header>
             <div id='dlBackground' className={styles.diceLauncherBackground}>
-                <h2 id='dlTitle' className={styles.blueHarmonistereTitle}>Lanceur de dés</h2>
+                <h2 id='dlTitle' className={`${styles.prout} ${styles.blueHarmonistereTitle}`}>Lanceur de dés</h2>
                 <DiceLauncherMini />
             </div>
         </div>

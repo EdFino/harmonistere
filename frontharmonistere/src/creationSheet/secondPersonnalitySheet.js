@@ -69,7 +69,6 @@ const SecondPersonnalitySheet = ({formData, handleFormData, nextStep, previousSt
 
     return (
         <div id='secondChapter'>
-            <SubNavbarSheet/>
             <form id='secondChapterForm' onSubmit={handleSubmit(onSubmitTwo)}>
 
                 <label htmlFor='principalTrait'>Choisissez votre trait principal : </label>

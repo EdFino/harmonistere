@@ -46,8 +46,6 @@ function FirstIdentitySheet ({formData, handleFormData, nextStep}) {
 
         <div id='firstChapter'>
 
-            <SubNavbarSheet/>
-
             <form id='firstChapterForm' onSubmit={handleSubmit(onSubmitOne)}>
 
                 

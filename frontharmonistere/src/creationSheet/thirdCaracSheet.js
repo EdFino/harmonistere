@@ -52,7 +52,6 @@ console.log ('quel est le problème ?', errors)
 
     return (
         <div id='thirdChapter'>
-            <SubNavbarSheet/>
             <form id='thirdChapterForm' onSubmit={handleSubmit(onSubmitThree)}>
                 <div id='inne'>
                     <label htmlFor='bodyLevel'>Corps</label>

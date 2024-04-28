@@ -1,4 +1,16 @@
 #creationSheetAll {
+    color: #233463;
+    overflow-x: hidden;
+}
+
+#creationSheetAll input {
+    font-size: 1em;
+    background-color: #FEF2E2;
+}
+
+#creationSheetAll select {
+    font-size: 0.9em;
+    background-color: #FEF2E2;
 }
 
 #creationSheet {
@@ -25,8 +37,6 @@
 }
 
 
-
-
 .chapter {
     display: flex;
     justify-content: space-between;
@@ -48,6 +58,64 @@
     width: 30px;
     height: 30px;
     text-align: center;
+}
+
+.previousButton {
+    margin-top : 1em;
+    margin-right: 1em;
+    cursor: pointer;
+}
+
+.bottomFormButtons {
+    display: flex;
+    align-items: center;
+}
+
+.allChapters {
+    max-width: 60vw;
+    display: flex;
+    justify-content: space-between;
+}
+
+.chapterForm {
+    min-width: 23vw;
+    max-width: 30%;
+    min-height: 35vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.sideForm {
+    max-width: 30%;
+    margin-right: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.sideTextForm {
+    font-size: 0.85em;
+    padding: 2em;
+    background: #FFF9F0 0% 0% no-repeat padding-box;
+    border-radius: 30px;
+}
+
+.iconeQuestion {
+    position: relative;
+    bottom: 25px;
+    right: 15px;
+    width: 60px;
+}
+
+#benderDiv {
+    text-wrap: nowrap;
+}
+
+#benderBool {
+    font-size: 0.9em;
+    margin-top: 25px;
+    margin-right: 5px;
 }
 
 

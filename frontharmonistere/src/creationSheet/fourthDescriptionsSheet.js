@@ -3,6 +3,8 @@ import Popup from 'reactjs-popup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup" ;
+import kit from '../style/kitUI.module.css';
+import iconeQuestion from '../images/Icone questions.png';
 
 const schema = yup.object().shape({
     skills: yup.string(),
@@ -11,7 +13,7 @@ const schema = yup.object().shape({
     story: yup.string(),
 })
 
-function FourthDescriptionSheet ({formData, handleFormData, nextStep, previousStep}) {
+function FourthDescriptionSheet ({formData, handleFormData, nextStep, previousStep, buttonSize}) {
 
     const { register, handleSubmit, watch, formState: { errors, isSubmitted, isSubmitSuccessful } } = useForm({
         mode: 'onSubmit',
@@ -24,73 +26,66 @@ function FourthDescriptionSheet ({formData, handleFormData, nextStep, previousSt
     }
 
     return (
-        <div id='fourthChapter'>
-            <form id='fourthChapterForm' onSubmit={handleSubmit(onSubmitFour)}>
+        <div id='fourthChapter' className='allChapters'>
+            <form id='fourthChapterForm' className='chapterForm' onSubmit={handleSubmit(onSubmitFour)}>
 
-                <div id='textareaSkills' className='textarea-fourth'>
-                    <p>Vos compétences :</p>
                     <textarea
                         name='skills'
                         id='skills'
-                        placeholder='Ecrivez ici vos compétences'
-                        cols={75}
-                        rows={12}
+                        placeholder='Vos compétences'
+                        className={kit.textareaHarmonistere}
+                        cols={45}
+                        rows={3}
                         {...register("skills")}
                     />
                     {errors.skills && <><span className='invalid-feedback'>{errors.skills.message}</span><br/></>}
-                </div>
 
-
-                <div id='textareaPhysic' className='textarea-fourth'>
-                    <p>Votre physique :</p>
                     <textarea
                         name='physicDescription'
                         id='physicDescription'
-                        placeholder='Décrivez plus en détail le physique votre personnage'
-                        cols={75}
-                        rows={12}
+                        placeholder='Votre physique'
+                        className={kit.textareaHarmonistere}
+                        cols={45}
+                        rows={3}
                         {...register("physicDescription")}
                     />
                     {errors.physicDescription && <><span className='invalid-feedback'>{errors.physicDescription.message}</span><br/></>}
-                </div>
 
-                <div id='textareaPersonnality' className='textarea-fourth'>
-                    <p>Votre personnalité :</p>
                     <textarea
                         name='mentalDescription'
                         id='mentalDescription'
-                        placeholder='Décrivez ici la personnalité de votre personnage ; cette partie sera cachée par défaut aux autres joueurs'
-                        cols={75}
-                        rows={12}
+                        placeholder='Votre personnalité'
+                        className={kit.textareaHarmonistere}
+                        cols={45}
+                        rows={3}
                         {...register("mentalDescription")}
                     />
                     {errors.mentalDescription && <><span className='invalid-feedback'>{errors.mentalDescription.message}</span><br/></>}
 
-                </div>
-
-                <div id='textareaHistory' className='textarea-fourth'>
-                    <p>Votre histoire :</p>
                     <textarea
                         name='story'
                         id='story'
-                        placeholder="Cet espace est réservé à l'histoire de votre personnage ; cette partie sera cachée par défaut aux autres joueurs"
-                        cols={75}
-                        rows={12}
+                        placeholder="Votre histoire"
+                        className={kit.textareaHarmonistere}
+                        cols={45}
+                        rows={3}
                         {...register("story")}
                     />
                     {errors.story && <><span className='invalid-feedback'>{errors.story.message}</span><br/></>}
 
+                <div className="bottomFormButtons">
+                    <span className='previousButton' onClick={() => previousStep()}>Retour</span>
+                    <button type='submit' className={kit.buttonHarmonistere} style={{padding: `1em ${buttonSize}`}}>Terminer</button>
                 </div>
-
-                <button type='button' onClick={() => previousStep()}>Retour</button>
-                <button type='submit'>Suivant</button>
             </form>
-            <div className="sideTextForm">
-                <p>
-                    Vous n'êtes pas obligés de remplir ces champs pour la validation de la fiche.
-                    Mais si vous trouvez l'inspiration plus tard et que vous possédez un compte, vous pourrez toujours les modifier dans votre espace jeu.
-                </p>
-            </div> 
+
+            <div className="sideForm">
+                <div className='sideTextForm'>
+                    <p>Vous n'êtes pas obligés de remplir ces champs pour la validation de la fiche.
+                        Mais si vous trouvez l'inspiration plus tard et que vous possédez un compte, vous pourrez toujours les modifier dans votre espace jeu.</p>
+                </div>
+                <img className='iconeQuestion' src={iconeQuestion} alt="icone de point d'interrogation"/>
+            </div>
         </div>
     )
 }

@@ -18,6 +18,8 @@ function Home() {
     const [isLoading, setIsLoading] = useState(true);
     const [newAccount, setNewAccount] = useState (false);
 
+    const buttonSize = '80px';
+
     useEffect(() => {
         const timeout = setTimeout(() => {
             setIsLoading(false);
@@ -60,8 +62,8 @@ function Home() {
                         </li>
                     </ul>
                     <div id='connexionPanelTotal'>
-                        {newAccount && <AccountCreationPanel loadingAuthCreation={loadingAuthCreation} />}
-                        {!newAccount && !user && <ConnexionPanel loadingAccountCreation={loadingAccountCreation} />}
+                        {newAccount && <AccountCreationPanel loadingAuthCreation={loadingAuthCreation} buttonSize={buttonSize} />}
+                        {!newAccount && !user && <ConnexionPanel loadingAccountCreation={loadingAccountCreation} buttonSize={buttonSize} />}
                         {user && <WelcomePlayer />}
                     </div>
                 </div>

@@ -37,7 +37,7 @@ const schema = yup.object({
   })
   .required()
 
-function AccountCreationPanel({loadingAuthCreation}) {
+function AccountCreationPanel({loadingAuthCreation, buttonSize}) {
     const { register, handleSubmit, formState: { errors, isSubmitted, isSubmitSuccessful } } = useForm({
         mode: 'onSubmit',
         resolver: yupResolver(schema)
@@ -148,7 +148,7 @@ function AccountCreationPanel({loadingAuthCreation}) {
                     {...register("passwordPlayer")}/><br />
                 {errors.passwordPlayer && <><span className='invalid-feedback'>{errors.passwordPlayer.message}</span><br/></>}
 
-                <button className={style.buttonHarmonistere}type='submit'>S'inscrire</button>
+                <button className={style.buttonHarmonistere} style={{padding: `1em ${buttonSize}`}} type='submit'>S'inscrire</button>
 
                 <div id='bottomAccountForm'>
                     <p>Déjà un compte ?&nbsp;</p><span onClick={loadingAuthCreation} id='connectUnderline'>Connectez-vous</span>

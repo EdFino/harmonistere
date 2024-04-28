@@ -4,6 +4,9 @@ import Popup from 'reactjs-popup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup" ;
+import iconeQuestion from '../images/Icone questions.png';
+import kit from '../style/kitUI.module.css';
+import './firstIdentitySheet.css';
 
 const schema = yup.object().shape({
     /* characterAvatar: yup
@@ -30,7 +33,7 @@ const schema = yup.object().shape({
     })
 })
 
-function FirstIdentitySheet ({formData, handleFormData, nextStep}) {
+function FirstIdentitySheet ({formData, handleFormData, nextStep, buttonSize}) {
 
     const { register, handleSubmit, watch, formState: { errors, isSubmitted, isSubmitSuccessful } } = useForm({
         mode: 'onSubmit',
@@ -42,56 +45,70 @@ function FirstIdentitySheet ({formData, handleFormData, nextStep}) {
         nextStep();
     }
 
+    console.log ('je suis button size : ', buttonSize);
+
     return (
 
-        <div id='firstChapter'>
+        <div id='firstChapter' className='allChapters'>
 
-            <form id='firstChapterForm' onSubmit={handleSubmit(onSubmitOne)}>
+            <form id='firstChapterForm' className='chapterForm' onSubmit={handleSubmit(onSubmitOne)}>
 
                 
                 {/* <label htmlFor='characterAvatar'>Votre avatar : </label>
                 <input type='file' id='characterAvatar' name='characterAvatar' {...register("characterAvatar")}/><br/>
                 {errors.characterAvatar && <><span className='invalid-feedback'>{errors.characterAvatar.message}</span><br/></>} */}
 
-                <label htmlFor='characterName'>Le nom de votre personnage : </label>
-                <input type='text' id='characterName' name='characterName' {...register("characterName")}/><br/>
+                <input
+                    type='text'
+                    id='characterName'
+                    name='characterName'
+                    className={kit.inputHarmonistere}
+                    placeholder="Le nom de votre personnage"
+                    defaultValue='Tintin'
+                    {...register("characterName")}/><br/>
                 {errors.characterName && <><span className='invalid-feedback'>{errors.characterName.message}</span><br/></>}
 
-                <label htmlFor='characterAge'>L'âge de votre personnage : </label>
-                <input type='number' id='characterAge' name='characterAge' {...register("characterAge")} /><br/>
+                <input
+                    type='number'
+                    id='characterAge'
+                    name='characterAge'
+                    className={kit.inputHarmonistere}
+                    placeholder="L'âge de votre personnage"
+                    defaultValue='53'
+                    {...register("characterAge")} /><br/>
                 {errors.characterAge && <><span className='invalid-feedback'>{errors.characterAge.message}</span><br/></>}
 
-                <label htmlFor='benderOrNot'>Votre personnage maîtrise-t-il un élément ? </label>
-                <input type='checkbox' id='benderOrNot' name='benderOrNot' {...register("benderOrNot")} /><br/>
+                <div id='benderDiv'>
+                    <label htmlFor='benderOrNot' id='benderBool'>Votre personnage maîtrise-t-il un élément ? </label>
+                    <input type='checkbox' id='benderOrNot' name='benderOrNot' {...register("benderOrNot")} /><br/>
+                </div>
                 
                 <div id="disappearBending" className={watch('benderOrNot') ? 'appear' : "disappear"}>
-                    <label htmlFor='benderSelect'>Choisissez votre élément : </label>
-                    <select id="benderSelect" name='benderSelect' {...register("benderSelect")}>
-                        <option value=''>Choisissez votre élément</option>
-                        <option value="Terre">Terre</option>
-                        <option value="Feu">Feu</option>
-                        <option value="Air">Air</option>
-                        <option value="Eau">Eau</option>
-                    </select>
+                    <select
+                        id="benderSelect"
+                        name='benderSelect'
+                        className={kit.inputSelectHarmonistere} 
+                        {...register("benderSelect")}>
+
+                        <option value='' disabled selected hidden>Choisissez votre élément</option>
+                        <option className={kit.optionHarmonistere} value="Terre">Terre</option>
+                        <option className={kit.optionHarmonistere} value="Feu">Feu</option>
+                        <option className={kit.optionHarmonistere} value="Air">Air</option>
+                        <option className={kit.optionHarmonistere} value="Eau">Eau</option>
+                    </select><br/>
+                    {errors.benderSelect && <><span className='invalid-feedback'>{errors.benderSelect.message}</span><br/></>}
+
                 </div>
-                <button type='submit'>Suivant</button>
+                <button className={kit.buttonHarmonistere} style={{padding: `1em ${buttonSize}`}} type='submit'>Étape suivante</button>
             </form>
-                    
-            <div className="sideTextForm">
-                <p>Voici la partie la plus simple ! Posez simplement les informations de votre personnage, vous ne devriez avoir aucun souci.</p>
+            
+            <div className="sideForm">
+                <div className='sideTextForm'>
+                    <p>Voici la partie la plus simple ! Posez simplement les informations de votre personnage, vous ne devriez avoir aucun souci.</p>
+                </div>
+                <img className='iconeQuestion' src={iconeQuestion} alt="icone de point d'interrogation"/>
             </div>
 
-            <Popup trigger=
-            {
-            <div id='firstHelp' className='helpPopup'>
-            ?
-            </div>}
-            position="left center">
-            <p>Vous ne devriez pas avoir trop de soucis pour cette partie. Sachez cependant que si vous décidez de ne pas joueur
-                un harmonistère, vous ne serez pas pénalisés au niveau des règles, elles ont été écrites avec l'idée que tout le monde
-                soit sur un pied d'égalité, même les personnages qui ne sont pas doués pour l'action.
-            </p>
-            </Popup>
         </div>
     )
 }

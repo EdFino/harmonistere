@@ -37,6 +37,8 @@ function CreationSheet () {
         setStepForm(stepForm -1);
     }
 
+    const buttonSize = '35px';
+
   const onFinalSubmit = async (formData) => {
 
     try {
@@ -82,6 +84,7 @@ const closeModalSheet = () => {
                         formData={formData}
                         handleFormData={handleFormData}
                         nextStep={nextStep}
+                        buttonSize={buttonSize}
                     />}
                     {stepForm === 2 &&
                     <SecondPersonnalitySheet
@@ -89,6 +92,7 @@ const closeModalSheet = () => {
                         handleFormData={handleFormData}
                         nextStep={nextStep}
                         previousStep={previousStep}
+                        buttonSize={buttonSize}
                     />}
                     {stepForm === 3 &&
                     <ThirdCaracSheet
@@ -96,6 +100,7 @@ const closeModalSheet = () => {
                         handleFormData={handleFormData}
                         nextStep={nextStep}
                         previousStep={previousStep}
+                        buttonSize={buttonSize}
                     />}
                     {stepForm === 4 &&
                     <FourthDescriptionSheet
@@ -103,12 +108,14 @@ const closeModalSheet = () => {
                         handleFormData={handleFormData}
                         nextStep={nextStep}
                         previousStep={previousStep}
+                        buttonSize={buttonSize}
                     />}
                     {stepForm === 5 &&
                     <FinalStepForm
                         formData={formData}
                         onFinalSubmit={onFinalSubmit}
                         previousStep={previousStep}
+                        buttonSize={buttonSize}
                     />}
                 </div>
             </div>

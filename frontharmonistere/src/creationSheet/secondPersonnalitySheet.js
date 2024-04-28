@@ -4,6 +4,9 @@ import Popup from 'reactjs-popup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup" ;
+import kit from '../style/kitUI.module.css';
+import iconeQuestion from '../images/Icone questions.png';
+
 
 const schema = yup.object().shape({
     principalTrait: yup.string().required ("Attention : vous devez choisir un trait principal à votre personnage"),
@@ -12,7 +15,7 @@ const schema = yup.object().shape({
     oppositeTrait: yup.string().required ("Attention : vous devez choisir un trait opposé à votre personnage"),
 })
 
-const SecondPersonnalitySheet = ({formData, handleFormData, nextStep, previousStep}) => {
+const SecondPersonnalitySheet = ({formData, handleFormData, nextStep, previousStep, buttonSize}) => {
 
     const { register, handleSubmit, watch, setValue, formState: { errors, isSubmitted, isSubmitSuccessful } } = useForm({
         mode: 'onSubmit',
@@ -68,73 +71,55 @@ const SecondPersonnalitySheet = ({formData, handleFormData, nextStep, previousSt
     }
 
     return (
-        <div id='secondChapter'>
-            <form id='secondChapterForm' onSubmit={handleSubmit(onSubmitTwo)}>
+        <div id='secondChapter' className='allChapters'>
+            <form id='secondChapterForm' className='chapterForm' onSubmit={handleSubmit(onSubmitTwo)}>
 
-                <label htmlFor='principalTrait'>Choisissez votre trait principal : </label>
-                <select id="principalTrait" name="principalTrait" {...register("principalTrait")}>
-                    <option value=''>Choisissez un élément dans la liste : </option>
+                <select id="principalTrait" name="principalTrait"  className={kit.inputSelectHarmonistere} {...register("principalTrait")}>
+                    <option value='' disabled selected hidden>Votre trait principal</option>
                     {personnalityElementsList.map((element, index) => (
-                        <option key={index} value={element}>{element}</option>
+                        <option key={index} value={element} className={kit.optionHarmonistere}>{element}</option>
                     ))}
                 </select><br/>
                 {errors.principalTrait && <><span className='invalid-feedback'>{errors.principalTrait.message}</span><br/></>}
 
-                <label htmlFor='ascendantTrait'>Choisissez votre ascendant : </label>
-                <select id="ascendantTrait" name="ascendantTrait" {...register("ascendantTrait")}>
-                    <option value=''>Choisissez un élément dans la liste : </option>
+                <select id="ascendantTrait" name="ascendantTrait" className={kit.inputSelectHarmonistere} {...register("ascendantTrait")}>
+                    <option value='' disabled selected hidden>Votre trait ascendant</option>
                     {availableElementsAscendant.map((element, index) => (
-                        <option key={index} value={element}>{element}</option>
+                        <option key={index} value={element} className={kit.optionHarmonistere}>{element}</option>
                     ))}
                 </select><br/>
                 {errors.ascendantTrait && <><span className='invalid-feedback'>{errors.ascendantTrait.message}</span><br/></>}
 
-                <label htmlFor='neutralTrait'>Choisissez votre trait neutre : </label>
-                <select id="neutralTrait" name="neutralTrait" {...register("neutralTrait")}>
-                    <option value=''>Choisissez un élément dans la liste : </option>
+                <select id="neutralTrait" name="neutralTrait" className={kit.inputSelectHarmonistere} {...register("neutralTrait")}>
+                    <option value='' disabled selected hidden>Votre trait neutre</option>
                     {availableElementsNeutral.map((element, index) => (
-                        <option key={index} value={element}>{element}</option>
+                        <option key={index} value={element} className={kit.optionHarmonistere}>{element}</option>
                     ))}
                 </select><br/>
                 {errors.neutralTrait && <><span className='invalid-feedback'>{errors.neutralTrait.message}</span><br/></>}
 
-                <label htmlFor='oppositeTrait'>Choisissez votre trait contraire : </label>
-                <select id="oppositeTrait" name="oppositeTrait" {...register("oppositeTrait")}>
-                    <option value=''>Choisissez un élément dans la liste : </option>
+                <select id="oppositeTrait" name="oppositeTrait" className={kit.inputSelectHarmonistere} {...register("oppositeTrait")}>
+                    <option value='' disabled selected hidden>Votre trait contraire : </option>
                     {availableElementsOpposite.map((element, index) => (
-                        <option key={index} value={element}>{element}</option>
+                        <option key={index} value={element} className={kit.optionHarmonistere}>{element}</option>
                     ))}
                 </select><br/>
                 {errors.oppositeTrait && <><span className='invalid-feedback'>{errors.oppositeTrait.message}</span><br/></>}
 
-                <button type='button' onClick={resetCharac}>Réinitialiser les valeurs</button>
-                <button type='button' onClick={() => previousStep()}>Retour</button>
-                <button type='submit'>Suivant</button>
+                <div className="bottomFormButtons">
+                    <span className='previousButton' onClick={() => previousStep()}>Retour</span>
+                    <button type='submit' className={kit.buttonHarmonistere} style={{padding: `1em ${buttonSize}`}}>Étape suivante</button>
+                </div>
 
             </form>
 
-            <div className="sideTextForm">
+            <div className="sideForm">
+                <div className='sideTextForm'>
                 <p>Choisissez ici la personnalité de votre personnage. Vous aurez quatre champs d'importance décroissante
                 (Principal, Ascendant, Neutre, Trait contraire) sur lequel vous pourrez poser une fois chaque élément.</p>
+                </div>
+                <img className='iconeQuestion' src={iconeQuestion} alt="icone de point d'interrogation"/>
             </div>
-
-            <Popup trigger=
-            {
-            <div id='secondHelp' className='helpPopup'>
-                ?
-            </div>}
-            position="left center">
-                <p>
-                    Principal : Le trait le plus important de votre personnage, l'élément qui le caractérise le plus, l'état émotionnel dans lequel il se sent le plus à l'aise.<br/>
-                    Ascendant : Le trait secondaire qui le définit selon une relative importance.<br/>
-                    Neutre : Correspond à l'élément avec lequel il n'a pas énormément d'affinités. Votre personnage n'est pas connu pour réagir ainsi.<br/>
-                    Trait opposé : Votre personnage est tout sauf cet élément. C'est plutôt inhabituel de le voir ainsi. Comprenez que l'élément que vous poserez n'est pas obligatoirement l'inverse de celui que vous aurez mis en principal.<br/>
-                    Terre : L'élément de la résilience, du rationnalisme, du concret, de la force tranquille, du calme, de l'ordre.
-                    Feu : L'élément de la passion, de la force, du courage, de la vitalité, de l'intimidation, du défi.
-                    Air : L'élément de la spiritualité, de l'introspection, de l'adaptation, du voyage, de la curiosité.
-                    Eau : L'élément du lien, de l'empathie, de la diplomatie, du changement, de la vie, de l'amour.
-                </p>
-            </Popup>
         </div>
 
         

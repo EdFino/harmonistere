@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @font-face {
   font-family: 'Righteous';
-  src: url('../fonts/RIGHTEOUS/Righteous.ttf') format('truetype');
+  src: url('../style/fonts/RIGHTEOUS/Righteous.ttf') format('truetype');
 }
 
 * {
@@ -55,10 +55,10 @@ body {
     border-radius: 35px;
     color: #233463;
     font-weight: bold;
-    min-width: 81%;
     margin-top: 1.5em;
     margin-bottom: 5px;
-    padding: 1em 5.8em;
+    padding-top: 1em;
+    padding-bottom: 1em;
     border: none;
     cursor: pointer;
     text-align: center;
@@ -75,7 +75,7 @@ body {
     color: rgba(35, 52, 99, 0.59);
     background-color: #FAF4E7;
     padding: 1px 0px;
-    margin: 0.7em 1em;
+    margin: 0.7em 0em;
     min-width: 80%;
     font-size: 0.8em;
 }
@@ -107,6 +107,14 @@ body {
 
 .inputHarmonistere:focus {
     outline: none;
+}
+
+.textareaHarmonistere {
+    background-color: #FFF9F0;
+    border-radius: 30px;
+    padding: 1em;
+    margin-top: 1.5em;
+    border: none;
 }
 
 .diceLauncherBackground {

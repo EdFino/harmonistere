@@ -8,7 +8,7 @@ import style from '../style/kitUI.module.css';
 import './connexionPanel.css';
 
 
-function ConnexionPanel ({loadingAccountCreation}) {
+function ConnexionPanel ({loadingAccountCreation, buttonSize}) {
 
     const [email, setEmail] = useState ('');
     const [password, setPassword] = useState ('');
@@ -39,7 +39,7 @@ function ConnexionPanel ({loadingAccountCreation}) {
 
                     <input type='password' id='passwordPlayer' className={style.inputHarmonistere} name='passwordPlayer' placeholder='Mot de passe' onChange={(e) => setPassword(e.target.value)} required /><br/>
 
-                    <button id='buttonAuthForm' className={style.buttonHarmonistere} type='submit'>Se connecter</button><br/>
+                    <button id='buttonAuthForm' className={style.buttonHarmonistere} style={{paddingLeft:buttonSize, paddingRight:buttonSize}} type='submit'>Se connecter</button><br/>
                     <div id='bottomAuthForm'>
                     <Link to='/resetPassword'><span id='resetUnderline'>Mot de passe oublié ?</span></Link>
                         <div id='linkNewAccount'>

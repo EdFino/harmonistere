@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/harmoBeta/static/css/main.247ae5aa.css",
+    "main.js": "/harmoBeta/static/js/main.bae9c4ca.js",
+    "static/js/453.0f882cee.chunk.js": "/harmoBeta/static/js/453.0f882cee.chunk.js",
+    "static/media/harmonistereHome.jpg": "/harmoBeta/static/media/harmonistereHome.ff0c85cc5bb7dd1e536a.jpg",
+    "static/media/harmonistereCharacter.jpg": "/harmoBeta/static/media/harmonistereCharacter.2ba687791e9d60fd1077.jpg",
+    "static/media/harmonistereColumnTwo.jpg": "/harmoBeta/static/media/harmonistereColumnTwo.845522319b9b23ec8791.jpg",
+    "static/media/harmonistereCharacter2.jpg": "/harmoBeta/static/media/harmonistereCharacter2.84603b10d3b5ecbd8d8c.jpg",
+    "static/media/harmonistereError.jpg": "/harmoBeta/static/media/harmonistereError.89535c74444c60e3749e.jpg",
+    "static/media/harmonistereColumn.jpg": "/harmoBeta/static/media/harmonistereColumn.fc2ae961deebbe7904e2.jpg",
+    "static/media/logo.jpg": "/harmoBeta/static/media/logo.dd0e70cf1d31c777f68f.jpg",
+    "index.html": "/harmoBeta/index.html",
+    "main.247ae5aa.css.map": "/harmoBeta/static/css/main.247ae5aa.css.map",
+    "main.bae9c4ca.js.map": "/harmoBeta/static/js/main.bae9c4ca.js.map",
+    "453.0f882cee.chunk.js.map": "/harmoBeta/static/js/453.0f882cee.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.247ae5aa.css",
+    "static/js/main.bae9c4ca.js"
+  ]
+}

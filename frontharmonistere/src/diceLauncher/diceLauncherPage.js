@@ -11,6 +11,7 @@ function DiceLauncherPage() {
     return (
         <div id='fullContainer' className={styles.homeBackground}>
             <header>
+                <Navbar />
                 <h1 className={styles.cornerLeftTitle}>
                 <a href="./">Harmonistère</a>
                 </h1>

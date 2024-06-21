@@ -45,7 +45,7 @@ function Home() {
                 <img id="homeArt" src={harmonistereHome} alt="Ecran de la page principale" />
                 <img id="degradeArt" src={degradeHome} alt="Dégradé de la page principale" />
                 <img id="greatTitleHarmonistere" src={greatTitle} alt="Grand titre harmonistère" />
-                    <ul id="homeNavbar" className={kit.navbarHarmonistere}>
+                    <ul id="homeNavbar" className={`${kit.navbarHarmonistere} ${kit.beigeNavbarHarmonistere}`}>
                         {user && <li id='deconnectLi' className={kit.navbarLiHarmonistere} onClick={logOut}>Déconnexion</li>}
                         {user && <li className={kit.navbarLiHarmonistere}>
                             <NavLink exact to="/univers" activeclassName="active">Univers</NavLink>

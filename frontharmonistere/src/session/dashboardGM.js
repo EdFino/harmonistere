@@ -17,6 +17,7 @@ function DashboardGM ({charactersInSession}) {
     const { id } =useParams();
 
     const urlSession = `http://localhost:5038/backharmonistere/deleteSession/${id}`;
+    const urlSessionRejoin = `http://localhost:5038/backharmonistere/rejoinSession`;
 
     const closeDeleteSessionModal = () => {
         setShowDeleteSessionModal(false);
@@ -85,7 +86,7 @@ function DashboardGM ({charactersInSession}) {
                 {(close) => (
                     <div className='modal'>
                         <div className='content'>
-                            <p>Si vous souhaitez inviter vos amis, donnez-leur ce lien :<br/> {urlSession} </p>
+                            <p>Si vous souhaitez inviter vos amis, donnez-leur ce lien :<br/> {id} </p>
                             <button type='button' onClick={closeAddPlayersModal}>Annuler l'opération</button>
                         </div>
                     </div>

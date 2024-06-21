@@ -112,7 +112,7 @@ function PlayerSpace () {
     function handleRejoinSession() {
         try {
             const updatedFormRejoinSession = {
-                sessionID: rejoinSessionName, // Utilisez la variable qui contient l'ID de la session à rejoindre
+                sessionID: rejoinSessionName,
                 playerCharacter: characterNewSession,
                 playerEmail: user.email
             };
@@ -224,7 +224,7 @@ function PlayerSpace () {
                                 <label htmlFor='characterNewSession'>Nom du personnage qui participera à cette aventure : </label>
                                 <select id='characterNewSession' value={characterNewSession} onChange={handleCharacternewSession} name='characterNewSession'>
                                     {characterList.map((character, index) => (
-                                        <option key={index} value={character.name}>{character.name}</option>
+                                        <option key={index} value={character.characterName}>{character.characterName}</option>
                             ))}
                                 </select>
                                 <button type='button' onClick={handleRejoinSession}>Rejoindre votre session</button>

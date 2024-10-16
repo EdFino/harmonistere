@@ -20,6 +20,10 @@
     font-weight: bold;
 }
 
+.invisibleMarks {
+    display: none;
+}
+
 .sheetCreationArrow {
     width: 5em;
     position: relative;
@@ -28,4 +32,16 @@
 
 #chapters {
     margin-top: 3em;
+}
+
+@media only screen and (min-width: 0px) and (max-width:767px) {
+
+    .stepFormWeak, .sheetCreationArrow {
+        display: none;
+    }
+
+    .invisibleMarks {
+        display: inline;
+        color: rgba(35, 52, 99, 1);
+    }
 }

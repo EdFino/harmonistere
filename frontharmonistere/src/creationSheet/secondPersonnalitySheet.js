@@ -113,13 +113,6 @@ const SecondPersonnalitySheet = ({formData, handleFormData, nextStep, previousSt
 
             </form>
 
-            <div className="sideForm">
-                <div className='sideTextForm'>
-                <p>Choisissez ici la personnalité de votre personnage. Vous aurez quatre champs d'importance décroissante
-                (Principal, Ascendant, Neutre, Trait contraire) sur lequel vous pourrez poser une fois chaque élément.</p>
-                </div>
-                <img className='iconeQuestion' src={iconeQuestion} alt="icone de point d'interrogation"/>
-            </div>
         </div>
 
         

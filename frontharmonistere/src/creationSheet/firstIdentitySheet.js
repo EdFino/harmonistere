@@ -1,5 +1,6 @@
 import React from 'react';
 import SubNavbarSheet from './subNavbarSheet';
+import helpSection from './helpSection';
 import Popup from 'reactjs-popup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -33,7 +34,7 @@ const schema = yup.object().shape({
     })
 })
 
-function FirstIdentitySheet ({formData, handleFormData, nextStep, buttonSize}) {
+function FirstIdentitySheet ({formData, handleFormData, nextStep, buttonSize, stepForm}) {
 
     const { register, handleSubmit, watch, formState: { errors, isSubmitted, isSubmitSuccessful } } = useForm({
         mode: 'onSubmit',
@@ -49,7 +50,7 @@ function FirstIdentitySheet ({formData, handleFormData, nextStep, buttonSize}) {
 
     return (
 
-        <div id='firstChapter' className='allChapters'>
+        <div id='firstChapter'>
 
             <form id='firstChapterForm' className='chapterForm' onSubmit={handleSubmit(onSubmitOne)}>
 
@@ -102,12 +103,12 @@ function FirstIdentitySheet ({formData, handleFormData, nextStep, buttonSize}) {
                 <button className={kit.buttonHarmonistere} style={{padding: `1em ${buttonSize}`}} type='submit'>Étape suivante</button>
             </form>
             
-            <div className="sideForm">
+            {/* <div className="sideForm">
                 <div className='sideTextForm'>
                     <p>Voici la partie la plus simple ! Posez simplement les informations de votre personnage, vous ne devriez avoir aucun souci.</p>
                 </div>
                 <img className='iconeQuestion' src={iconeQuestion} alt="icone de point d'interrogation"/>
-            </div>
+            </div> */}
 
         </div>
     )

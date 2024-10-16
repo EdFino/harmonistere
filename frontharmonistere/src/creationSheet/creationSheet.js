@@ -12,6 +12,7 @@ import FirstIdentitySheet from './firstIdentitySheet';
 import SecondPersonnalitySheet from './secondPersonnalitySheet';
 import ThirdCaracSheet from './thirdCaracSheet';
 import FourthDescriptionSheet from './fourthDescriptionsSheet';
+import HelpSection from './helpSection';
 import FinalStepForm from './finalStepForm';
 import creationSheetImage from '../images/Image 2.png';
 import creationSheetBackground from '../images/Fond fiche perso.png';
@@ -65,11 +66,16 @@ const closeModalSheet = () => {
 
     return (
         <div id='creationSheetAll'>
-            <img src={creationSheetImage} id='imageLeftSheet' alt='Illustration à gauche de la création de fiche' />
-            <img src={creationSheetBackground} id='imageRightSheet' alt='Fond pour la création de la fiche'/>
+            <div id='creationSheetBothImages'>
+                <img src={creationSheetImage} id='imageLeftSheet' alt='Illustration à gauche de la création de fiche' />
+                <img src={creationSheetBackground} id='imageRightSheet' alt='Fond pour la création de la fiche'/>
+            </div>
             <Navbar
-                light={false}/>
-            <h1 className={kit.cornerLeftTitle}>Harmonistère</h1>
+                light={false}
+                />
+
+            
+            <h1 id="harmonistereCornerSheet" className={kit.cornerLeftTitle}>Harmonistère</h1>
 
             <div id='creationSheet'>
 
@@ -78,6 +84,8 @@ const closeModalSheet = () => {
             <SubNavbarSheet
                 stepForm = {stepForm}/>
 
+                <div className = "allChapters">
+
                 <div id="chapters">
                     {stepForm === 1 &&
                     <FirstIdentitySheet
@@ -85,6 +93,7 @@ const closeModalSheet = () => {
                         handleFormData={handleFormData}
                         nextStep={nextStep}
                         buttonSize={buttonSize}
+                        stepForm = {stepForm}
                     />}
                     {stepForm === 2 &&
                     <SecondPersonnalitySheet
@@ -118,6 +127,12 @@ const closeModalSheet = () => {
                         buttonSize={buttonSize}
                     />}
                 </div>
+                <HelpSection
+                    stepForm = {stepForm}/>
+                </div>
+
+
+
             </div>
 
     <Popup open={showModalSheet} onClose={closeModalSheet} modal nested closeOnDocumentClick={false}>

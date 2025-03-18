@@ -59,46 +59,53 @@ function FirstIdentitySheet ({formData, handleFormData, nextStep, buttonSize, st
                 <input type='file' id='characterAvatar' name='characterAvatar' {...register("characterAvatar")}/><br/>
                 {errors.characterAvatar && <><span className='invalid-feedback'>{errors.characterAvatar.message}</span><br/></>} */}
 
-                <input
-                    type='text'
-                    id='characterName'
-                    name='characterName'
-                    className={kit.inputHarmonistere}
-                    placeholder="Le nom de votre personnage"
-                    defaultValue='Tintin'
-                    {...register("characterName")}/><br/>
-                {errors.characterName && <><span className='invalid-feedback'>{errors.characterName.message}</span><br/></>}
-
-                <input
-                    type='number'
-                    id='characterAge'
-                    name='characterAge'
-                    className={kit.inputHarmonistere}
-                    placeholder="L'âge de votre personnage"
-                    defaultValue='53'
-                    {...register("characterAge")} /><br/>
-                {errors.characterAge && <><span className='invalid-feedback'>{errors.characterAge.message}</span><br/></>}
-
-                <div id='benderDiv'>
-                    <label htmlFor='benderOrNot' id='benderBool'>Votre personnage maîtrise-t-il un élément ? </label>
-                    <input type='checkbox' id='benderOrNot' name='benderOrNot' {...register("benderOrNot")} /><br/>
+                <div className={kit.divInputHarmonistere}>
+                    <input
+                        type='text'
+                        id='characterName'
+                        name='characterName'
+                        className={kit.inputHarmonistere}
+                        placeholder="Le nom de votre personnage"
+                        defaultValue='Tintin'
+                        {...register("characterName")}/><br/>
+                    {errors.characterName && <><span className='invalid-feedback'>{errors.characterName.message}</span><br/></>}
                 </div>
                 
-                <div id="disappearBending" className={watch('benderOrNot') ? 'appear' : "disappear"}>
-                    <select
-                        id="benderSelect"
-                        name='benderSelect'
-                        className={kit.inputSelectHarmonistere} 
-                        {...register("benderSelect")}>
 
-                        <option value='' disabled selected hidden>Choisissez votre élément</option>
-                        <option className={kit.optionHarmonistere} value="Terre">Terre</option>
-                        <option className={kit.optionHarmonistere} value="Feu">Feu</option>
-                        <option className={kit.optionHarmonistere} value="Air">Air</option>
-                        <option className={kit.optionHarmonistere} value="Eau">Eau</option>
-                    </select><br/>
-                    {errors.benderSelect && <><span className='invalid-feedback'>{errors.benderSelect.message}</span><br/></>}
+                <div className={kit.divInputHarmonistere}>
+                    <input
+                        type='number'
+                        id='characterAge'
+                        name='characterAge'
+                        className={kit.inputHarmonistere}
+                        placeholder="L'âge de votre personnage"
+                        defaultValue='53'
+                        {...register("characterAge")} /><br/>
+                    {errors.characterAge && <><span className='invalid-feedback'>{errors.characterAge.message}</span><br/></>}
+                </div>
 
+                <div className={kit.divInputHarmonistere}>
+                    <div id='benderDiv'>
+                        <label htmlFor='benderOrNot' id='benderBool'>Votre personnage maîtrise-t-il un élément ? </label>
+                        <input type='checkbox' id='benderOrNot' name='benderOrNot' {...register("benderOrNot")} /><br/>
+                    </div>
+                    
+                    <div id="disappearBending" className={watch('benderOrNot') ? 'appear' : "disappear"}>
+                        <select
+                            id="benderSelect"
+                            name='benderSelect'
+                            className={kit.inputSelectHarmonistere} 
+                            {...register("benderSelect")}>
+
+                            <option value='' disabled selected hidden>Choisissez votre élément</option>
+                            <option className={kit.optionHarmonistere} value="Terre">Terre</option>
+                            <option className={kit.optionHarmonistere} value="Feu">Feu</option>
+                            <option className={kit.optionHarmonistere} value="Air">Air</option>
+                            <option className={kit.optionHarmonistere} value="Eau">Eau</option>
+                        </select><br/>
+                        {errors.benderSelect && <><span className='invalid-feedback'>{errors.benderSelect.message}</span><br/></>}
+
+                    </div>
                 </div>
                 <button className={kit.buttonHarmonistere} style={{padding: `1em ${buttonSize}`}} type='submit'>Étape suivante</button>
             </form>

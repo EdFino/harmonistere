@@ -1,14 +1,18 @@
-// config/db.js
-const { MongoClient } = require('mongodb');
-const CONNEXION_STRING = process.env.MONGO_URI || "mongodb://localhost:27017";
-const DATABASE_NAME = "harmonistere";
-let db;
+require('dotenv').config();
+const mongoose = require('mongoose');
 
-MongoClient.connect(CONNEXION_STRING)
-    .then(client => {
-        db = client.db(DATABASE_NAME);
-        console.log('Connected to MongoDB');
-    })
-    .catch(error => console.error('Error connecting to MongoDB:', error));
+const connectDB = async () => {
+    try {
+        await mongoose.connect('mongodb+srv://edfino:1f0ywbpR5WU6sR8F@fino.tlj3u2l.mongodb.net/harmonistere?retryWrites=true&w=majority&appName=fino'
+            , {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
+        console.log("✅ Connexion réussie à MongoDB !");
+    } catch (error) {
+        console.error("❌ Erreur de connexion MongoDB:", error);
+        process.exit(1);
+    }
+};
 
-module.exports = db;
+module.exports = connectDB;

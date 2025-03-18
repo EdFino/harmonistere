@@ -3,41 +3,33 @@ import axios from 'axios';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import { Link } from 'react-router-dom';
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, registerUser } from "../assets/firebase";
-import { useForm } from 'react-hook-form'
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup" ;
+import { useForm } from 'react-hook-form';
+import { registerUser } from '../assets/firebase';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import DOMPurify from 'dompurify';
 import style from '../style/kitUI.module.css';
 import './accountCreationPanel.css';
 
 const schema = yup.object({
-
     pseudoPlayer: yup.string()
-        .required('N\' oubliez pas votre pseudo !')
+        .required('N\'oubliez pas votre pseudo !')
         .max(20, 'Le pseudo ne doit pas dépasser 20 caractères'),
-
     agePlayer: yup.number()
         .positive('Votre âge doit être positif...')
-        .integer('veuillez ne pas mettre de virgule')
+        .integer('Veuillez ne pas mettre de virgule')
         .required('Vous devez mentionner votre âge.'),
-
     genderPlayer: yup.string()
         .required('N\'oubliez pas votre genre.'),
-    
     emailPlayer: yup.string()
         .email('Veuillez entrer une adresse email valide.')
         .required('Vous devez mentionner votre adresse email.'),
-    
     passwordPlayer: yup.string()
         .required('Vous devez entrer un mot de passe.')
         .min(8, 'Votre mot de passe doit comporter au moins 8 caractères.'),
+}).required();
 
-  })
-  .required()
-
-function AccountCreationPanel({loadingAuthCreation, buttonSize}) {
+function AccountCreationPanel({ loadingAuthCreation, buttonSize }) {
     const { register, handleSubmit, formState: { errors, isSubmitted, isSubmitSuccessful } } = useForm({
         mode: 'onSubmit',
         resolver: yupResolver(schema)
@@ -45,36 +37,39 @@ function AccountCreationPanel({loadingAuthCreation, buttonSize}) {
 
     async function isEmailUnique(email) {
         try {
-            const response = await axios.get(`http://localhost:5038/backharmonistere/checkEmail?email=${email}`);
+            const response = await axios.get(`http://localhost:5038/api/players/checkEmail?email=${email}`);
             return response.data.isUnique;
         } catch (error) {
             console.error('Erreur lors de la vérification de l\'unicité de l\'e-mail :', error);
             return false;
         }
     }
-    
+
     const onSubmit = async (data) => {
-    console.log(data);
+        console.log(data);
 
-    try {
-        const emailIsUnique = await isEmailUnique(data.emailPlayer);
-        if (!emailIsUnique) {
-            alert('Cet e-mail est déjà utilisé.');
-            return;
-        }
+        try {
+            const emailIsUnique = await isEmailUnique(data.emailPlayer);
+            if (!emailIsUnique) {
+                alert('Cet e-mail est déjà utilisé.');
+                return;
+            }
 
-        const { passwordPlayer, ...dataWithoutPassword } = data;
+            const sanitizedData = {
+            pseudoPlayer: DOMPurify.sanitize(data.pseudoPlayer),
+            agePlayer: DOMPurify.sanitize(data.agePlayer),
+            genderPlayer: DOMPurify.sanitize(data.genderPlayer),
+            emailPlayer: DOMPurify.sanitize(data.emailPlayer),
+            };
 
-        data.pseudoPlayer = DOMPurify.sanitize(data.pseudoPlayer);
-        data.emailPlayer = DOMPurify.sanitize(data.emailPlayer);
-        data.passwordPlayer = DOMPurify.sanitize(data.passwordPlayer);
-
-            await axios.post('http://localhost:5038/backharmonistere/accountCreation', dataWithoutPassword);
+            await axios.post('http://localhost:5038/api/players/createAccount', sanitizedData);
             setShowModal(true);
+            console.log('Voici les données que tu as envoyé ou tenté d\'envoyer :', sanitizedData);
+
             await registerUser(data.emailPlayer, data.passwordPlayer);
             console.log('Formulaire soumis', isSubmitted);
             console.log('Formulaire parfait', isSubmitSuccessful);
-    } catch (error) {
+        } catch (error) {
             if (error.response && error.response.status === 400) {
                 const errorMessage = error.response.data;
                 if (errorMessage === 'Email déjà utilisé') {
@@ -86,7 +81,7 @@ function AccountCreationPanel({loadingAuthCreation, buttonSize}) {
                 console.error('Erreur lors de la soumission du formulaire :', error);
             }
         }
-};
+    };
 
     const closeModal = () => {
         setShowModal(false);
@@ -95,7 +90,6 @@ function AccountCreationPanel({loadingAuthCreation, buttonSize}) {
     const [showModal, setShowModal] = useState(false);
 
     return (
-
         <div id="contenuAccountCreation">
             <form id="accountForm" onSubmit={handleSubmit(onSubmit)}>
                 <input
@@ -104,9 +98,9 @@ function AccountCreationPanel({loadingAuthCreation, buttonSize}) {
                     className={style.inputHarmonistere}
                     name='pseudoPlayer'
                     placeholder='Pseudo'
-                    {...register("pseudoPlayer")}/>
-                    <br />
-                {errors.pseudoPlayer && <><span className='invalid-feedback'>{errors.pseudoPlayer.message}</span><br/></>}
+                    {...register("pseudoPlayer")} />
+                <br />
+                {errors.pseudoPlayer && <><span className='invalid-feedback'>{errors.pseudoPlayer.message}</span><br /></>}
 
                 <input
                     type='number'
@@ -114,21 +108,22 @@ function AccountCreationPanel({loadingAuthCreation, buttonSize}) {
                     className={style.inputHarmonistere}
                     name='agePlayer'
                     placeholder='Âge'
-                    {...register("agePlayer")}/>
-                    <br />
-                {errors.agePlayer && <><span className='invalid-feedback'>{errors.agePlayer.message}</span><br/></>}
+                    {...register("agePlayer")} />
+                <br />
+                {errors.agePlayer && <><span className='invalid-feedback'>{errors.agePlayer.message}</span><br /></>}
 
                 <select
                     id="genderPlayer"
                     name="genderPlayer"
                     className={style.inputSelectHarmonistere}
-                    {...register("genderPlayer")}>
-                    <option value="" disabled selected hidden>Genre</option>
+                    {...register("genderPlayer")}
+                    defaultValue="">
+                    <option value="" disabled hidden>Genre</option>
                     <option value="female" className={style.optionHarmonistere}>Femme</option>
                     <option value="male" className={style.optionHarmonistere}>Homme</option>
                     <option value="other" className={style.optionHarmonistere}>Autre</option>
                 </select><br />
-                {errors.genderPlayer && <><span className='invalid-feedback'>{errors.genderPlayer.message}</span><br/></>}
+                {errors.genderPlayer && <><span className='invalid-feedback'>{errors.genderPlayer.message}</span><br /></>}
 
                 <input
                     type='email'
@@ -136,8 +131,8 @@ function AccountCreationPanel({loadingAuthCreation, buttonSize}) {
                     className={style.inputHarmonistere}
                     name='emailPlayer'
                     placeholder='E-mail'
-                    {...register("emailPlayer")}/><br />
-                {errors.emailPlayer && <><span className='invalid-feedback'>{errors.emailPlayer.message}</span><br/></>}
+                    {...register("emailPlayer")} /><br />
+                {errors.emailPlayer && <><span className='invalid-feedback'>{errors.emailPlayer.message}</span><br /></>}
 
                 <input
                     type='password'
@@ -145,10 +140,10 @@ function AccountCreationPanel({loadingAuthCreation, buttonSize}) {
                     className={style.inputHarmonistere}
                     name='passwordPlayer'
                     placeholder='Mot de passe'
-                    {...register("passwordPlayer")}/><br />
-                {errors.passwordPlayer && <><span className='invalid-feedback'>{errors.passwordPlayer.message}</span><br/></>}
+                    {...register("passwordPlayer")} /><br />
+                {errors.passwordPlayer && <><span className='invalid-feedback'>{errors.passwordPlayer.message}</span><br /></>}
 
-                <button className={style.buttonHarmonistere} style={{padding: `1em ${buttonSize}`}} type='submit'>S'inscrire</button>
+                <button className={style.buttonHarmonistere} style={{ padding: `1em ${buttonSize}` }} type='submit'>S'inscrire</button>
 
                 <div id='bottomAccountForm'>
                     <p>Déjà un compte ?&nbsp;</p><span onClick={loadingAuthCreation} id='connectUnderline'>Connectez-vous</span>
@@ -161,12 +156,13 @@ function AccountCreationPanel({loadingAuthCreation, buttonSize}) {
                         <div className='content'>
                             <h2>Merci !</h2>
                             <p>Votre compte a été créé avec succès.</p>
-                            <Link to="/"><button onClick={close}>Retourner à l'accueil</button></Link> {/* Utilisation de Link pour créer un lien */}
+                            <Link to="/"><button onClick={close}>Retourner à l'accueil</button></Link>
                         </div>
                     </div>
                 )}
             </Popup>
-        </div>    )
+        </div>
+    );
 }
 
 export default AccountCreationPanel;

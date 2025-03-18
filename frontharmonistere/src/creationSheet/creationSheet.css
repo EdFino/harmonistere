@@ -20,7 +20,8 @@
 }
 
 #creationSheetBothImages {
-    height: 100vh;
+    min-width: 100vw;
+    height: 120vh;
     position: absolute;
     display: flex;
 }
@@ -31,7 +32,6 @@
     left: 0;
     top: -15px;
     /* height: 120vh; */
-    min-height: 100%;
     object-fit: cover;
 }
 
@@ -85,6 +85,7 @@
     max-width: 60vw;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .chapterForm {
@@ -126,6 +127,11 @@
     font-size: 0.9em;
     margin-top: 25px;
     margin-right: 5px;
+}
+
+.invalid-feedback {
+    color: red;
+    margin: 1px;
 }
 
 

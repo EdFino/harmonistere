@@ -8,7 +8,7 @@ const ChatLog = () => {
     
 
   useEffect(() => {
-    const socket = io.connect("http://localhost:3001");
+    const socket = io.connect("http://localhost:5038");
 
     const storedCharacter = JSON.parse(localStorage.getItem('pseudoCharacter'));
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import io from 'socket.io-client';
 import './chatbox.css';
-const socket = io.connect("http://localhost:3001");
+const socket = io.connect("http://localhost:5038");
 
 const scrollToBottom = (element) => {
     if (element) {

@@ -14,7 +14,7 @@ import DiceLauncherMini from '../diceLauncher/diceLauncherMini.js';
 import io from 'socket.io-client';
 import ChatLog from './chatlog.js';
 
-const socket = io.connect("http://localhost:3001");
+const socket = io.connect("http://localhost:5038");
 
 function Session() {
     const [user] = useAuthState(auth);

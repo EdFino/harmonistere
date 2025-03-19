@@ -1,5 +1,5 @@
 // controllers/sheetController.js
-const Sheet = require('../models/sheetModel');
+const Sheet = require('../models/Sheet');
 
 exports.createSheet = async (req, res) => {
     try {
@@ -8,16 +8,18 @@ exports.createSheet = async (req, res) => {
         await newSheet.save();
         res.status(201).json({ message: 'Fiche créée avec succès' });
     } catch (error) {
+        console.error('Grosse erreur lors de la création de la fiche :', error);
         res.status(500).json({ error: 'Erreur lors de la création de la fiche' });
     }
 };
 
-exports.readSheets = async (req, res) => {
+exports.readSheet = async (req, res) => {
     try {
         const email = req.query.email;
         const sheets = await Sheet.find({ email });
         res.status(200).json(sheets);
     } catch (error) {
+        console.error('Erreur lors de la récupération de la fiche :', error);
         res.status(500).json({ error: 'Erreur lors de la récupération des fiches' });
     }
 };

@@ -8,7 +8,7 @@ const FinalStepForm = ({formData, onFinalSubmit, previousStep, buttonSize}) => {
         <p>Vous êtes sur le point de créer votre fiche.</p>
         <p>Pressez le bouton pour finaliser</p>
         <button type='button' onClick={() => previousStep()}>Retour</button>
-        <button Étape suivante  type='button' onClick={() => onFinalSubmit(formData)}>Valider</button>
+        <button type='button' onClick={() => onFinalSubmit(formData)}>Valider</button>
 
         </div>
   )

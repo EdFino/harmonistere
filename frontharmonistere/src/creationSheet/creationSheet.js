@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Navbar from '../navbar/navbar';
 import './creationSheet.css';
 import Popup from 'reactjs-popup';
@@ -43,15 +43,33 @@ function CreationSheet () {
   const onFinalSubmit = async (formData) => {
 
     try {
-        const totalFormData = {... formData, email: user.email};
+        const totalFormData = {
+            email: user.email,
+            sheetData: {
+                characterName: DOMPurify.sanitize(formData.characterName),
+                characterAge: DOMPurify.sanitize(formData.characterAge),
+                benderOrNot: formData.benderOrNot,
+                benderSelect: formData.benderSelect,
+                principalTrait: DOMPurify.sanitize(formData.principalTrait),
+                ascendantTrait: DOMPurify.sanitize(formData.ascendantTrait),
+                neutralTrait: DOMPurify.sanitize(formData.neutralTrait),
+                oppositeTrait: DOMPurify.sanitize(formData.oppositeTrait),
+                bodyLevel: DOMPurify.sanitize(formData.bodyLevel),
+                mindLevel: DOMPurify.sanitize(formData.mindLevel),
+                soulLevel: DOMPurify.sanitize(formData.soulLevel),
+                martialArtsLevel: DOMPurify.sanitize(formData.martialArtsLevel),
+                elementaryArtsLevel: DOMPurify.sanitize(formData.elementaryArtsLevel),
+                speakingLevel: DOMPurify.sanitize(formData.speakingLevel),
+                skills: DOMPurify.sanitize(formData.skills),
+                notes: DOMPurify.sanitize(formData.notes),
+                physicDescription: DOMPurify.sanitize(formData.physicDescription),
+                mentalDescription: DOMPurify.sanitize(formData.mentalDescription),
+                story: DOMPurify.sanitize(formData.characterName)
+            }
+        };
 
-        formData.characterName = DOMPurify.sanitize(formData.characterName);
-        formData.skills = DOMPurify.sanitize(formData.skills);
-        formData.physicDescription = DOMPurify.sanitize(formData.physicDescription);
-        formData.mentalDescription = DOMPurify.sanitize(formData.mentalDescription);
-        formData.story = DOMPurify.sanitize(formData.characterName);
 
-        await axios.post('http://localhost:5038/backharmonistere/sheetCreation', totalFormData);
+        await axios.post('http://localhost:5038/api/sheets/createSheet', totalFormData);
         console.log('Données envoyées avec succès');
         console.log(totalFormData);
         setShowModalSheet(true);

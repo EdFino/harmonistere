@@ -13,7 +13,6 @@ const http = require('http');
 const { Server } = require('socket.io');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-// const db = require('./config/db');
 const playerRoutes = require('./routes/playerRoutes');
 const sheetRoutes = require('./routes/sheetRoutes');
 const sessionRoutes = require('./routes/sessionRoutes');

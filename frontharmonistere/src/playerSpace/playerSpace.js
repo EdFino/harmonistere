@@ -37,18 +37,19 @@ function PlayerSpace () {
 
     useEffect(() => {
         if (user) {
-            axios.get(`http://localhost:5038/backharmonistere/readSheetsData?email=${user.email}`)
+            axios.get(`http://localhost:5038/api/sheets/readSheet?email=${user.email}`)
                 .then(response => {
                     setCharacterList(response.data);    
                     if (response.data.length > 0) {
                         const data = response.data[0];
+                        console.log('Personnage récupéré: ', data);
                     }
                 })
                 .catch(error => {
                     console.log('Erreur lors de la récupération des données : ', error);
                 });
 
-                axios.get(`http://localhost:5038/backharmonistere/readSessionsData?email=${user.email}`)
+                axios.get(`http://localhost:5038/api/sessions/readSessionsData?email=${user.email}`)
                 .then(response => {
                     if (Array.isArray(response.data) && response.data.length > 0) {
                         setSessionList(response.data);
@@ -148,7 +149,7 @@ function PlayerSpace () {
                         <div id='allSheetsPlayer'>
                             {characterList.map((character, index) => (
                                 <Link to={`/espacefiche/${character._id}`} key={index}>
-                                    <button>{character.characterName}</button><br />
+                                    <button>{character.sheetData.characterName}</button><br />
                                 </Link>
                             ))}
                                 <Link to={`/creationfiche`}>

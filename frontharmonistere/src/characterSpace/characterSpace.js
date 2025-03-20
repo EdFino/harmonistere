@@ -45,32 +45,31 @@ function CharacterSpace () {
 
     useEffect(() => {
         if (user) {
-            axios.get(`http://localhost:5038/backharmonistere/readSheetsData/${id}?email=${user.email}`)
+            axios.get(`http://localhost:5038/api/sheets/getSheet/${id}`)
                 .then(response => {
+                    const data = response.data.sheetData;
+                    console.log(data);
                     setSheetData(response.data);
     
-                    if (response.data.length > 0) {
-                        const data = response.data[0];
-                        setCharacterOneName(data.name);  
-                        setCharacterOneAge(data.age);                       
-                        setIsOneBender(data.bender);                       
-                        setCharacterOneBender(data.bending);                       
-                        setCharacterOnePrincipal(data.principalTrait);                       
-                        setCharacterOneAscendant(data.ascendantTrait);                       
-                        setCharacterOneNeutral(data.neutralTrait);                       
-                        setCharacterOneOpposite(data.oppositeTrait);                       
-                        setCharacterOneBody(data.bodyLevel);                       
-                        setCharacterOneMind(data.mindLevel);                       
-                        setCharacterOneSoul(data.soulLevel);                       
-                        setCharacterOneMartial(data.martialLevel);                       
-                        setCharacterOneElement(data.elementaryLevel);                       
-                        setCharacterOneSpeaking(data.speakingLevel);
-                        setSpecialSkills(data.skills);
-                        setNotes(data.notes);
-                        setPhysicalDescription(data.physicDescription);
-                        setPersonnalityDescription(data.mentalDescription);
-                        setStoryCharacter(data.story);
-                    }
+                    setCharacterOneName(data.characterName);  
+                    setCharacterOneAge(data.characterAge);                       
+                    setIsOneBender(data.benderOrNot);                       
+                    setCharacterOneBender(data.benderSelect);                       
+                    setCharacterOnePrincipal(data.principalTrait);                       
+                    setCharacterOneAscendant(data.ascendantTrait);                       
+                    setCharacterOneNeutral(data.neutralTrait);                       
+                    setCharacterOneOpposite(data.oppositeTrait);                       
+                    setCharacterOneBody(data.bodyLevel);                       
+                    setCharacterOneMind(data.mindLevel);                       
+                    setCharacterOneSoul(data.soulLevel);                       
+                    setCharacterOneMartial(data.martialArtsLevel);                       
+                    setCharacterOneElement(data.elementaryArtsLevel);                       
+                    setCharacterOneSpeaking(data.speakingLevel);
+                    setSpecialSkills(data.skills);
+                    setNotes(data.notes);
+                    setPhysicalDescription(data.physicDescription);
+                    setPersonnalityDescription(data.mentalDescription);
+                    setStoryCharacter(data.story);
                 })
                 .catch(error => {
                     console.log('Erreur lors de la récupération des données : ', error);

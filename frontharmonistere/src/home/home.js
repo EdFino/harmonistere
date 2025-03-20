@@ -48,17 +48,17 @@ function Home() {
                     <ul id="homeNavbar" className={`${kit.navbarHarmonistere} ${kit.beigeNavbarHarmonistere}`}>
                         {user && <li id='deconnectLi' className={kit.navbarLiHarmonistere} onClick={logOut}>Déconnexion</li>}
                         {user && <li className={kit.navbarLiHarmonistere}>
-                            <NavLink exact={true} to="/univers" activeClassName="active">Univers</NavLink>
+                            <NavLink exact='true' to="/univers" activeClassName="active">Univers</NavLink>
                         </li>}
                         {!user && <li id='inscriptionLi' className={kit.navbarLiHarmonistere} onClick={loadingAccountCreation}>Inscription</li>}
                         <li className={kit.navbarLiHarmonistere}>
-                            <NavLink exact={true} activeClassName="active" to={'/creationfiche'}>Créer une fiche</NavLink>
+                            <NavLink exact='true' activeClassName="active" to={'/creationfiche'}>Créer une fiche</NavLink>
                         </li>
                         {user && <li className={kit.navbarLiHarmonistere}>
-                            <NavLink exact={true} activeClassName="active" to="/espacejoueur">Votre espace joueur</NavLink>
+                            <NavLink exact='true' activeClassName="active" to="/espacejoueur">Votre espace joueur</NavLink>
                             </li>}
                         <li className={kit.navbarLiHarmonistere}>
-                            <NavLink exact={true} activeClassName="active" to={'/lanceur'}>Lanceur de dés</NavLink>
+                            <NavLink exact='true' activeClassName="active" to={'/lanceur'}>Lanceur de dés</NavLink>
                         </li>
                     </ul>
                     <div id='connexionPanelTotal'>

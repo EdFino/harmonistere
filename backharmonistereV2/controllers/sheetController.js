@@ -23,3 +23,17 @@ exports.readSheet = async (req, res) => {
         res.status(500).json({ error: 'Erreur lors de la récupération des fiches' });
     }
 };
+
+exports.getSheet = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const sheet = await Sheet.findById(id);
+        if (!sheet) {
+            return res.status(404).json({ error: 'Fiche non trouvée' });
+        }
+        res.status(200).json(sheet);
+    } catch (error) {
+        console.error('Erreur lors de la récupération de la fiche :', error);
+        res.status(500).json({ error: 'Erreur lors de la récupération de la fiche' });
+    }
+};

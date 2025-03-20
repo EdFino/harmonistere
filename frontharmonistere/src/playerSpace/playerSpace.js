@@ -41,7 +41,7 @@ function PlayerSpace () {
                 .then(response => {
                     setCharacterList(response.data);    
                     if (response.data.length > 0) {
-                        const data = response.data[0];
+                        setCharacterNewSession(response.data[0].sheetData.characterName);
                     }
                 })
                 .catch(error => {
@@ -54,9 +54,11 @@ function PlayerSpace () {
                     console.log(sessions);
                     const gmSession = sessions.filter(session => session.gmSession === user.email);
                     console.log(gmSession);
-                    const playersSession = sessions.filter(session => session.playersSession.includes(user.email));
+                    const playersSession = sessions.filter(session => session.playersSession.some(player => player.emailPlayer === user.email));
                     setSessionGMList(gmSession);
                     setSessionPlayersList(playersSession);
+                    console.log('Sessions GM:', gmSession);
+                    console.log('Sessions Player:', playersSession);
                 })
                 .catch(error => {
                     console.log('Erreur lors de la récupération des sessions : ', error);
@@ -110,7 +112,7 @@ function PlayerSpace () {
             };
             console.log(updatedFormRejoinSession);
     
-            axios.post('http://localhost:5038/backharmonistere/rejoinSession', updatedFormRejoinSession)
+            axios.post('http://localhost:5038/api/sessions/rejoin', updatedFormRejoinSession)
                 .then(response => {
                     console.log('Vous avez rejoint la session avec succès !');
                     // Mettre à jour l'état ou effectuer d'autres actions si nécessaire
@@ -220,7 +222,7 @@ function PlayerSpace () {
                                 <label htmlFor='characterNewSession'>Nom du personnage qui participera à cette aventure : </label>
                                 <select id='characterNewSession' value={characterNewSession} onChange={handleCharacternewSession} name='characterNewSession'>
                                     {characterList.map((character, index) => (
-                                        <option key={index} value={character.characterName}>{character.characterName}</option>
+                                        <option key={index} value={character.sheetData.characterName}>{character.sheetData.characterName}</option>
                             ))}
                                 </select>
                                 <button type='button' onClick={handleRejoinSession}>Rejoindre votre session</button>

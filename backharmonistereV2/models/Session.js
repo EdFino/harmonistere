@@ -4,8 +4,8 @@ const { ObjectId } = mongoose.Schema.Types;
 
 const sessionSchema = new mongoose.Schema({
     sessionName: { type: String, required: true },
-    GM: { type: String, required: true },
-    players: [{
+    gmSession: { type: String, required: true },
+    playersSession: [{
         character: { type: String },
         emailPlayer: { type: String }
     }]

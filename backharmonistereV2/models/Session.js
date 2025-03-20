@@ -9,6 +9,7 @@ const sessionSchema = new mongoose.Schema({
         character: { type: String },
         emailPlayer: { type: String }
     }]
-});
+},
+{ collection: 'Sessions', versionKey: false });
 
 module.exports = mongoose.model('Session', sessionSchema);

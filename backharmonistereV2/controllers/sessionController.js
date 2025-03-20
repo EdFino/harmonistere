@@ -1,10 +1,10 @@
 // controllers/sessionController.js
 const Session = require('../models/Session');
 
-exports.checkSession = async (req, res) => {
+exports.getUserSessions = async (req, res) => {
     try {
         const email = req.query.email;
-        const sessions = await Session.find({ email });
+        const sessions = await Session.find({ $or: [{ gmSession: email }, { playersSession: email }] });
         res.status(200).json(sessions);
     } catch (error) {
         console.error('Erreur lors de la récupération de la session :', error);

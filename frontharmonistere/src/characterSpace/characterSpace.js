@@ -106,7 +106,7 @@ function CharacterSpace () {
     return (
         <>
             <Navbar/>
-            <h1>Espace de votre vanille</h1>
+            <h1>ESPACE EN COURS DE CONSTRUCTION</h1>
             <h2>{characterOneName}</h2>
             <div id='characterSpace'>
                 <div id='columnCrud' className='columnSheet'>
@@ -150,12 +150,12 @@ function CharacterSpace () {
                             </div>
                             )
                             }
-                        <button type='button' onClick={() => {setSheetPresented(!sheetPresented)}}>Verso</button>
+                        <button type='button' onClick={() => {setSheetPresented(!sheetPresented)}}>Recto-Verso</button>
 
                 </div>
                 <div id='columnPlay' className='columnSheet'>
                     <h3>Lanceur de dés</h3>
-                    <button type='button' onClick={diceLauncherSet}>J'aime le plâtre</button>
+                    <button type='button' onClick={diceLauncherSet}>Lanceur</button>
                     {diceLauncherReady ? (
                     <DiceLauncherMini/>) : null}
                 </div>

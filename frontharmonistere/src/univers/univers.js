@@ -105,7 +105,7 @@ function Univers() {
   
       <div id="contenuUnivers">
         <Navbar width="50%" />
-        <h1 id="universeTitle">Les pays de l'univers</h1>
+        <h1 id="universeTitle">ESPACE EN COURS DE CONSTRUCTION</h1>
         <div id="countriesBar">
           <ul id="countriesList">
             {descriptionCountry.map((country, index) => (

@@ -12,7 +12,7 @@ import * as yup from "yup" ;
 import DOMPurify from 'dompurify';
 
 const schema = yup.object({
-    sessionName: yup.string().required().max(30, "Attention : le nom de votre instance doit prendre moins de 30 caractères"),
+    sessionName: yup.string().required().max(30, "Attention : le nom de votre instance doit comporter moins de 30 caractères"),
 })
 
 
@@ -25,8 +25,8 @@ function PlayerSpace () {
 
     const [user, error] = useAuthState(auth);
     const [characterList, setCharacterList] = useState([]);
-    const [sessionList, setSessionList] = useState([]);
-    const [sessionPlayerList, setSessionPlayerList] = useState([]);
+    const [sessionGMList, setSessionGMList] = useState([]);
+    const [sessionPlayersList, setSessionPlayersList] = useState([]);
     const [modalSessionCreation, setModalSessioncreation] = useState(false);
     const [rejoinSessionName, setRejoinSessionName] = useState('');
     const [characterNewSession, setCharacterNewSession] = useState ('');
@@ -42,34 +42,25 @@ function PlayerSpace () {
                     setCharacterList(response.data);    
                     if (response.data.length > 0) {
                         const data = response.data[0];
-                        console.log('Personnage récupéré: ', data);
                     }
                 })
                 .catch(error => {
                     console.log('Erreur lors de la récupération des données : ', error);
                 });
 
-                axios.get(`http://localhost:5038/api/sessions/readSessionsData?email=${user.email}`)
+                axios.get(`http://localhost:5038/api/sessions/get?email=${user.email}`)
                 .then(response => {
-                    if (Array.isArray(response.data) && response.data.length > 0) {
-                        setSessionList(response.data);
-                    } else {
-                        console.log('Aucune session trouvée.');
-                    }
+                    const sessions = response.data;
+                    console.log(sessions);
+                    const gmSession = sessions.filter(session => session.gmSession === user.email);
+                    console.log(gmSession);
+                    const playersSession = sessions.filter(session => session.playersSession.includes(user.email));
+                    setSessionGMList(gmSession);
+                    setSessionPlayersList(playersSession);
                 })
                 .catch(error => {
                     console.log('Erreur lors de la récupération des sessions : ', error);
-                });
-
-                axios.get(`http://localhost:5038/backharmonistere/userSessions?email=${user.email}`)
-                .then(response => {
-                    setSessionPlayerList(response.data);
-                    console.log('Sessions de l\'utilisateur joli :', response.data);
-                })
-                .catch(error => {
-                    console.error('Erreur lors de la récupération des sessions de l\'utilisateur :', error);
-                });
-            
+                });            
         }
     }, [user]);
 
@@ -97,12 +88,12 @@ function PlayerSpace () {
 
             const formDataSession = {
                 ...data,
-                GM: user.email,
-                players: []
+                gmSession: user.email,
+                playersSession: []
             };
             console.log (formDataSession)
 
-            await axios.post('http://localhost:5038/backharmonistere/sessionCreation', formDataSession);
+            await axios.post('http://localhost:5038/api/sessions/create', formDataSession);
             console.log('Données session envoyées avec succès');
             console.log(formDataSession);
         } catch (error) {
@@ -136,7 +127,7 @@ function PlayerSpace () {
     return (
         <>
             <Navbar />
-            <h1>Votre espace</h1>
+            <h1>Espace en cours de création</h1>
             <div id='allSections'>
                 <div id='characterSection'>
                     <h2>Vos personnages</h2>
@@ -165,11 +156,11 @@ function PlayerSpace () {
                     <h2>Vos instances</h2>
                     <div id='allSessions'>
                         <h4>Vos parties en tant que MJ</h4>
-                        {sessionList.length === 0 ? (
+                        {sessionGMList.length === 0 ? (
                             <p>Vous n'avez pas de partie en tant que Maître du Jeu.</p>
                         ) : (
                         <div id='allSessionsGM'>
-                            {sessionList.map((sessionLine, index) => (
+                            {sessionGMList.map((sessionLine, index) => (
                                 <div key={index}>
                                     <Link to={`/session/${sessionLine._id}`}>
                                         <button>{sessionLine.sessionName}</button>
@@ -181,8 +172,11 @@ function PlayerSpace () {
                         </div>
                         )}
                         <h4>Vos parties en tant que joueurs</h4>
+                        {sessionPlayersList.length === 0 ? (
+                            <p>Vous n'avez pas de partie en tant que joueur.</p>
+                        ) : (
                         <div id='allSessionsPlayers'>
-                            {sessionPlayerList.map((sessionPlayerLine, index) => (
+                            {sessionPlayersList.map((sessionPlayerLine, index) => (
                                 <div key={index}>
                                     <Link to={`/session/${sessionPlayerLine._id}`}>
                                         <button>{sessionPlayerLine.sessionName}</button>
@@ -190,8 +184,9 @@ function PlayerSpace () {
                                     <br/>
                                 </div>
                                 ))
-                        }
+                            }
                         </div>
+                        )}
                         <div className='sheetsList'>
                             <p onClick={modalOpenSession}>Nouvelle instance</p>
                         </div>

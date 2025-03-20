@@ -16,7 +16,7 @@ function DashboardGM ({charactersInSession}) {
 
     const { id } =useParams();
 
-    const urlSession = `http://localhost:5038/backharmonistere/deleteSession/${id}`;
+    const urlSession = `http://localhost:5038/api/sessions/delete/${id}`;
     const urlSessionRejoin = `http://localhost:5038/backharmonistere/rejoinSession`;
 
     const closeDeleteSessionModal = () => {
@@ -36,7 +36,7 @@ function DashboardGM ({charactersInSession}) {
     }
 
     const handleDeleteSession = () => {
-        axios.delete(`http://localhost:5038/backharmonistere/deleteSession/${id}`)
+        axios.delete(`http://localhost:5038/api/sessions/delete/${id}`)
         .then(response => {
             console.log ('Session supprimée avec succès');
             setSessionDeleted(true);

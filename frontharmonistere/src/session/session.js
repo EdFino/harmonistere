@@ -21,19 +21,27 @@ function Session() {
     const { id } = useParams();
     const [charactersInSession, setCharactersInSession] = useState([]);
     const [pseudoCharacter, setPseudoCharacter] = useState('');
+    const [roleSession, setRoleSession] = useState('');
+
 
     useEffect(() => {
         if (user) {
-            axios.get(`http://localhost:5038/api/sessions/charactersInSession/${id}`)
+            axios.get(`http://localhost:5038/api/sessions/charactersInSession/${id}?email=${user.email}`)
                 .then(response => {
                     setCharactersInSession(response.data.characters);
-                    console.log('charactersInSession dans session.js : ', charactersInSession)                    //setPseudoCharacter(response.data.connectedPlayerPseudo);
+                    const isGM = response.data.isGM;
+                    setRoleSession(isGM ? 'Vous êtes le MJ' : 'Vous êtes un joueur');
+                    console.log('charactersInSession dans session.js : ', charactersInSession);
                 })
                 .catch(error => {
                     console.log('Erreur lors de la récupération des données : ', error);
                 });
         }
     }, [id, user]);
+
+    useEffect(() => {
+        console.log('A-t-on récupéré le rôle ? ', roleSession);
+    }, [roleSession]);
 
     const sendResultsToSocket = (data) => {
         socket.emit("send_dice_results", data);
@@ -50,10 +58,14 @@ function Session() {
             <div id='allSession'>
                 <div id='leftColumnSession'>
 
-                    <TitleSession sessionId={id} />
+                    <TitleSession
+                        sessionId={id}
+                        roleSession={roleSession}
+                    />
 
                     <AvatarPlayers
-                        charactersInSession={charactersInSession} />
+                        charactersInSession={charactersInSession}
+                    />
 
                     <div id='GMMenu'>
                         <DashboardGM

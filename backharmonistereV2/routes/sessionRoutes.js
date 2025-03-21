@@ -7,6 +7,6 @@ router.get('/get', sessionController.getUserSessions);
 router.post('/create', sessionController.createSession);
 router.post('/rejoin', sessionController.rejoinSession);
 router.delete('/delete/:id', sessionController.deleteSession);
-router.get('/charactersInSession/:id', sessionController.getCharactersInSession);
+router.get('/charactersInSession/:id/', sessionController.getCharactersInSession);
 
 module.exports = router;

@@ -12,7 +12,7 @@ function AvatarPlayers({ charactersInSession }) {
             <ul id='avatarList'>
                 <p>Joueurs</p>
                 {charactersInSession.length === 0 ? (
-                    <p>loading...</p>
+                    <p>Personne pour le moment</p>
                 ) : (
                     charactersInSession.map((character, index) => (
                         <li key={index}>{character}</li>

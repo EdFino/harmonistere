@@ -24,17 +24,16 @@ function Session() {
 
     useEffect(() => {
         if (user) {
-            const email = user.email;
-            axios.get(`http://localhost:5038/backharmonistere/charactersInSession/${id}/${email}`)
+            axios.get(`http://localhost:5038/api/sessions/charactersInSession/${id}`)
                 .then(response => {
                     setCharactersInSession(response.data.characters);
-                    setPseudoCharacter(response.data.connectedPlayerPseudo);
+                    console.log('charactersInSession dans session.js : ', charactersInSession)                    //setPseudoCharacter(response.data.connectedPlayerPseudo);
                 })
                 .catch(error => {
                     console.log('Erreur lors de la récupération des données : ', error);
                 });
         }
-    }, [id]);
+    }, [id, user]);
 
     const sendResultsToSocket = (data) => {
         socket.emit("send_dice_results", data);

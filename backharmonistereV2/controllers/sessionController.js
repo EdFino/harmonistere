@@ -66,3 +66,20 @@ exports.getCharactersInSession = async (req, res) => {
         res.status(500).json({ error: 'Erreur lors de la récupération des joueurs de la session' });
     }
 };
+
+exports.deleteCharacterInSession = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { characterName } = req.body;
+        const session = await Session.findById(id);
+        if (!session) {
+            return res.status(404).json({ error: 'Session non trouvée' });
+        }
+        session.playersSession = session.playersSession.filter(player => player.character !== characterName);
+        await session.save();
+        res.status(200).json({ message: 'Personnage supprimé avec succès' });
+    } catch (error) {
+        console.error('Erreur lors de la suppression du personnage de la session :', error);
+        res.status(500).json({ error: 'Erreur lors de la suppression du personnage de la session' });
+    }
+};

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './dashBoard.css';
 import { auth } from '../assets/firebase';
 import axios from 'axios';
@@ -15,6 +15,12 @@ function DashboardGM ({charactersInSession}) {
     const [characterDeletion, setCharacterDeletion] = useState('');
 
     const { id } =useParams();
+
+    useEffect(() => {
+        if (charactersInSession.length > 0) {
+            setCharacterDeletion(charactersInSession[0]); // Définir la valeur par défaut
+        }
+    }, [charactersInSession]);
 
     const urlSession = `http://localhost:5038/api/sessions/delete/${id}`;
     const urlSessionRejoin = `http://localhost:5038/backharmonistere/rejoinSession`;
@@ -47,7 +53,7 @@ function DashboardGM ({charactersInSession}) {
     }
 
     const handleDeleteCharacter = () => {
-        axios.delete(`http://localhost:5038/backharmonistere/deleteCharacterSession/${id}`, {
+        axios.delete(`http://localhost:5038/api/sessions/deleteCharacter/${id}`, {
             data: { characterName: characterDeletion }
         })
         .then(response => {

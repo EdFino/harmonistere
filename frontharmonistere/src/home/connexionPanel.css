@@ -47,8 +47,8 @@
     justify-content: center;
     font-size: 12px;
     font-style: italic;
-    margin-top: 10px;
-    margin-bottom: 0.8em;
+    margin-top: 5px;
+    margin-bottom: 2.8em;
 }
 
 #linkNewAccount {
@@ -57,16 +57,13 @@
     justify-content: center;
 }
 
-#resetUnderline:hover {
-    border-bottom: 2px solid #212122;
-}
-
-#toAccount {
+.toAccount {
     font-weight: bold;
     cursor: pointer;
+    flex-wrap: nowrap;
 }
 
-#toAccount:hover {
+.toAccount:hover {
     border-bottom: 2px solid #212122;
 }
 

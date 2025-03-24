@@ -44,9 +44,9 @@ function ConnexionPanel ({loadingAccountCreation, buttonSize}) {
 
                     <button id='buttonAuthForm' className={style.buttonHarmonistere} style={{paddingLeft:buttonSize, paddingRight:buttonSize}} type='submit'>Se connecter</button><br/>
                     <div id='bottomAuthForm'>
-                    <Link to='/resetPassword'><span id='resetUnderline'>Mot de passe oublié ?</span></Link>
+                    <p>Mot de passe oublié ?&nbsp;<Link to='/resetPassword'><span className='toAccount'> Cliquez ici</span></Link></p>
                         <div id='linkNewAccount'>
-                            <p>Pas de compte ?&nbsp;</p><span id='toAccount' onClick={loadingAccountCreation}>Créez-en un</span>
+                            <p>Pas de compte ?&nbsp;</p><span className='toAccount' onClick={loadingAccountCreation}>Créez-en un</span>
                         </div>
                     </div>
                 </div>

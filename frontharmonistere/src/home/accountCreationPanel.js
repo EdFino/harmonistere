@@ -16,6 +16,7 @@ const schema = yup.object({
         .required('N\'oubliez pas votre pseudo !')
         .max(20, 'Le pseudo ne doit pas dépasser 20 caractères'),
     agePlayer: yup.number()
+        .typeError('Veuillez entrer un nombre valide pour l\'âge.')
         .positive('Votre âge doit être positif...')
         .integer('Veuillez ne pas mettre de virgule')
         .required('Vous devez mentionner votre âge.'),
@@ -27,6 +28,10 @@ const schema = yup.object({
     passwordPlayer: yup.string()
         .required('Vous devez entrer un mot de passe.')
         .min(8, 'Votre mot de passe doit comporter au moins 8 caractères.'),
+        passwordPlayerVerification: yup.string()
+        .oneOf([yup.ref('passwordPlayer'), null], 'Les mots de passe doivent correspondre.')
+        .required('Vous devez confirmer votre mot de passe.')
+        
 }).required();
 
 function AccountCreationPanel({ loadingAuthCreation, buttonSize }) {

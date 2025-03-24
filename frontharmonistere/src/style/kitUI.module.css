@@ -74,8 +74,7 @@ body {
     border-bottom: 1px solid rgba(35, 52, 99, 0.35);
     color: rgba(35, 52, 99, 0.59);
     background-color: #FAF4E7;
-    padding: 1px 0px;
-    margin: 0.5em 0em;
+    margin: 10px 0;
     min-width: 80%;
     font-size: 0.8em;
 }
@@ -99,8 +98,7 @@ body {
     border-bottom: 1px solid rgba(35, 52, 99, 1);
     color: rgba(35, 52, 99, 0.59);
     background-color: #FAF4E7;
-    padding: 2px 0px;
-    margin: 1em 0;
+    margin: 10px 0;
     min-width: 80%;
     font-size: 0.8em;
 }
@@ -132,9 +130,9 @@ body {
   height: 709px;
 }
 
-.dices {
+/* .dices {
   
-}
+} */
 
 .diceButton {
     display: inline-block;
@@ -323,7 +321,7 @@ body {
   
     .diceButton {
       width: calc(50% - 1em); /* Ajustez la largeur des dés selon vos besoins */
-      height: ; /* Ajustez la hauteur des dés selon vos besoins */
+      /* height: ; */ /* Ajustez la hauteur des dés selon vos besoins */
       margin: 0.5em;
     }
 
@@ -376,9 +374,9 @@ body {
 
 @media only screen and (min-height: 0px) and (max-height:580px) {
 
-    .navbarLiHarmonistere {
+/*     .navbarLiHarmonistere {
         display: none;
-    }
+    } */
 }
 
 @media only screen and (min-height: 580px) and (max-height:570px) and (min-width:768px) {

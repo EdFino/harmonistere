@@ -2,20 +2,48 @@
     background-image: url('../images/Pop-up\ 2.png');
     background-size: contain;
     background-position: center;
-    width: 19em;
-    height: auto;
     background-repeat: no-repeat;
     z-index: 5;
-    padding: 50px 50px 50px 50px;
-    font-size: 1.2em;
+    width: 50vh;
+    height: 70vh;    
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 55px 10px 30px 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+#scrollContainer {
+    width: 100%;
+    height: calc(100% - 40px);
+    overflow-y: auto; /* Ajoute un scroll si le contenu est trop grand */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    box-sizing: border-box;
+}
+
+#contenuAccountCreation h2 {
+    text-align: center;
+    color: #233463;
 }
 
 #accountForm {
+    width: 90%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    color: #233463;
+    gap: 10px;
+}
+
+#accountForm input select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
 }
 
 #bottomAccountForm {
@@ -39,4 +67,30 @@
 .invalid-feedback {
     color: red;
     font-size: 0.6em;
-  }
+    text-align: center;
+    width: 100%;
+    padding-bottom: 1em;
+}
+
+#scrollContainer::-webkit-scrollbar {
+    width: 6px; /* Réduit la largeur de la barre */
+}
+
+#scrollContainer::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.5); /* Couleur de la barre */
+    border-radius: 3px; /* Arrondi pour un look plus sympa */
+}
+
+#scrollContainer::-webkit-scrollbar-track {
+    background: transparent; /* Fond de la scrollbar */
+}
+
+#scrollContainer::-webkit-scrollbar-track-piece:end {
+    background: transparent;
+    margin-bottom: 4em; 
+}
+
+#scrollContainer::-webkit-scrollbar-track-piece:start {
+    background: transparent;
+    margin-top: 4em;
+}

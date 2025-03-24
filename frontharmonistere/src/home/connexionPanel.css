@@ -11,9 +11,11 @@
     background-position: center;
     background-repeat: no-repeat;
     width: 23em;
-    height: auto;
+    min-height: 100px;
+    max-height: 80vh;
     z-index: 5;
     padding: 25px;
+    overflow: auto;
     }
 
 #titleAuthForm {
@@ -66,4 +68,11 @@
 
 #toAccount:hover {
     border-bottom: 2px solid #212122;
+}
+
+.errorMessage {
+    color: red;
+    font-size: 11px;
+    margin-top: 0.5em;
+    text-align: center;
 }

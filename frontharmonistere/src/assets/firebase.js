@@ -32,7 +32,8 @@ const logIn = async (email, password) => {
     try {
         await signInWithEmailAndPassword(auth, email, password)
     } catch (err) {
-        console.error(err)
+        console.error(err);
+        throw err;
     }
 }
 

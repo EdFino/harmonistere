@@ -91,64 +91,73 @@ function AccountCreationPanel({ loadingAuthCreation, buttonSize }) {
 
     return (
         <div id="contenuAccountCreation">
-            <form id="accountForm" onSubmit={handleSubmit(onSubmit)}>
-                <input
-                    type='text'
-                    id='pseudoPlayer'
-                    className={style.inputHarmonistere}
-                    name='pseudoPlayer'
-                    placeholder='Pseudo'
-                    {...register("pseudoPlayer")} />
-                <br />
-                {errors.pseudoPlayer && <><span className='invalid-feedback'>{errors.pseudoPlayer.message}</span><br /></>}
+            <div id="scrollContainer">
+                <form id="accountForm" onSubmit={handleSubmit(onSubmit)}>
+                    <input
+                        type='text'
+                        id='pseudoPlayer'
+                        className={style.inputHarmonistere}
+                        name='pseudoPlayer'
+                        placeholder='Pseudo'
+                        {...register("pseudoPlayer")} />
+                    {errors.pseudoPlayer && <><span className='invalid-feedback'>{errors.pseudoPlayer.message}</span></>}
 
-                <input
-                    type='number'
-                    id='agePlayer'
-                    className={style.inputHarmonistere}
-                    name='agePlayer'
-                    placeholder='Âge'
-                    {...register("agePlayer")} />
-                <br />
-                {errors.agePlayer && <><span className='invalid-feedback'>{errors.agePlayer.message}</span><br /></>}
+                    <input
+                        type='number'
+                        id='agePlayer'
+                        className={style.inputHarmonistere}
+                        name='agePlayer'
+                        placeholder='Âge'
+                        {...register("agePlayer")} />
+                    {errors.agePlayer && <><span className='invalid-feedback'>{errors.agePlayer.message}</span></>}
 
-                <select
-                    id="genderPlayer"
-                    name="genderPlayer"
-                    className={style.inputSelectHarmonistere}
-                    {...register("genderPlayer")}
-                    defaultValue="">
-                    <option value="" disabled hidden>Genre</option>
-                    <option value="female" className={style.optionHarmonistere}>Femme</option>
-                    <option value="male" className={style.optionHarmonistere}>Homme</option>
-                    <option value="other" className={style.optionHarmonistere}>Autre</option>
-                </select><br />
-                {errors.genderPlayer && <><span className='invalid-feedback'>{errors.genderPlayer.message}</span><br /></>}
+                    <select
+                        id="genderPlayer"
+                        name="genderPlayer"
+                        className={style.inputSelectHarmonistere}
+                        {...register("genderPlayer")}
+                        defaultValue="">
+                        <option value="" disabled hidden>Genre</option>
+                        <option value="female" className={style.optionHarmonistere}>Femme</option>
+                        <option value="male" className={style.optionHarmonistere}>Homme</option>
+                        <option value="other" className={style.optionHarmonistere}>Autre</option>
+                    </select>
+                    {errors.genderPlayer && <><span className='invalid-feedback'>{errors.genderPlayer.message}</span></>}
 
-                <input
-                    type='email'
-                    id='emailPlayer'
-                    className={style.inputHarmonistere}
-                    name='emailPlayer'
-                    placeholder='E-mail'
-                    {...register("emailPlayer")} /><br />
-                {errors.emailPlayer && <><span className='invalid-feedback'>{errors.emailPlayer.message}</span><br /></>}
+                    <input
+                        type='email'
+                        id='emailPlayer'
+                        className={style.inputHarmonistere}
+                        name='emailPlayer'
+                        placeholder='E-mail'
+                        {...register("emailPlayer")} />
+                    {errors.emailPlayer && <><span className='invalid-feedback'>{errors.emailPlayer.message}</span></>}
 
-                <input
-                    type='password'
-                    id='passwordPlayer'
-                    className={style.inputHarmonistere}
-                    name='passwordPlayer'
-                    placeholder='Mot de passe'
-                    {...register("passwordPlayer")} /><br />
-                {errors.passwordPlayer && <><span className='invalid-feedback'>{errors.passwordPlayer.message}</span><br /></>}
+                    <input
+                        type='password'
+                        id='passwordPlayer'
+                        className={style.inputHarmonistere}
+                        name='passwordPlayer'
+                        placeholder='Mot de passe'
+                        {...register("passwordPlayer")} />
+                    {errors.passwordPlayer && <><span className='invalid-feedback'>{errors.passwordPlayer.message}</span></>}
 
-                <button className={style.buttonHarmonistere} style={{ padding: `1em ${buttonSize}` }} type='submit'>S'inscrire</button>
+                    <input
+                        type='password'
+                        id='passwordPlayerVerification'
+                        className={style.inputHarmonistere}
+                        name='passwordPlayerVerification'
+                        placeholder='Confirmez le mot de passe'
+                        {...register("passwordPlayerVerification")} />
+                    {errors.passwordPlayerVerification && <><span className='invalid-feedback'>{errors.passwordPlayerVerification.message}</span></>}
 
-                <div id='bottomAccountForm'>
-                    <p>Déjà un compte ?&nbsp;</p><span onClick={loadingAuthCreation} id='connectUnderline'>Connectez-vous</span>
-                </div>
-            </form>
+                    <button className={style.buttonHarmonistere} style={{ padding: `1em ${buttonSize}` }} type='submit'>S'inscrire</button>
+
+                    <div id='bottomAccountForm'>
+                        <p>Déjà un compte ?&nbsp;</p><span onClick={loadingAuthCreation} id='connectUnderline'>Connectez-vous</span>
+                    </div>
+                </form>
+            </div>
 
             <Popup open={showModal} onClose={closeModal} modal nested closeOnDocumentClick={false}>
                 {(close) => (

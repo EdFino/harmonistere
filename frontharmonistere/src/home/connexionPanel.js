@@ -13,15 +13,16 @@ function ConnexionPanel ({loadingAccountCreation, buttonSize}) {
     const [email, setEmail] = useState ('');
     const [password, setPassword] = useState ('');
     const [user, error] = useAuthState (auth);
+    const [errorMessage, setErrorMessage] = useState ('');
 
-    function handleSubmit (e) {
+    async function handleSubmit (e) {
         e.preventDefault();
-        logIn(email, password);
+        try {
+            await logIn(email, password);
+        } catch (error) {
+            setErrorMessage('Votre email et/ou votre mot de passe sont incorrects.')
+        }
     }
-
-    console.log (email, password);
-
-    console.log(loadingAccountCreation);
 
     return (
 
@@ -38,6 +39,8 @@ function ConnexionPanel ({loadingAccountCreation, buttonSize}) {
                     <input type='email' id='emailPlayer' className={style.inputHarmonistere} name='emailPlayer' placeholder='E-mail' onChange={(e) => setEmail(e.target.value)} required /><br/>
 
                     <input type='password' id='passwordPlayer' className={style.inputHarmonistere} name='passwordPlayer' placeholder='Mot de passe' onChange={(e) => setPassword(e.target.value)} required /><br/>
+
+                    {errorMessage && <p className='errorMessage'>{errorMessage}</p>}
 
                     <button id='buttonAuthForm' className={style.buttonHarmonistere} style={{paddingLeft:buttonSize, paddingRight:buttonSize}} type='submit'>Se connecter</button><br/>
                     <div id='bottomAuthForm'>

@@ -20,9 +20,9 @@ const schema = yup.object().shape({
 
     characterAge: yup.number('Attention, veuillez ne mettre que des chiffres')
     .positive('Attention : L\'âge doit être positif, bien évidemment...')
-    .integer('Attention, veuillez ne pas mettre de virgule')
+    .integer('Attention : veuillez ne pas mettre de virgule')
     .required('Attention : Vous devez mentionner un âge.'),
-
+    
     benderOrNot: yup.boolean().required(),
 
     benderSelect: yup.string().when('benderOrNot', {

@@ -4,6 +4,40 @@ import Popup from 'reactjs-popup';
 import SelectTest from '../creationSheet/selectTest';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup" ;
+import DOMPurify from 'dompurify';
+import { useForm } from 'react-hook-form';
+
+const validationSchema = yup.object().shape({
+    characterName: yup
+        .string()
+        .required('Attention : votre personnage doit avoir un nom')
+        .max(30, 'Attention : le prénom ne doit pas comporter plus de 30 caractères'),
+
+    characterAge: yup
+        .number('Attention, veuillez ne mettre que des chiffres...')
+        .integer('Attention, veuillez ne pas mettre de virgule')
+        .required('Attention : Vous devez mentionner un âge.'),
+
+    benderOrNot: yup.boolean().required('Le statut de maîtrise est requis'),
+    benderSelect: yup.string().oneOf(['Aucune', 'Terre', 'Feu', 'Air', 'Eau'], 'Maîtrise invalide'),
+    principalTrait: yup.string().required ("Attention : vous devez choisir un trait principal à votre personnage"),
+    ascendantTrait: yup.string().required ("Attention : vous devez choisir un trait ascendant à votre personnage"),
+    neutralTrait: yup.string().required ("Attention : vous devez choisir un trait neutre à votre personnage"),
+    oppositeTrait: yup.string().required ("Attention : vous devez choisir un trait opposé à votre personnage"),
+    bodyLevel: yup.string().required ("Attention : vous devez choisir un niveau pour le corps de votre personnage"),
+    mindLevel: yup.string().required ("Attention : vous devez choisir un niveau pour l'esprit de votre personnage"),
+    soulLevel: yup.string().required ("Attention : vous devez choisir un niveau pour l'âme de votre personnage"),
+    martialArtsLevel: yup.string().required ("Attention : vous devez choisir un niveau pour les arts martiaux de votre personnage"),
+    elementaryArtsLevel: yup.string().required ("Attention : vous devez choisir un niveau pour les arts élémentaires de votre personnage"),
+    speakingLevel: yup.string().required ("Attention : vous devez choisir un niveau pour l\'éloquence de votre personnage"),
+    skills: yup.string().max(1000, 'Les compétences ne peuvent pas dépasser 1000 caractères'),
+    notes: yup.string().max(2500, 'Les notes ne peuvent pas dépasser 2500 caractères'),
+    physicDescription: yup.string().max(2500, 'La description physique ne peut pas dépasser 2500 caractères'),
+    mentalDescription: yup.string().max(2500, 'La description mentale ne peut pas dépasser 2500 caractères'),
+    story: yup.string().max(3000, 'L\'histoire ne peut pas dépasser 3000 caractères'),
+});
 
 function CharacterSheet (props) {
 
@@ -27,6 +61,11 @@ function CharacterSheet (props) {
             mentalDescription,
             story,
             changeSheet} = props;
+
+                const { register, handleSubmit, watch, formState: { errors, isSubmitted, isSubmitSuccessful } } = useForm({
+                    mode: 'onSubmit',
+                    resolver: yupResolver(validationSchema)
+                });
 
             const { id } = useParams();
 
@@ -78,10 +117,25 @@ function CharacterSheet (props) {
                 }));
             };
 
+            const sanitizeData = (data) => {
+                const sanitizedData = {};
+                for (const key in data) {
+                    if (data.hasOwnProperty(key)) {
+                        if (typeof data[key] === 'object' && data[key] !== null) {
+                            sanitizedData[key] = sanitizeData(data[key]);
+                        } else {
+                            sanitizedData[key] = DOMPurify.sanitize(data[key]);
+                        }
+                    }
+                }
+                return sanitizedData;
+            };
+
             const submitUpdate = async () => {
                 try {
+                    const sanitizedCharacterData = sanitizeData (characterData);
                     console.log ('Formulaire de changement à envoyer : ', characterData);
-                    const response = await axios.put(`http://localhost:5038/api/sheets/updateSheet/${id}`, { sheetData : characterData});
+                    const response = await axios.put(`http://localhost:5038/api/sheets/updateSheet/${id}`, { sheetData : sanitizedCharacterData});
                     if (response.status === 200) {
                         console.log('Mise à jour réussie !');
                     } else {

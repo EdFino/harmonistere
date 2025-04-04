@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './characterSheet.css';
 import Popup from 'reactjs-popup';
 import SelectTest from '../creationSheet/selectTest';
@@ -7,10 +7,10 @@ import { useParams } from 'react-router-dom';
 
 function CharacterSheet (props) {
 
-    const {name,
-            age,
-            isBender,
-            bending,
+    const {characterName,
+            characterAge,
+            benderOrNot,
+            benderSelect,
             principalTrait,
             ascendantTrait,
             neutralTrait,
@@ -18,63 +18,90 @@ function CharacterSheet (props) {
             bodyLevel,
             mindLevel, 
             soulLevel, 
-            martialLevel,
-            elementLevel,
+            martialArtsLevel,
+            elementaryArtsLevel,
             speakingLevel,
-            specialSkills,
+            skills,
             notes,
-            physicalDescription,
-            personnalityDescription,
-            storyCharacter,
+            physicDescription,
+            mentalDescription,
+            story,
             changeSheet} = props;
 
-    const elementList = [{elementName: 'TERRE', importance: ''},
-                        {elementName: 'FEU', importance: ''},
-                        {elementName: 'AIR', importance: ''},
-                        {elementName: 'EAU', importance: ''},
-                        ];
+            const { id } = useParams();
 
-    if (principalTrait === 'Terre') {
-        elementList[0].importance = 'principalTrait';
-    } else if (principalTrait === 'Feu') {
-        elementList[1].importance = 'principalTrait';
-    } else if (principalTrait === 'Air') {
-        elementList[2].importance = 'principalTrait';
-    } else if (principalTrait === 'Eau') {
-        elementList[3].importance = 'principalTrait';
-    }
+            const [characterData, setCharacterData] = useState({
+                characterName: '',
+                characterAge: '',
+                benderOrNot: false,
+                benderSelect: 'Aucune',
+                skills: '',
+                notes: '',
+                physicDescription: '',
+                mentalDescription: '',
+                story: '',
+                bodyLevel: '0',
+                mindLevel: '0',
+                soulLevel: '0',
+                martialArtsLevel: '0',
+                elementaryArtsLevel: '0',
+                speakingLevel: '0',
+            });
+            
+            useEffect(() => {
+                setCharacterData({
+                    characterName: props.characterName || '',
+                    characterAge: props.characterAge || '',
+                    benderOrNot: props.benderOrNot || false,
+                    benderSelect: props.benderOrNot ? props.benderSelect : 'Aucune',
+                    skills: props.skills || '',
+                    notes: props.notes || '',
+                    physicDescription: props.physicDescription || '',
+                    mentalDescription: props.mentalDescription || '',
+                    story: props.story || '',
+                    bodyLevel: props.bodyLevel || '0',
+                    mindLevel: props.mindLevel || '0',
+                    soulLevel: props.soulLevel || '0',
+                    martialArtsLevel: props.martialArtsLevel || '0',
+                    elementaryArtsLevel: props.elementaryArtsLevel || '0',
+                    speakingLevel: props.speakingLevel || '0',
+                });
+            }, [props]); // Met à jour l'état lorsque les props changent
 
-    if (ascendantTrait === 'Terre') {
-        elementList[0].importance = 'ascendantTrait';
-    } else if (ascendantTrait === 'Feu') {
-        elementList[1].importance = 'ascendantTrait';
-    } else if (ascendantTrait === 'Air') {
-        elementList[2].importance = 'ascendantTrait';
-    } else if (ascendantTrait === 'Eau') {
-        elementList[3].importance = 'ascendantTrait';
-    }
+            console.log('Voyons voir characterData au début', characterData);
 
-    if (neutralTrait === 'Terre') {
-        elementList[0].importance = 'neutralTrait';
-    } else if (neutralTrait === 'Feu') {
-        elementList[1].importance = 'neutralTrait';
-    } else if (neutralTrait === 'Air') {
-        elementList[2].importance = 'neutralTrait';
-    } else if (neutralTrait === 'Eau') {
-        elementList[3].importance = 'neutralTrait';
-    }
+            const handleChange = (event) => {
+                const { name, value } = event.target;
+                setCharacterData((prevData) => ({
+                    ...prevData,
+                    [name]: value,
+                }));
+            };
 
-    if (oppositeTrait === 'Terre') {
-        elementList[0].importance = 'oppositeTrait';
-    } else if (oppositeTrait === 'Feu') {
-        elementList[1].importance = 'oppositeTrait';
-    } else if (oppositeTrait === 'Air') {
-        elementList[2].importance = 'oppositeTrait';
-    } else if (oppositeTrait === 'Eau') {
-        elementList[3].importance = 'oppositeTrait';
-    }
+            const submitUpdate = async () => {
+                try {
+                    console.log ('Formulaire de changement à envoyer : ', characterData);
+                    const response = await axios.put(`http://localhost:5038/api/sheets/updateSheet/${id}`, { sheetData : characterData});
+                    if (response.status === 200) {
+                        console.log('Mise à jour réussie !');
+                    } else {
+                        console.error('Erreur lors de la mise à jour.');
+                    }
+                } catch (error) {
+                    console.error('Erreur lors de la communication avec le backend :', error);
+                }
+            };
 
-    const characteristicsInnéList = [{caracName:'CORPS', value:'', class:''},
+            console.log('Props reçus :', props);
+        const elementList = [
+            { elementName: 'TERRE', importance: principalTrait === 'Terre' ? 'principalTrait' : ascendantTrait === 'Terre' ? 'ascendantTrait' : neutralTrait === 'Terre' ? 'neutralTrait' : oppositeTrait === 'Terre' ? 'oppositeTrait' : '' },
+            { elementName: 'FEU', importance: principalTrait === 'Feu' ? 'principalTrait' : ascendantTrait === 'Feu' ? 'ascendantTrait' : neutralTrait === 'Feu' ? 'neutralTrait' : oppositeTrait === 'Feu' ? 'oppositeTrait' : '' },
+            { elementName: 'AIR', importance: principalTrait === 'Air' ? 'principalTrait' : ascendantTrait === 'Air' ? 'ascendantTrait' : neutralTrait === 'Air' ? 'neutralTrait' : oppositeTrait === 'Air' ? 'oppositeTrait' : '' },
+            { elementName: 'EAU', importance: principalTrait === 'Eau' ? 'principalTrait' : ascendantTrait === 'Eau' ? 'ascendantTrait' : neutralTrait === 'Eau' ? 'neutralTrait' : oppositeTrait === 'Eau' ? 'oppositeTrait' : '' },
+        ];
+
+
+     const characteristicsInnéList = [{caracName:'CORPS', value:'', class:''},
                                     {caracName:'ESPRIT', value:'', class:''},
                                     {caracName:'ÂME', value:'', class:''}];
     
@@ -124,30 +151,30 @@ function CharacterSheet (props) {
         characteristicsInnéList[2].class = 'oppositeClass';
     } else {}
 
-    if (martialLevel === '2') {
+    if (martialArtsLevel === '2') {
         characteristicsAcquisList[0].value = 'Critique';
         characteristicsAcquisList[0].class = 'criticClass';
-    } else if (martialLevel === '1') {
+    } else if (martialArtsLevel === '1') {
         characteristicsAcquisList[0].value = 'Bonus';
         characteristicsAcquisList[0].class = 'bonusClass';
-    } else if (martialLevel === '0') {
+    } else if (martialArtsLevel === '0') {
         characteristicsAcquisList[0].value = 'Neutre';
         characteristicsAcquisList[0].class = 'neutralClass';
-    } else if (martialLevel === '-1') {
+    } else if (martialArtsLevel === '-1') {
         characteristicsAcquisList[0].value = 'Malus';
         characteristicsAcquisList[0].class = 'oppositeClass';
     } else {}
 
-    if (elementLevel === '2') {
+    if (elementaryArtsLevel === '2') {
         characteristicsAcquisList[1].value = 'Critique';
         characteristicsAcquisList[1].class = 'criticClass';
-    } else if (elementLevel === '1') {
+    } else if (elementaryArtsLevel === '1') {
         characteristicsAcquisList[1].value = 'Bonus';
         characteristicsAcquisList[1].class = 'bonusClass';
-    } else if (elementLevel === '0') {
+    } else if (elementaryArtsLevel === '0') {
         characteristicsAcquisList[1].value = 'Neutre';
         characteristicsAcquisList[1].class = 'neutralClass';
-    } else if (elementLevel === '-1') {
+    } else if (elementaryArtsLevel === '-1') {
         characteristicsAcquisList[1].value = 'Malus';
         characteristicsAcquisList[1].class = 'oppositeClass';
     } else {}
@@ -169,33 +196,14 @@ function CharacterSheet (props) {
     /* Fonctions pour gérer les updates de la fiche */
 
 
-    const [formDataUpdate, setFormDataUpdate] = useState({});
-    const [newName, setNewName] = useState('');
-    const [newAge, setNewAge] = useState('');
-    const [newSkills, setNewSkills] = useState('');
-    const [newNotes, setNewNotes] = useState('');
-    const [newPhysic, setNewPhysic] = useState('');
-    const [newMental, setNewMental] = useState('');
-    const [newStory, setNewStory] = useState('');
-    const { id } =useParams();
-
-    console.log('Montre-moi le formulaire : ', formDataUpdate);
-
-    const handleUpdate = (event) => {
-        const { name, value } = event.target;
-        setFormDataUpdate((prevState) => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
-    
+     const [formDataUpdate, setFormDataUpdate] = useState({});    
 
     const characteristicFields = {
         'CORPS': 'bodyLevel',
         'ESPRIT': 'mindLevel',
         'ÂME': 'soulLevel',
-        'ARTS MARTIAUX': 'martialLevel',
-        'ARTS ELEMENTAIRES': 'elementaryLevel',
+        'ARTS MARTIAUX': 'martialArtsLevel',
+        'ARTS ELEMENTAIRES': 'elementaryArtsLevel',
         'ARTS ORATOIRES': 'speakingLevel'
     };
 
@@ -225,167 +233,149 @@ function CharacterSheet (props) {
         }
     };
 
-    const handleNameChange = (event) => {
-        setNewName(event.target.value);
-        handleUpdate(event);
-    };
-
-    const handleAgeChange = (event) => {
-        setNewAge(event.target.value);
-        handleUpdate(event);
-    };
-
-    const handleSkillsChange = (event) => {
-        setNewSkills(event.target.value);
-        handleUpdate(event);
-    };
-
-    const handleNotesChange = (event) => {
-        setNewNotes(event.target.value);
-        handleUpdate(event);
-    };
-
-    const handlePhysicChange = (event) => {
-        setNewPhysic(event.target.value);
-        handleUpdate(event);
-    };
-
-    const handleMentalChange = (event) => {
-        setNewMental(event.target.value);
-        handleUpdate(event);
-    };
-
-    const handleStoryChange = (event) => {
-        setNewStory(event.target.value);
-        handleUpdate(event);
-    };
-
-    console.log({id});
-
-    const submitUpdate = async () => {
-        try {
-            // Envoyer les données au backend pour la mise à jour
-            const response = await axios.put('/backharmonistere/updateSheet/:id', formDataUpdate);
-    
-            // Vérifier si la mise à jour a réussi
-            if (response.status === 200) {
-                console.log('Mise à jour des caractéristiques réussie !');
-            } else {
-                console.error('Erreur lors de la mise à jour des caractéristiques.');
-            }
-        } catch (error) {
-            console.error('Erreur lors de la communication avec le backend :', error);
-        }
-    };
-    
-    
-
-
     return (
         <>
             {changeSheet ? (
                 <div id="allSheet">
                     <div id='headerSheet'>
                         <div id='personnalInformation'>
-                            <h3><input type='text' name='name' value={newName} placeholder={name} onChange={handleNameChange} /></h3>
-                            <p>Âge : <input type='number' name='age' value={newAge} placeholder={age} onChange={handleAgeChange} /></p>
+                            <h3>
+                                <input
+                                    type='text'
+                                    name='characterName' 
+                                    value={characterData.characterName}
+                                    placeholder={characterName}
+                                    onChange={handleChange} 
+                                />
+                            </h3>
+
+                            <p>
+                                Âge : 
+                                    <input
+                                    type='number'
+                                    name='characterAge'
+                                    value={characterData.characterAge}
+                                    placeholder={characterAge}
+                                    onChange={handleChange}
+                                />
+                            </p>
+
                             <p>Maîtrise :</p>
-                            <select defaultValue= {isBender ? bending : 'Aucune'}>
+                            <select
+                                name='benderSelect'
+                                value={characterData.benderSelect}
+                                onChange={handleChange}
+                            >
                                 <option value='Aucune'>Aucune</option>
                                 <option value='Terre'>Terre</option>
                                 <option value='Feu'>Feu</option>
                                 <option value='Air'>Air</option>
                                 <option value='Eau'>Eau</option>
+
                             </select>
                         </div>
-                        <Popup trigger={
-            <div id='personnalityInformation'>
-                {elementList.map((element, index) => (
-                    <div key={index} className={`elementSheet ${element.importance}`}>{element.elementName}</div>
-                ))}
-            </div>
-        } position="left center">
-            <SelectTest/>
-        </Popup>
+
+                        <Popup
+                            trigger={
+                                <div id='personnalityInformation'>
+                                    {elementList.map((element, index) => (
+                                        <div
+                                            key={index}
+                                            className={`elementSheet ${element.importance}`}
+                                        >
+                                            {element.elementName}
+                                        </div>
+                                    ))}
+                                </div>
+                            }
+                            position="left center"
+                        >
+
+                            <SelectTest/>
+                        </Popup>
                     </div>
-                    <div id='characteristicsInformation'>
-                        <div className='columnCarac'>
+                    <div id="characteristicsInformation">
+                        <div className="columnCarac">
                             <h3>Inné</h3>
-                            {characteristicsInnéList.map((element, index) => (
-                                <div className='subtitleSheet' key={index}>
-                                    <div className={`caracSheet ${element.class}`}>
-                                        <select defaultValue={element.value} onChange={(event) => handleUpdateCharacteristics(element.caracName, event.target.value)}>
-                                            <option value='Malus'>Malus</option>
-                                            <option value='Neutre'>Neutre</option>
-                                            <option value='Bonus'>Bonus</option>
-                                            <option value='Critique'>Critique</option>
-                                        </select>
-                                    </div>
-                                    {element.caracName}
+                            {['bodyLevel', 'mindLevel', 'soulLevel'].map((carac, index) => (
+                                <div className="subtitleSheet" key={index}>
+                                    <select
+                                        name={carac}
+                                        value={characterData[carac]}
+                                        onChange={handleChange}
+                                    >
+                                        <option value="2">Critique</option>
+                                        <option value="1">Bonus</option>
+                                        <option value="0">Neutre</option>
+                                        <option value="-1">Malus</option>
+                                    </select>
+                                    {carac.toUpperCase()}
                                 </div>
                             ))}
                         </div>
-                        <div className='columnCarac'>
+                        <div className="columnCarac">
                             <h3>Acquis</h3>
-                            {characteristicsAcquisList.map((element, index) => (
-                                <div className='subtitleSheet rightSide' key={index}>
-                                    <div className={`caracSheet ${element.class}`}>
-                                    <select defaultValue={element.value} onChange={(event) => handleUpdateCharacteristics(element.caracName, event.target.value)}>
-                                            <option value='Malus'>Malus</option>
-                                            <option value='Neutre'>Neutre</option>
-                                            <option value='Bonus'>Bonus</option>
-                                            <option value='Critique'>Critique</option>
-                                        </select>
-                                    </div>
-                                    {element.caracName}
+                            {['martialArtsLevel', 'elementaryArtsLevel', 'speakingLevel'].map((carac, index) => (
+                                <div className="subtitleSheet" key={index}>
+                                    <select
+                                        name={carac}
+                                        value={characterData[carac]}
+                                        onChange={handleChange}
+                                    >
+                                        <option value="2">Critique</option>
+                                        <option value="1">Bonus</option>
+                                        <option value="0">Neutre</option>
+                                        <option value="-1">Malus</option>
+                                    </select>
+                                    {carac.toUpperCase()}
                                 </div>
                             ))}
                         </div>
                     </div>
                     <div id='bottomSheet'>
-                        <div id='skillsNote' className='characterInfoText'>
-                            <h3>Compétences de votre personnage</h3>
+{/*                         <div id='skillsNote' className='characterInfoText'>
+                            <h3>Compétences de votre personnage</h3> */}
                             <textarea
                                 name='skills'
-                                placeholder={specialSkills}
-                                value={newSkills}
-                                onChange={handleSkillsChange}
+                                placeholder={skills}
+                                value={characterData.skills}
+                                onChange={handleChange}
                                 cols={40}
                             />
-                        </div>
-                        <div id='notes' className='characterInfoText'>
+{/*                         </div>
+                        <div id='notes' className='characterInfoText'> */}
                             <h3>Vos notes</h3>
                             <textarea
                                 name='notes'
                                 placeholder={notes}
-                                value={newNotes}
-                                onChange={handleNotesChange}
+                                value={characterData.notes}
+                                onChange={handleChange}
                                 cols={40}
                                 />
-                        </div>
-                    </div>
+{/*                         </div>
+ */}                    </div>
                     <div id="otherCategories">
                         <h3>Votre physique</h3>
                         <textarea
                             name='physicDescription'
-                            placeholder={physicalDescription}
-                            value={newPhysic}
-                            onChange={handlePhysicChange}
+                            placeholder={physicDescription}
+                            value={characterData.physicDescription}
+                            onChange={handleChange}
                             cols={60}
                         />
                         <h3>Votre mental</h3>
                         <textarea
                             name='mentalDescription'
-                            placeholder={personnalityDescription}
-                            value={newMental}
-                            onChange={handleMentalChange}
+                            placeholder={mentalDescription}
+                            value={characterData.mentalDescription}
+                            onChange={handleChange}
                             cols={60} />
                         <h3>Votre histoire</h3>
                         <textarea
                             name='story'
-                            placeholder={storyCharacter}
-                            value={newStory}
-                            onChange={handleStoryChange}
+                            placeholder={story}
+                            value={characterData.story}
+                            onChange={handleChange}
                             cols={60} />
                     </div>
                     <button type='button' onClick={submitUpdate}>Envoyez vos changements</button>
@@ -395,9 +385,9 @@ function CharacterSheet (props) {
                 <div id="allSheet">
                     <div id='headerSheet'>
                         <div id='personnalInformation'>
-                            <h3>{name}</h3>
-                            <p>Âge : {age}</p>
-                            <p>Maîtrise : {isBender ? bending : 'Aucune'}</p>
+                            <h3>{characterName}</h3>
+                            <p>Âge : {characterAge}</p>
+                            <p>Maîtrise : {benderOrNot ? benderSelect : 'Aucune'}</p>
                         </div>
                         <div id='personnalityInformation'>
                             {elementList.map((element, index) => (
@@ -428,7 +418,7 @@ function CharacterSheet (props) {
                     <div id='bottomSheet'>
                         <div id='skillsNote' className='characterInfoText'>
                             <h3>Compétences de votre personnage</h3>
-                            <p>{specialSkills}</p>
+                            <p>{skills}</p>
                         </div>
                         <div id='notes' className='characterInfoText'>
                             <h3>Vos notes</h3>

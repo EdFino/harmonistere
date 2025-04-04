@@ -118,10 +118,10 @@ function CharacterSpace () {
                 {!sheetPresented ? (
                     <div id='sheetVisualRecto' className='sheetVisualElement'>
                         <CharacterSheet
-                            name={characterOneName}
-                            age={characterOneAge}
-                            isBender={isOneBender}
-                            bending={characterOneBender}
+                            characterName={characterOneName}
+                            characterAge={characterOneAge}
+                            benderOrNot={isOneBender}
+                            benderSelect={characterOneBender}
                             principalTrait={characterOnePrincipal}
                             ascendantTrait={characterOneAscendant}
                             neutralTrait={characterOneNeutral}
@@ -129,14 +129,14 @@ function CharacterSpace () {
                             bodyLevel={characterOneBody}
                             mindLevel={characterOneMind}
                             soulLevel={characterOneSoul}
-                            martialLevel={characterOneMartial}
-                            elementLevel={characterOneElement}
+                            martialArtsLevel={characterOneMartial}
+                            elementaryArtsLevel={characterOneElement}
                             speakingLevel={characterOneSpeaking}
-                            specialSkills={specialSkills}
+                            skills={specialSkills}
                             notes={notes}
-                            physicalDescription={physicalDescription}
-                            personnalityDescription={personnalityDescription}
-                            storyCharacter={storyCharacter}
+                            physicDescription={physicalDescription}
+                            mentalDescription={personnalityDescription}
+                            story={storyCharacter}
                             changeSheet={changeSheet}
                             />
                             </div>)

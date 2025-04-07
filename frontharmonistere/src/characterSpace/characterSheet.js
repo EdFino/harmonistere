@@ -354,8 +354,9 @@ function CharacterSheet (props) {
                     <div id="characteristicsInformation">
                         <div className="columnCarac">
                             <h3>Inné</h3>
-                            {['bodyLevel', 'mindLevel', 'soulLevel'].map((carac, index) => (
+                            {['CORPS : ', 'ESPRIT : ', 'ÂME : '].map((carac, index) => (
                                 <div className="subtitleSheet" key={index}>
+                                    {carac.toUpperCase()}
                                     <select
                                         name={carac}
                                         value={characterData[carac]}
@@ -366,14 +367,14 @@ function CharacterSheet (props) {
                                         <option value="0">Neutre</option>
                                         <option value="-1">Malus</option>
                                     </select>
-                                    {carac.toUpperCase()}
                                 </div>
                             ))}
                         </div>
                         <div className="columnCarac">
                             <h3>Acquis</h3>
-                            {['martialArtsLevel', 'elementaryArtsLevel', 'speakingLevel'].map((carac, index) => (
+                            {['ARTS MARTIAUX : ', 'ARTS ELEMENTAIRES : ', 'ART ORATOIRE : '].map((carac, index) => (
                                 <div className="subtitleSheet" key={index}>
+                                    {carac.toUpperCase()}
                                     <select
                                         name={carac}
                                         value={characterData[carac]}
@@ -384,14 +385,14 @@ function CharacterSheet (props) {
                                         <option value="0">Neutre</option>
                                         <option value="-1">Malus</option>
                                     </select>
-                                    {carac.toUpperCase()}
+
                                 </div>
                             ))}
                         </div>
                     </div>
                     <div id='bottomSheet'>
-{/*                         <div id='skillsNote' className='characterInfoText'>
-                            <h3>Compétences de votre personnage</h3> */}
+                        <div id='skillsNote' className='characterInfoText'>
+                            <h3>Compétences de votre personnage</h3>
                             <textarea
                                 name='skills'
                                 placeholder={skills}
@@ -399,8 +400,8 @@ function CharacterSheet (props) {
                                 onChange={handleChange}
                                 cols={40}
                             />
-{/*                         </div>
-                        <div id='notes' className='characterInfoText'> */}
+                        </div>
+                        <div id='notes' className='characterInfoText'>
                             <h3>Vos notes</h3>
                             <textarea
                                 name='notes'
@@ -409,8 +410,8 @@ function CharacterSheet (props) {
                                 onChange={handleChange}
                                 cols={40}
                                 />
-{/*                         </div>
- */}                    </div>
+                        </div>
+                    </div>
                     <div id="otherCategories">
                         <h3>Votre physique</h3>
                         <textarea

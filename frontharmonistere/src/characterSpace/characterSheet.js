@@ -86,6 +86,8 @@ function CharacterSheet (props) {
                 elementaryArtsLevel: '0',
                 speakingLevel: '0',
             });
+
+            const [showModal, setShowModal] = useState(false);
             
             useEffect(() => {
                 setCharacterData({
@@ -138,6 +140,7 @@ function CharacterSheet (props) {
                     const response = await axios.put(`http://localhost:5038/api/sheets/updateSheet/${id}`, { sheetData : sanitizedCharacterData});
                     if (response.status === 200) {
                         console.log('Mise à jour réussie !');
+                        setShowModal(true);
                     } else {
                         console.error('Erreur lors de la mise à jour.');
                     }
@@ -433,7 +436,16 @@ function CharacterSheet (props) {
                             cols={60} />
                     </div>
                     <button type='button' onClick={submitUpdate}>Envoyez vos changements</button>
+
+                    <Popup open={showModal} onClose={() => setShowModal(false)} modal nested>
+                        <div className="modal">
+                            <h2>Succès</h2>
+                            <p>Vos changements ont été enregistrés avec succès !</p>
+                            <button onClick={() => {setShowModal(false); window.location.reload();}}>Fermer</button>
+                        </div>
+                    </Popup>
                 </div>
+
                 
             ) : (
                 <div id="allSheet">

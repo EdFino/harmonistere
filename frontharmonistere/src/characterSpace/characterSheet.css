@@ -51,10 +51,17 @@
 .caracSheet {
     margin : 1em;
     border: solid black 1px;
-    border-radius: 50%;
+    border-radius: 40%;
     padding: 3em;
     max-width: 3em;
     max-height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.optionsUpdate {
+    display: flex;
 }
 
 .rightSide {
@@ -67,6 +74,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.caracName {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    text-align: center;
 }
 
 #bottomSheet {

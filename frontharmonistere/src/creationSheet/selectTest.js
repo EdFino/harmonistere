@@ -1,96 +1,103 @@
 import React, { useState, useEffect } from "react";
 
-const SelectTest = ({onPersonalitySelect, register, errors, watch, setValue}) => {
-    const [availableElementsAscendant, setAvailableElementsAscendant] = useState(['Terre', 'Feu', 'Air', 'Eau']);
-    const [availableElementsNeutral, setAvailableElementsNeutral] = useState(['Terre', 'Feu', 'Air', 'Eau']);
-    const [availableElementsOpposite, setAvailableElementsOpposite] = useState(['Terre', 'Feu', 'Air', 'Eau']);
+const SelectTest = ({ onTraitsChange, initialTraits }) => {
+    const elements = ['Terre', 'Feu', 'Air', 'Eau'];
+    const [traits, setTraits] = useState({
+        principalTrait: initialTraits?.principal || '',
+        ascendantTrait: initialTraits?.ascendant || '',
+        neutralTrait: initialTraits?.neutral || '',
+        oppositeTrait: initialTraits?.opposite || '',
+    });
 
-    useEffect(() => {
-        const updatedAvailableElementsAscendant = personnalityElementsList.filter(element => {
-            return element !== watch("principalTrait");
+    // Met à jour les traits et notifie le parent
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setTraits((prevTraits) => {
+            const updatedTraits = { ...prevTraits, [name]: value };
+            onTraitsChange(updatedTraits); // Envoie les données au parent
+            return updatedTraits;
         });
-        setAvailableElementsAscendant(updatedAvailableElementsAscendant);
-        setValue("ascendantTrait", "");
-        setValue("neutralTrait", "");
-        setValue("oppositeTrait", "");
-    }, [watch("principalTrait")]);
+    };
 
-    useEffect(() => {
-        const updatedAvailableElementsNeutral = availableElementsAscendant.filter(element => {
-            return element !== watch("principalTrait") && element !== watch("ascendantTrait");
-        });
-        setAvailableElementsNeutral(updatedAvailableElementsNeutral);
-        setValue("neutralTrait", "");
-        setValue("oppositeTrait", "");
-    }, [watch("principalTrait"), watch("ascendantTrait")]);
-
-    useEffect(() => {
-        const updatedAvailableElementsOpposite = availableElementsNeutral.filter(element => {
-            return element !== watch("principalTrait") && element !== watch("ascendantTrait") && element !== watch("neutralTrait");
-        });
-        setAvailableElementsOpposite(updatedAvailableElementsOpposite);
-        setValue("oppositeTrait", "");
-    }, [watch("principalTrait"), watch("ascendantTrait"), watch("neutralTrait")]);
-
-    const personnalityElementsList = ['Terre', 'Feu', 'Air', 'Eau'];
-
-    function resetCharac() {
-        setValue('principalTrait')
-        setValue("ascendantTrait", "");
-        setValue("neutralTrait", "");
-        setValue("oppositeTrait", "");
-    }
+    // Filtre les options disponibles pour chaque champ
+    const getAvailableOptions = (currentTrait) => {
+        return elements.filter(
+            (element) => !Object.values(traits).includes(element) || traits[currentTrait] === element
+        );
+    };
 
     return (
-        <div id='firstChapterForm'>
-            <h2>2/ Personnalité</h2>
+        <div id="selectTest">
+            <h2>Personnalité</h2>
             <div>
-                <label htmlFor='principalTrait'>Choisissez votre trait principal : </label>
-                <select id="principalTrait" name="principalTrait" {...register("principalTrait")}>
-                    <option value=''>Choisissez un élément dans la liste : </option>
-                    {personnalityElementsList.map((element, index) => (
-                        <option key={index} value={element}>{element}</option>
+                <label htmlFor="principalTrait">Trait principal :</label>
+                <select
+                    id="principalTrait"
+                    name="principalTrait"
+                    value={traits.principalTrait}
+                    onChange={handleChange}
+                >
+                    <option value="">Choisissez un élément</option>
+                    {getAvailableOptions('principalTrait').map((element, index) => (
+                        <option key={index} value={element}>
+                            {element}
+                        </option>
                     ))}
-                </select><br/>
-                {errors.principalTrait && <><span className='invalid-feedback'>{errors.principalTrait.message}</span><br/></>}
-
+                </select>
             </div>
 
             <div>
-                <label htmlFor='ascendantTrait'>Choisissez votre ascendant : </label>
-                <select id="ascendantTrait" name="ascendantTrait" {...register("ascendantTrait")}>
-                    <option value=''>Choisissez un élément dans la liste : </option>
-                    {availableElementsAscendant.map((element, index) => (
-                        <option key={index} value={element}>{element}</option>
+                <label htmlFor="ascendantTrait">Trait ascendant :</label>
+                <select
+                    id="ascendantTrait"
+                    name="ascendantTrait"
+                    value={traits.ascendantTrait}
+                    onChange={handleChange}
+                >
+                    <option value="">Choisissez un élément</option>
+                    {getAvailableOptions('ascendantTrait').map((element, index) => (
+                        <option key={index} value={element}>
+                            {element}
+                        </option>
                     ))}
-                </select><br/>
-                {errors.ascendantTrait && <><span className='invalid-feedback'>{errors.ascendantTrait.message}</span><br/></>}
+                </select>
             </div>
 
             <div>
-                <label htmlFor='neutralTrait'>Choisissez votre trait neutre : </label>
-                <select id="neutralTrait" name="neutralTrait" {...register("neutralTrait")}>
-                    <option value=''>Choisissez un élément dans la liste : </option>
-                    {availableElementsNeutral.map((element, index) => (
-                        <option key={index} value={element}>{element}</option>
+                <label htmlFor="neutralTrait">Trait neutre :</label>
+                <select
+                    id="neutralTrait"
+                    name="neutralTrait"
+                    value={traits.neutralTrait}
+                    onChange={handleChange}
+                >
+                    <option value="">Choisissez un élément</option>
+                    {getAvailableOptions('neutralTrait').map((element, index) => (
+                        <option key={index} value={element}>
+                            {element}
+                        </option>
                     ))}
-                </select><br/>
-                {errors.neutralTrait && <><span className='invalid-feedback'>{errors.neutralTrait.message}</span><br/></>}
+                </select>
             </div>
 
             <div>
-                <label htmlFor='oppositeTrait'>Choisissez votre trait contraire : </label>
-                <select id="oppositeTrait" name="oppositeTrait" {...register("oppositeTrait")}>
-                    <option value=''>Choisissez un élément dans la liste : </option>
-                    {availableElementsOpposite.map((element, index) => (
-                        <option key={index} value={element}>{element}</option>
+                <label htmlFor="oppositeTrait">Trait opposé :</label>
+                <select
+                    id="oppositeTrait"
+                    name="oppositeTrait"
+                    value={traits.oppositeTrait}
+                    onChange={handleChange}
+                >
+                    <option value="">Choisissez un élément</option>
+                    {getAvailableOptions('oppositeTrait').map((element, index) => (
+                        <option key={index} value={element}>
+                            {element}
+                        </option>
                     ))}
-                </select><br/>
-                {errors.oppositeTrait && <><span className='invalid-feedback'>{errors.oppositeTrait.message}</span><br/></>}
+                </select>
             </div>
-            <button type='button' onClick={resetCharac}>Réinitialiser les valeurs</button>
         </div>
     );
-}
+};
 
 export default SelectTest;

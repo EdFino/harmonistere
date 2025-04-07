@@ -24,6 +24,32 @@ exports.readSheet = async (req, res) => {
     }
 };
 
+exports.updateSheet = async (req, res) => {
+    try {
+        const { id } = req.params; // ID de la fiche
+        console.log('ID reçu pour mise à jour :', id); // Vérifiez la valeur ici
+        const updatedSheetData = req.body.sheetData;
+        console.log('Données reçues pour mise à jour :', req.body.sheetData);
+
+        const sheet = await Sheet.findById(id);
+        if (!sheet) {
+            return res.status(404).json({ error: 'Fiche non trouvée' });
+        }
+        for (const key in updatedSheetData) {
+            if (updatedSheetData.hasOwnProperty(key)) {
+                sheet.sheetData[key] = updatedSheetData[key];
+            }
+        }
+
+        await sheet.save();
+
+        res.status(200).json({ message: 'Fiche mise à jour avec succès', sheet });
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour de la fiche :', error);
+        res.status(500).json({ error: 'Erreur lors de la mise à jour de la fiche' });
+    }
+};
+
 exports.getSheet = async (req, res) => {
     try {
         const { id } = req.params;

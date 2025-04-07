@@ -74,6 +74,10 @@ function CharacterSheet (props) {
                 characterAge: '',
                 benderOrNot: false,
                 benderSelect: 'Aucune',
+                principalTrait:'',
+                ascendantTrait:'',
+                neutralTrait:'',
+                oppositeTrait: '',
                 skills: '',
                 notes: '',
                 physicDescription: '',
@@ -95,6 +99,10 @@ function CharacterSheet (props) {
                     characterAge: props.characterAge || '',
                     benderOrNot: props.benderOrNot || false,
                     benderSelect: props.benderOrNot ? props.benderSelect : 'Aucune',
+                    principalTrait: props.principalTrait || '',
+                    ascendantTrait: props.ascendantTrait || '',
+                    neutralTrait: props.neutralTrait || '',
+                    oppositeTrait: props.oppositeTrait || '',
                     skills: props.skills || '',
                     notes: props.notes || '',
                     physicDescription: props.physicDescription || '',
@@ -162,9 +170,9 @@ function CharacterSheet (props) {
                                     {caracName:'ESPRIT', value:'', class:''},
                                     {caracName:'ÂME', value:'', class:''}];
     
-    const characteristicsAcquisList = [{caracName:'ARTS MARTIAUX', value:'', class:''},
-                                    {caracName:'ARTS ELEMENTAIRES', value:'', class:''},
-                                    {caracName:'ARTS ORATOIRES', value:'', class:''}];
+    const characteristicsAcquisList = [{caracName:'ARTS\n MARTIAUX', value:'', class:''},
+                                    {caracName:'ARTS\n ELEMENTAIRES', value:'', class:''},
+                                    {caracName:'ARTS\n ORATOIRES', value:'', class:''}];
 
     if (bodyLevel === '2') {
         characteristicsInnéList[0].value = 'Critique';
@@ -290,6 +298,23 @@ function CharacterSheet (props) {
         }
     };
 
+    const [traits, setTraits] = useState({
+        principal: '',
+        ascendant: '',
+        neutral: '',
+        opposite: '',
+    });
+
+    const handleTraitsChange = (updatedTraits) => {
+        setTraits(updatedTraits);
+        setCharacterData((prevData) => ({
+            ...prevData,
+            ...updatedTraits,
+        }));
+    };
+
+    
+
     return (
         <>
             {changeSheet ? (
@@ -348,7 +373,12 @@ function CharacterSheet (props) {
                             position="left center"
                         >
 
-                            <SelectTest/>
+<div>
+            <SelectTest onTraitsChange={handleTraitsChange} initialTraits={traits} />
+            <button type="button" onClick={submitUpdate}>
+                Envoyez vos changements
+            </button>
+        </div>
                         </Popup>
                     </div>
                     <div id="characteristicsInformation">
@@ -356,16 +386,16 @@ function CharacterSheet (props) {
                             <h3>Inné</h3>
                             {['CORPS : ', 'ESPRIT : ', 'ÂME : '].map((carac, index) => (
                                 <div className="subtitleSheet" key={index}>
-                                    {carac.toUpperCase()}
+                                    {carac}
                                     <select
                                         name={carac}
                                         value={characterData[carac]}
                                         onChange={handleChange}
                                     >
-                                        <option value="2">Critique</option>
-                                        <option value="1">Bonus</option>
-                                        <option value="0">Neutre</option>
-                                        <option value="-1">Malus</option>
+                                            <option value="2">Critique</option>
+                                            <option value="1">Bonus</option>
+                                            <option value="0">Neutre</option>
+                                            <option value="-1">Malus</option>
                                     </select>
                                 </div>
                             ))}
@@ -374,7 +404,7 @@ function CharacterSheet (props) {
                             <h3>Acquis</h3>
                             {['ARTS MARTIAUX : ', 'ARTS ELEMENTAIRES : ', 'ART ORATOIRE : '].map((carac, index) => (
                                 <div className="subtitleSheet" key={index}>
-                                    {carac.toUpperCase()}
+                                    {carac}
                                     <select
                                         name={carac}
                                         value={characterData[carac]}
@@ -477,7 +507,7 @@ function CharacterSheet (props) {
                             {characteristicsAcquisList.map((element, index) => (
                                 <div className='subtitleSheet rightSide' key={index}>
                                     <div className={`caracSheet ${element.class}`}>{element.value}</div>
-                                    {element.caracName}
+                                    <div className='caracName'>{element.caracName}</div>
                                 </div>
                             ))}
                         </div>

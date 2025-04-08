@@ -166,13 +166,13 @@ function CharacterSheet (props) {
         ];
 
 
-     const characteristicsInnéList = [{caracName:'CORPS', value:'', class:''},
-                                    {caracName:'ESPRIT', value:'', class:''},
-                                    {caracName:'ÂME', value:'', class:''}];
+     const characteristicsInnéList = [{caracName:'CORPS', fieldName: 'bodyLevel'},
+                                    {caracName:'ESPRIT', fieldName: 'mindLevel'},
+                                    {caracName:'ÂME', fieldName: 'soulLevel'}];
     
-    const characteristicsAcquisList = [{caracName:'ARTS\n MARTIAUX', value:'', class:''},
-                                    {caracName:'ARTS\n ELEMENTAIRES', value:'', class:''},
-                                    {caracName:'ARTS\n ORATOIRES', value:'', class:''}];
+    const characteristicsAcquisList = [{caracName:'ARTS\n MARTIAUX', fieldName: 'martialArtsLevel'},
+                                    {caracName:'ARTS\n ELEMENTAIRES', fieldName: 'elementaryArtsLevel'},
+                                    {caracName:'ARTS\n ORATOIRES', fieldName: 'speakingLevel'}];
 
     if (bodyLevel === '2') {
         characteristicsInnéList[0].value = 'Critique';
@@ -384,12 +384,12 @@ function CharacterSheet (props) {
                     <div id="characteristicsInformation">
                         <div className="columnCarac">
                             <h3>Inné</h3>
-                            {['CORPS : ', 'ESPRIT : ', 'ÂME : '].map((carac, index) => (
+                            {characteristicsInnéList.map((element, index) => (
                                 <div className="subtitleSheet" key={index}>
-                                    {carac}
+                                    {element.caracName}
                                     <select
-                                        name={carac}
-                                        value={characterData[carac]}
+                                        name={element.fieldName}
+                                        value={characterData[element.fieldName]}
                                         onChange={handleChange}
                                     >
                                             <option value="2">Critique</option>
@@ -402,12 +402,12 @@ function CharacterSheet (props) {
                         </div>
                         <div className="columnCarac">
                             <h3>Acquis</h3>
-                            {['ARTS MARTIAUX : ', 'ARTS ELEMENTAIRES : ', 'ART ORATOIRE : '].map((carac, index) => (
+                            {characteristicsAcquisList.map((element, index) => (
                                 <div className="subtitleSheet" key={index}>
-                                    {carac}
+                                    {element.caracName}
                                     <select
-                                        name={carac}
-                                        value={characterData[carac]}
+                                        name={element.fieldName}
+                                        value={characterData[element.fieldName]}
                                         onChange={handleChange}
                                     >
                                         <option value="2">Critique</option>

@@ -17,9 +17,9 @@ exports.checkEmail = async (req, res) => {
 // Créer un nouvel utilisateur
 exports.createAccount = async (req, res) => {
     console.log('Données reçues par le back-end:', req.body);
-    const { pseudoPlayer, agePlayer, genderPlayer, emailPlayer } = req.body;
+    const { pseudoPlayer, birthdayPlayer, genderPlayer, emailPlayer } = req.body;
     try {
-        const newPlayer = new Player({ pseudoPlayer, agePlayer, genderPlayer, emailPlayer });
+        const newPlayer = new Player({ pseudoPlayer, birthdayPlayer, genderPlayer, emailPlayer });
         console.log('Données à enregistrer dans MongoDB:', newPlayer);
         await newPlayer.save();
         res.status(201).json({ message: 'Compte créé avec succès' });

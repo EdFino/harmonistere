@@ -15,11 +15,10 @@ const schema = yup.object({
     pseudoPlayer: yup.string()
         .required('N\'oubliez pas votre pseudo !')
         .max(20, 'Le pseudo ne doit pas dépasser 20 caractères'),
-    agePlayer: yup.number()
-        .typeError('Veuillez entrer un nombre valide pour l\'âge.')
-        .positive('Votre âge doit être positif...')
-        .integer('Veuillez ne pas mettre de virgule')
-        .required('Vous devez mentionner votre âge.'),
+    birthdayPlayerPlayer: yup.date()
+        .typeError('Veuillez entrer une date valide.')
+        .max(new Date(), "La date de naissance ne saurait être dans le futur...")
+        .required('Vous devez mentionner votre date de naissance.'),
     genderPlayer: yup.string()
         .required('N\'oubliez pas votre genre.'),
     emailPlayer: yup.string()
@@ -62,7 +61,7 @@ function AccountCreationPanel({ loadingAuthCreation, buttonSize }) {
 
             const sanitizedData = {
             pseudoPlayer: DOMPurify.sanitize(data.pseudoPlayer),
-            agePlayer: DOMPurify.sanitize(data.agePlayer),
+            birthdayPlayer: DOMPurify.sanitize(data.birthdayPlayer),
             genderPlayer: DOMPurify.sanitize(data.genderPlayer),
             emailPlayer: DOMPurify.sanitize(data.emailPlayer),
             };
@@ -108,13 +107,14 @@ function AccountCreationPanel({ loadingAuthCreation, buttonSize }) {
                     {errors.pseudoPlayer && <><span className='invalid-feedback'>{errors.pseudoPlayer.message}</span></>}
 
                     <input
-                        type='number'
-                        id='agePlayer'
+                        type='date'
+                        min='1900-01-01'
+                        id='birthdayPlayer'
                         className={style.inputHarmonistere}
-                        name='agePlayer'
-                        placeholder='Âge'
-                        {...register("agePlayer")} />
-                    {errors.agePlayer && <><span className='invalid-feedback'>{errors.agePlayer.message}</span></>}
+                        name='birthdayPlayer'
+                        placeholder='Date de naissance'
+                        {...register("birthdayPlayer")} />
+                    {errors.birthdayPlayer && <><span className='invalid-feedback'>{errors.birthdayPlayer.message}</span></>}
 
                     <select
                         id="genderPlayer"

@@ -69,3 +69,21 @@ exports.getSheet = async (req, res) => {
         res.status(500).json({ error: 'Erreur lors de la récupération de la fiche' });
     }
 };
+
+exports.deleteSheet = async (req, res) => {
+    try {
+        const { id } = req.params; // Récupère l'ID de la fiche à supprimer
+        console.log('ID reçu pour suppression :', id);
+
+        const sheet = await Sheet.findByIdAndDelete(id); // Supprime la fiche par son ID
+
+        if (!sheet) {
+            return res.status(404).json({ error: 'Fiche non trouvée' });
+        }
+
+        res.status(200).json({ message: 'Fiche supprimée avec succès', sheet });
+    } catch (error) {
+        console.error('Erreur lors de la suppression de la fiche :', error);
+        res.status(500).json({ error: 'Erreur lors de la suppression de la fiche' });
+    }
+};

@@ -157,12 +157,11 @@ const closeModalSheet = () => {
             </div>
 
             <CustomModal
-  isOpen={showModalSheet}
-  onClose={closeModalSheet}
-  message= "Fiche créée avec succès !"
-  messageEnd="Retour sur votre profil"
->
-</CustomModal>
+                isOpen={showModalSheet}
+                onClose={closeModalSheet}
+                message= "Fiche créée avec succès !"
+                messageEnd="Retour sur votre profil"
+            />
 
     </div>
   )

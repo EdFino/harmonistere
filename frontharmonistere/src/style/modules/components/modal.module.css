@@ -18,8 +18,13 @@
     opacity: 1;
     margin-top: 1em;
     font-size: 1.1em;
+    text-align: center;
 }
 
 .modalFooter {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 5px;
 }

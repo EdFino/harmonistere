@@ -9,12 +9,15 @@ import CharacterSheet from './characterSheet';
 import Popup from 'reactjs-popup';
 import CharacterSheetVerso from './characterSheetVerso';
 import DiceLauncherMini from '../diceLauncher/diceLauncherMini';
+import CustomModal from '../specialComponents/customModal';
+import { useNavigate } from 'react-router-dom';
 
 function CharacterSpace () {
 
     const [user] = useAuthState(auth);
     const [sheetData, setSheetData] = useState(null);
-    const [showDeleteModal, setShowDeleteModal] = useState(null);
+    const [showFirstDeleteModal, setShowFirstDeleteModal] = useState(false);
+    const [showSecondDeleteModal, setShowSecondDeleteModal] = useState(false);
     const [sheetDeleted, setSheetDeleted] = useState(false);
     const [sheetPresented, setSheetPresented] = useState (false);
     const [changeSheet, setChangeSheet] = useState(false);
@@ -78,22 +81,22 @@ function CharacterSpace () {
     }, [user]);
 
     const handleDelete = () => {
-        axios.delete(`http://localhost:5038/backharmonistere/deleteSheet/${id}`)
-        .then(response => {
-            console.log ('Fiche supprimée avec succès');
-            setSheetDeleted(true)
-        })
-        .catch(error => {
-            console.log ('La fiche n\'a pas pu être supprimée : ', error);
-        });
-    }
+        setShowFirstDeleteModal(false);
+        setShowSecondDeleteModal(true);
+        setTimeout(() => {
+            axios.delete(`http://localhost:5038/api/sheets/deleteSheet/${id}`)
+            .then(response => {
+                console.log ('Fiche supprimée avec succès');
+                setSheetDeleted(true)
+            })
+            .catch(error => {
+                console.log ('La fiche n\'a pas pu être supprimée : ', error);
+            });
+        }, 5000);
+    };
     
 
     console.log (sheetData);
-
-    const closeModal = () => {
-        setShowDeleteModal(false);
-    };
 
     const editSheet = () => {
         setChangeSheet(!changeSheet);
@@ -101,6 +104,17 @@ function CharacterSpace () {
 
     const diceLauncherSet = () => {
         setDiceLauncherReady(!diceLauncherReady);
+    }
+
+    const navigate = useNavigate();
+
+    const closeFirstDeleteModal = () => {
+        setShowFirstDeleteModal(false);
+    }
+
+    const closeSecondDeleteModal = () => {
+        setShowSecondDeleteModal(false);
+        navigate('/espacejoueur');
     }
     
     return (
@@ -112,7 +126,7 @@ function CharacterSpace () {
                 <div id='columnCrud' className='columnSheet'>
                     <p>Ici il y aura les fonctions pour modifier ou supprimer sa fiche</p>
                     <button type='button' onClick={editSheet}>Editer votre fiche</button><br/>
-                    <button type='button' onClick={() => setShowDeleteModal(true)}>Supprimer la fiche</button>
+                    <button type='button' onClick={() => setShowFirstDeleteModal(true)}>Supprimer la fiche</button>
                 </div>
                 <div id='characterSheetVisual'>
                 {!sheetPresented ? (
@@ -160,18 +174,21 @@ function CharacterSpace () {
                     <DiceLauncherMini/>) : null}
                 </div>
 
-                <Popup open={showDeleteModal} onClose={closeModal} modal nested>
-                {(close) => (
-                    <div className='modal'>
-                        <div className='content'>
-                            <p>Êtes-vous certain de vouloir supprimer votre fiche ?</p>
-                            <p>Cette option sera définitive</p>
-                            <button type='button' onClick={handleDelete}>Suppression de la fiche</button>
-                            <button type='button' onClick={closeModal}>Annuler l'opération</button>
-                        </div>
-                    </div>
-                )}
-            </Popup>
+                        <CustomModal
+                            isOpen={showFirstDeleteModal}
+                            onClose={closeFirstDeleteModal}
+                            message= "Êtes-vous certain de vouloir supprimer votre fiche ?"
+                            messageEnd="Annuler l'opération"
+                            secondOnClose={handleDelete}
+                            secondMessageEnd="Suppression de la fiche"
+                        />
+
+                        <CustomModal
+                            isOpen={showSecondDeleteModal}
+                            onClose={closeSecondDeleteModal}
+                            message= "Votre fiche a été supprimée !"
+                            messageEnd="Retour dans mon espace"
+                        />
 
             {sheetDeleted && <Navigate to="/espacejoueur" />}
             </div>

@@ -15,7 +15,7 @@ const schema = yup.object({
     pseudoPlayer: yup.string()
         .required('N\'oubliez pas votre pseudo !')
         .max(20, 'Le pseudo ne doit pas dépasser 20 caractères'),
-    birthdayPlayerPlayer: yup.date()
+    birthdayPlayer: yup.date()
         .typeError('Veuillez entrer une date valide.')
         .max(new Date(), "La date de naissance ne saurait être dans le futur...")
         .required('Vous devez mentionner votre date de naissance.'),
@@ -108,7 +108,6 @@ function AccountCreationPanel({ loadingAuthCreation, buttonSize }) {
 
                     <input
                         type='date'
-                        min='1900-01-01'
                         id='birthdayPlayer'
                         className={style.inputHarmonistere}
                         name='birthdayPlayer'

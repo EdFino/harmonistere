@@ -1,0 +1,17 @@
+.buttonHarmonistere {
+    background: #77B7C9 0% 0% no-repeat padding-box;
+    border-radius: 35px;
+    color: #233463;
+    font-weight: bold;
+    margin-top: 1em;
+    margin-bottom: 5px;
+    padding: 1em 2em;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+
+.buttonHarmonistere:hover {
+    background: #233463;
+    color: #FEF2E2;
+}

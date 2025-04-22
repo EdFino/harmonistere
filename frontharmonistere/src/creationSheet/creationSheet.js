@@ -18,6 +18,7 @@ import creationSheetImage from '../images/Image 2.png';
 import creationSheetBackground from '../images/Fond fiche perso.png';
 import kit from '../style/kitUI.module.css';
 import SubNavbarSheet from './subNavbarSheet';
+import CustomModal from '../specialComponents/customModal';
 
 function CreationSheet () {
 
@@ -153,17 +154,14 @@ const closeModalSheet = () => {
 
             </div>
 
-    <Popup open={showModalSheet} onClose={closeModalSheet} modal nested closeOnDocumentClick={false}>
-                {(close) => (
-                    <div className='modal'>
-                        <div className='content'>
-                            <h2>Merci !</h2>
-                            <p>Votre fiche a été créée avec succès.</p>
-                            <Link to="/espacejoueur"><button onClick={close}>Retourner à l'accueil</button></Link>
-                        </div>
-                    </div>
-                )}
-            </Popup>
+            <CustomModal
+  isOpen={showModalSheet}
+  onClose={closeModalSheet}
+  message= "Fiche créée avec succès !"
+  messageEnd="Retour sur votre profil"
+>
+</CustomModal>
+
     </div>
   )
 }

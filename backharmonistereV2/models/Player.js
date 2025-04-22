@@ -6,10 +6,9 @@ const playerSchema = new mongoose.Schema({
         required: true,
         maxLength: 20
     },
-    agePlayer: {
-        type: Number,
+    birthdayPlayer: {
+        type: Date,
         required: true,
-        min: 0
     },
     genderPlayer: {
         type: String,

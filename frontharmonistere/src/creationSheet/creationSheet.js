@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import Navbar from '../navbar/navbar';
 import './creationSheet.css';
-import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import { auth } from '../assets/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import DOMPurify from 'dompurify';
@@ -19,6 +17,7 @@ import creationSheetBackground from '../images/Fond fiche perso.png';
 import kit from '../style/kitUI.module.css';
 import SubNavbarSheet from './subNavbarSheet';
 import CustomModal from '../specialComponents/customModal';
+import { useNavigate } from 'react-router-dom';
 
 function CreationSheet () {
 
@@ -79,8 +78,11 @@ function CreationSheet () {
     }
 };
 
+const navigate = useNavigate();
+
 const closeModalSheet = () => {
     setShowModalSheet(false);
+    navigate('/espacejoueur');
 };
 
     return (

@@ -2,7 +2,10 @@ import React from 'react';
 import kit from '../style/kitUI.module.css';
 
 const FinalStepForm = ({formData, onFinalSubmit, previousStep, buttonSize}) => {
-  return (
+  
+    console.log(formData);
+  
+    return (
 
     <div id='fifthChapter'>
         <p>Vous êtes sur le point de créer votre fiche.</p>

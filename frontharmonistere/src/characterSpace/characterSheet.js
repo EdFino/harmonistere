@@ -153,10 +153,13 @@ function CharacterSheet (props) {
                 const sanitizedData = {};
                 for (const key in data) {
                     if (data.hasOwnProperty(key)) {
-                        if (typeof data[key] === 'object' && data[key] !== null) {
-                            sanitizedData[key] = sanitizeData(data[key]);
+                        const value = data[key];
+                        if (typeof value === 'string') {
+                            sanitizedData[key] = DOMPurify.sanitize(value);
+                        } else if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+                            sanitizedData[key] = sanitizeData(value);
                         } else {
-                            sanitizedData[key] = DOMPurify.sanitize(data[key]);
+                            sanitizedData[key] = value;
                         }
                     }
                 }

@@ -3,4 +3,9 @@
     background: #FFF9F0 0% 0% no-repeat padding-box;
     padding: 1em;
     max-width: 22%;
-  }
+}
+
+.popup-overlay {
+    background: rgba(0, 0, 0, 0.3); /* noir semi-transparent */
+    z-index: 999;
+}

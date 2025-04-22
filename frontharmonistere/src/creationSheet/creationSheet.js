@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Navbar from '../navbar/navbar';
 import './creationSheet.css';
-import 'reactjs-popup/dist/index.css';
-import axios from 'axios';
+/* import 'reactjs-popup/dist/index.css';
+ */import axios from 'axios';
 import { auth } from '../assets/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import DOMPurify from 'dompurify';
@@ -48,19 +48,19 @@ function CreationSheet () {
             sheetData: {
                 characterName: DOMPurify.sanitize(formData.characterName),
                 characterAge: DOMPurify.sanitize(formData.characterAge),
-                benderOrNot: DOMPurify.sanitize(formData.benderOrNot),
+                benderOrNot: formData.benderOrNot,
                 benderSelect: DOMPurify.sanitize(formData.benderSelect),
                 principalTrait: DOMPurify.sanitize(formData.principalTrait),
                 ascendantTrait: DOMPurify.sanitize(formData.ascendantTrait),
                 neutralTrait: DOMPurify.sanitize(formData.neutralTrait),
                 oppositeTrait: DOMPurify.sanitize(formData.oppositeTrait),
-                bodyLevel: DOMPurify.sanitize(formData.bodyLevel),
-                mindLevel: DOMPurify.sanitize(formData.mindLevel),
-                soulLevel: DOMPurify.sanitize(formData.soulLevel),
-                martialArtsLevel: DOMPurify.sanitize(formData.martialArtsLevel),
-                elementaryArtsLevel: DOMPurify.sanitize(formData.elementaryArtsLevel),
-                speakingLevel: DOMPurify.sanitize(formData.speakingLevel),
-                skills: DOMPurify.sanitize(formData.skills),
+                bodyLevel: formData.bodyLevel,
+                mindLevel: formData.mindLevel,
+                soulLevel: formData.soulLevel,
+                martialArtsLevel: formData.martialArtsLevel,
+                elementaryArtsLevel: formData.elementaryArtsLevel,
+                speakingLevel: formData.speakingLevel,
+                skills: formData.skills,
                 notes: DOMPurify.sanitize(formData.notes),
                 physicDescription: DOMPurify.sanitize(formData.physicDescription),
                 mentalDescription: DOMPurify.sanitize(formData.mentalDescription),

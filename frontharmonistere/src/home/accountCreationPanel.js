@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
-import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { registerUser } from '../assets/firebase';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -27,14 +24,13 @@ const schema = yup.object({
     passwordPlayer: yup.string()
         .required('Vous devez entrer un mot de passe.')
         .min(8, 'Votre mot de passe doit comporter au moins 8 caractères.'),
-        passwordPlayerVerification: yup.string()
+    passwordPlayerVerification: yup.string()
         .oneOf([yup.ref('passwordPlayer'), null], 'Les mots de passe doivent correspondre.')
         .required('Vous devez confirmer votre mot de passe.')
-        
 }).required();
 
-function AccountCreationPanel({ loadingAuthCreation, buttonSize }) {
-    const { register, handleSubmit, formState: { errors, isSubmitted, isSubmitSuccessful } } = useForm({
+function AccountCreationPanel({ loadingAuthCreation, buttonSize, onAccountCreated }) {
+    const { register, handleSubmit, formState: { errors } } = useForm({
         mode: 'onSubmit',
         resolver: yupResolver(schema)
     });
@@ -60,38 +56,31 @@ function AccountCreationPanel({ loadingAuthCreation, buttonSize }) {
             }
 
             const sanitizedData = {
-            pseudoPlayer: DOMPurify.sanitize(data.pseudoPlayer),
-            birthdayPlayer: DOMPurify.sanitize(data.birthdayPlayer),
-            genderPlayer: DOMPurify.sanitize(data.genderPlayer),
-            emailPlayer: DOMPurify.sanitize(data.emailPlayer),
+                pseudoPlayer: DOMPurify.sanitize(data.pseudoPlayer),
+                birthdayPlayer: DOMPurify.sanitize(data.birthdayPlayer),
+                genderPlayer: DOMPurify.sanitize(data.genderPlayer),
+                emailPlayer: DOMPurify.sanitize(data.emailPlayer),
             };
 
             await axios.post('http://localhost:5038/api/players/createAccount', sanitizedData);
             setShowModal(true);
-            console.log('Voici les données que tu as envoyé ou tenté d\'envoyer :', sanitizedData);
+            onAccountCreated();
+            console.log('Données envoyées :', sanitizedData);
 
             await registerUser(data.emailPlayer, data.passwordPlayer);
-            console.log('Formulaire soumis', isSubmitted);
-            console.log('Formulaire parfait', isSubmitSuccessful);
         } catch (error) {
+            console.error('Erreur lors de la soumission du formulaire :', error);
             if (error.response && error.response.status === 400) {
-                const errorMessage = error.response.data;
-                if (errorMessage === 'Email déjà utilisé') {
-                    alert('Cet e-mail est déjà utilisé.');
-                } else {
-                    console.error('Erreur lors de la soumission du formulaire :', error);
-                }
-            } else {
-                console.error('Erreur lors de la soumission du formulaire :', error);
+                alert('Erreur lors de la soumission du formulaire');
             }
         }
     };
 
-    const closeModal = () => {
+    const [showModal, setShowModal] = useState(false);
+
+    const closeAccountModal = () => {
         setShowModal(false);
     };
-
-    const [showModal, setShowModal] = useState(false);
 
     return (
         <div id="contenuAccountCreation">
@@ -162,18 +151,6 @@ function AccountCreationPanel({ loadingAuthCreation, buttonSize }) {
                     </div>
                 </form>
             </div>
-
-            <Popup open={showModal} onClose={closeModal} modal nested closeOnDocumentClick={false}>
-                {(close) => (
-                    <div className='modal'>
-                        <div className='content'>
-                            <h2>Merci !</h2>
-                            <p>Votre compte a été créé avec succès.</p>
-                            <Link to="/"><button onClick={close}>Retourner à l'accueil</button></Link>
-                        </div>
-                    </div>
-                )}
-            </Popup>
         </div>
     );
 }

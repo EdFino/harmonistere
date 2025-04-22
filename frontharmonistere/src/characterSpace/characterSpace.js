@@ -6,7 +6,6 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import Navbar from '../navbar/navbar';
 import './characterSpace.css';
 import CharacterSheet from './characterSheet';
-import Popup from 'reactjs-popup';
 import CharacterSheetVerso from './characterSheetVerso';
 import DiceLauncherMini from '../diceLauncher/diceLauncherMini';
 import CustomModal from '../specialComponents/customModal';

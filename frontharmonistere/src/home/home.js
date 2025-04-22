@@ -11,12 +11,14 @@ import greatTitle from '../images/Harmonistère.png';
 import WelcomePlayer from './welcomePlayer';
 import AccountCreationPanel from './accountCreationPanel';
 import kit from '../style/kitUI.module.css';
+import CustomModal from '../specialComponents/customModal';
 
 function Home() {
 
     const [user, error] = useAuthState (auth);
     const [isLoading, setIsLoading] = useState(true);
     const [newAccount, setNewAccount] = useState (false);
+    const [showAccountSuccessModal, setShowAccountSuccessModal] = useState(false);
 
     const buttonSize = '80px';
 
@@ -32,13 +34,21 @@ function Home() {
         return <div>Chargement en cours...</div>;
     }
 
+    const handleAccountCreated = () => {
+        setShowAccountSuccessModal(true);
+    };
+
+    const closeAccountModal = () => {
+        setShowAccountSuccessModal(false);
+    };
+
     function loadingAccountCreation () {
         setNewAccount(true);
     }
 
     function loadingAuthCreation () {
         setNewAccount(false);
-    }
+    }    
     
         return (
             <div className="App">
@@ -62,10 +72,18 @@ function Home() {
                         </li>
                     </ul>
                     <div id='connexionPanelTotal'>
-                        {newAccount && <AccountCreationPanel loadingAuthCreation={loadingAuthCreation} buttonSize={buttonSize} />}
+                        {newAccount && !user && <AccountCreationPanel loadingAuthCreation={loadingAuthCreation} buttonSize={buttonSize} onAccountCreated={handleAccountCreated} />}
                         {!newAccount && !user && <ConnexionPanel loadingAccountCreation={loadingAccountCreation} buttonSize={buttonSize} />}
                         {user && <WelcomePlayer />}
                     </div>
+
+            {showAccountSuccessModal && (
+                <CustomModal
+                isOpen={showAccountSuccessModal} // Mise à jour ici
+                onClose={closeAccountModal}
+                message="Compte créé ! Bienvenue dans Harmonistère"
+                messageEnd="Fermer la fenêtre"
+            />)}
                 </div>
         );
     }

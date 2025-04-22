@@ -8,6 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup" ;
 import DOMPurify from 'dompurify';
 import { useForm } from 'react-hook-form';
+import CustomModal from '../specialComponents/customModal';
 
 const validationSchema = yup.object().shape({
     characterName: yup
@@ -97,8 +98,8 @@ function CharacterSheet (props) {
                 setCharacterData({
                     characterName: props.characterName || '',
                     characterAge: props.characterAge || '',
-                    benderOrNot: props.benderOrNot || false,
-                    benderSelect: props.benderOrNot ? props.benderSelect : 'Aucune',
+                    benderOrNot: props.benderOrNot,
+                    benderSelect: props.benderSelect,                
                     principalTrait: props.principalTrait || '',
                     ascendantTrait: props.ascendantTrait || '',
                     neutralTrait: props.neutralTrait || '',
@@ -121,11 +122,32 @@ function CharacterSheet (props) {
 
             const handleChange = (event) => {
                 const { name, value } = event.target;
-                setCharacterData((prevData) => ({
-                    ...prevData,
-                    [name]: value,
-                }));
+            
+                setCharacterData((prevData) => {
+                    // Si le champ modifié est "benderSelect"
+                    if (name === 'benderSelect') {
+                        if (value === 'Aucune') {
+                            return {
+                                ...prevData,
+                                benderSelect: value,
+                                benderOrNot: false,
+                            };
+                        } else {
+                            return {
+                                ...prevData,
+                                benderSelect: value,
+                                benderOrNot: true,
+                            };
+                        }
+                    }
+            
+                    return {
+                        ...prevData,
+                        [name]: value
+                    };
+                });
             };
+            
 
             const sanitizeData = (data) => {
                 const sanitizedData = {};
@@ -144,8 +166,9 @@ function CharacterSheet (props) {
             const submitUpdate = async () => {
                 try {
                     const sanitizedCharacterData = sanitizeData (characterData);
-                    console.log ('Formulaire de changement à envoyer : ', characterData);
-                    const response = await axios.put(`http://localhost:5038/api/sheets/updateSheet/${id}`, { sheetData : sanitizedCharacterData});
+                    console.log ('Formulaire de changement à envoyer, clic fait : ', characterData);
+                    console.log ('Voici la valeur de benderOrNot : ', characterData.benderOrNot);
+                    const response = await axios.put(`http://localhost:5038/api/sheets/updateSheet/${id}`, sanitizedCharacterData);
                     if (response.status === 200) {
                         console.log('Mise à jour réussie !');
                         setShowModal(true);
@@ -313,6 +336,11 @@ function CharacterSheet (props) {
         }));
     };
 
+    const closeUpdateModal = () => {
+        setShowModal(false);
+        window.location.reload();
+    };
+
     
 
     return (
@@ -468,13 +496,12 @@ function CharacterSheet (props) {
                     </div>
                     <button type='button' onClick={submitUpdate}>Envoyez vos changements</button>
 
-                    <Popup open={showModal} onClose={() => setShowModal(false)} modal nested>
-                        <div className="modal">
-                            <h2>Succès</h2>
-                            <p>Vos changements ont été enregistrés avec succès !</p>
-                            <button onClick={() => {setShowModal(false); window.location.reload();}}>Fermer</button>
-                        </div>
-                    </Popup>
+                    <CustomModal
+                        isOpen={showModal}
+                        onClose={closeUpdateModal}
+                        message= "Fiche éditée avec succès !"
+                        messageEnd="Retour sur votre fiche"
+                    />
                 </div>
 
                 

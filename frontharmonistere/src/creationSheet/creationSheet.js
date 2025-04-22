@@ -48,8 +48,8 @@ function CreationSheet () {
             sheetData: {
                 characterName: DOMPurify.sanitize(formData.characterName),
                 characterAge: DOMPurify.sanitize(formData.characterAge),
-                benderOrNot: formData.benderOrNot,
-                benderSelect: formData.benderSelect,
+                benderOrNot: DOMPurify.sanitize(formData.benderOrNot),
+                benderSelect: DOMPurify.sanitize(formData.benderSelect),
                 principalTrait: DOMPurify.sanitize(formData.principalTrait),
                 ascendantTrait: DOMPurify.sanitize(formData.ascendantTrait),
                 neutralTrait: DOMPurify.sanitize(formData.neutralTrait),

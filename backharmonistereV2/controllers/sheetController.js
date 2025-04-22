@@ -28,8 +28,14 @@ exports.updateSheet = async (req, res) => {
     try {
         const { id } = req.params; // ID de la fiche
         console.log('ID reçu pour mise à jour :', id); // Vérifiez la valeur ici
-        const updatedSheetData = req.body.sheetData;
-        console.log('Données reçues pour mise à jour :', req.body.sheetData);
+        const updatedSheetData = req.body;
+        if (updatedSheetData.benderOrNot === "") {
+            updatedSheetData.benderOrNot = false;
+        }
+        console.log('Données reçues pour mise à jour :', updatedSheetData);
+        console.log ('Voici notre second name: ', updatedSheetData.characterName);
+        console.log ('Voici notre second benderOrNot: ', updatedSheetData.benderOrNot);
+
 
         const sheet = await Sheet.findById(id);
         if (!sheet) {

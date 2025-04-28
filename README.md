@@ -1,3 +1,29 @@
+FR :
+Je suis désolé que ce projet n'a pas encore été déployé ! J'aimerais le faire très rapidement pour qu'on puisse admirer le travail jusque-là mais j'ai des consignes vis-à-vis des clients et quand le site sera plus abouti visuellement, il n'y aura aucun souci.
+
+En attendant, pour le faire tourner de votre côté, il y a une chose à considérer, c'est que le projet englobe le front d'un côté (frontharmonistere) et le back d'un autre (backharmonistereV2). Il faut donc lancer l'un et l'autre pour que le site fonctionne.
+
+D'abord, il faut aller sur le front et lancer l'application :
+
+1/
+cd harmonistere/frontharmonistere
+
+2/
+npm run start
+
+Ensuite, il faut avoir un autre terminal d'ouvert pour lancer le back ! Il faudra aussi aller sur ce dernier et le lancer !
+
+1/
+cd harmonistere/backharmonistereV2
+
+2/
+node app.js
+
+
+Et voilà, tout devrait fonctionner !
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

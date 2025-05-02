@@ -77,14 +77,6 @@ function FourthDescriptionSheet ({formData, handleFormData, nextStep, previousSt
                     <button type='submit' className={kit.buttonHarmonistere} style={{padding: `1em ${buttonSize}`}}>Terminer</button>
                 </div>
             </form>
-
-            <div className="sideForm">
-                <div className='sideTextForm'>
-                    <p>Vous n'êtes pas obligés de remplir ces champs pour la validation de la fiche.
-                        Mais si vous trouvez l'inspiration plus tard et que vous possédez un compte, vous pourrez toujours les modifier dans votre espace jeu.</p>
-                </div>
-                <img className='iconeQuestion' src={iconeQuestion} alt="icone de point d'interrogation"/>
-            </div>
         </div>
     )
 }

@@ -10,7 +10,7 @@ import ConnexionPanel from './connexionPanel';
 import greatTitle from '../images/Harmonistère.png';
 import WelcomePlayer from './welcomePlayer';
 import AccountCreationPanel from './accountCreationPanel';
-import kit from '../style/kitUI.module.css';
+import navbarKit from '../style/modules/components/navbar.module.css';
 import CustomModal from '../specialComponents/customModal';
 
 function Home() {
@@ -55,19 +55,19 @@ function Home() {
                 <img id="homeArt" src={harmonistereHome} alt="Ecran de la page principale" />
                 <img id="degradeArt" src={degradeHome} alt="Dégradé de la page principale" />
                 <img id="greatTitleHarmonistere" src={greatTitle} alt="Grand titre harmonistère" />
-                    <ul id="homeNavbar" className={`${kit.navbarHarmonistere} ${kit.beigeNavbarHarmonistere}`}>
-                        {user && <li id='deconnectLi' className={kit.navbarLiHarmonistere} onClick={logOut}>Déconnexion</li>}
-                        {user && <li className={kit.navbarLiHarmonistere}>
+                    <ul id="homeNavbar" className={`${navbarKit.navbarHarmonistere} ${navbarKit.beigeNavbarHarmonistere}`}>
+                        {user && <li id='deconnectLi' className={navbarKit.navbarLiHarmonistere} onClick={logOut}>Déconnexion</li>}
+                        {user && <li className={navbarKit.navbarLiHarmonistere}>
                             <NavLink exact='true' to="/univers" activeClassName="active">Univers</NavLink>
                         </li>}
-                        {!user && <li id='inscriptionLi' className={kit.navbarLiHarmonistere} onClick={loadingAccountCreation}>Inscription</li>}
-                        <li className={kit.navbarLiHarmonistere}>
+                        {!user && <li id='inscriptionLi' className={navbarKit.navbarLiHarmonistere} onClick={loadingAccountCreation}>Inscription</li>}
+                        <li className={navbarKit.navbarLiHarmonistere}>
                             <NavLink exact='true' activeClassName="active" to={'/creationfiche'}>Créer une fiche</NavLink>
                         </li>
-                        {user && <li className={kit.navbarLiHarmonistere}>
+                        {user && <li className={navbarKit.navbarLiHarmonistere}>
                             <NavLink exact='true' activeClassName="active" to="/espacejoueur">Votre espace joueur</NavLink>
                             </li>}
-                        <li className={kit.navbarLiHarmonistere}>
+                        <li className={navbarKit.navbarLiHarmonistere}>
                             <NavLink exact='true' activeClassName="active" to={'/lanceur'}>Lanceur de dés</NavLink>
                         </li>
                     </ul>

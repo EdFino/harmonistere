@@ -1,0 +1,37 @@
+.cornerLeftTitle {
+    font-family: 'Righteous';
+    font-size: 3em;
+    margin : 0 1em;
+    color: #FAF4E7;
+}
+
+.blueHarmonistereTitle {
+    font-family: 'Righteous';
+    color: #5EA7CE;
+    font-size: 3em;
+    text-align: center;
+    position: relative;
+    top: 1.2em;
+}
+
+.blueHarmonistereSheetTitle {
+    font-family: 'Righteous';
+    color: #5EA7CE;
+    font-size: 3em;
+}
+
+@media only screen and (min-width: 0px) and (max-width:768px) {
+
+    .cornerLeftTitle {
+        display: none;
+    }
+
+    .blueHarmonistereTitle {
+        font-size: 2.5em;
+        top: 0.5em;
+    }
+
+    .blueHarmonistereSheetTitle {
+        font-size: 2em;
+    }
+}

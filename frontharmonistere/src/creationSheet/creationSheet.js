@@ -14,7 +14,7 @@ import HelpSection from './helpSection';
 import FinalStepForm from './finalStepForm';
 import creationSheetImage from '../images/Image 2.png';
 import creationSheetBackground from '../images/Fond fiche perso.png';
-import kit from '../style/kitUI.module.css';
+import titleKit from '../style/modules/global/title.module.css';
 import SubNavbarSheet from './subNavbarSheet';
 import CustomModal from '../specialComponents/customModal';
 import { useNavigate } from 'react-router-dom';
@@ -96,11 +96,11 @@ const closeModalSheet = () => {
                 />
 
             
-            <h1 id="harmonistereCornerSheet" className={kit.cornerLeftTitle}>Harmonistère</h1>
+            <h1 id="harmonistereCornerSheet" className={titleKit.cornerLeftTitle}>Harmonistère</h1>
 
             <div id='creationSheet'>
 
-            <h2 className={kit.blueHarmonistereSheetTitle}>Créer une fiche</h2>
+            <h2 className={titleKit.blueHarmonistereSheetTitle}>Créer une fiche</h2>
 
             <SubNavbarSheet
                 stepForm = {stepForm}/>
@@ -151,7 +151,6 @@ const closeModalSheet = () => {
                 <HelpSection
                     stepForm = {stepForm}/>
                 </div>
-
 
 
             </div>

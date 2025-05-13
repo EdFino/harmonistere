@@ -1,0 +1,80 @@
+.navbarHarmonistere {
+    list-style-type: none;
+    text-align: center;
+    padding-left: 0;
+    display: flex;
+    position: absolute;
+    z-index: 5;
+}
+
+.beigeNavbarHarmonistere {
+    color: #FAF4E7;
+}
+
+.blueNavbarHarmonistere {
+    color: #233463;
+}
+
+.navbarLiHarmonistere {
+    text-decoration: none;
+    color: inherit;
+    text-align: center;
+    padding: 1em;
+    font-size: 1em;
+}
+
+.navbarLiHarmonistere:active {
+    font-weight: bold;
+}
+
+.navbarCharacter {
+    color: red;
+}
+
+@media only screen and (min-width: 0px) and (max-width:768px) {
+
+   .navbarHarmonistere {
+        top: 0;
+        right: 50%;
+        left: auto;
+        transform: translateX(+65%);
+        flex-wrap: wrap;
+        width: 450px;
+    } 
+   
+    .navbarLiHarmonistere {
+        padding: 0.1em 0.6em 0 0.6em;
+        white-space: nowrap;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width:1324px) {
+
+    .navbarHarmonistere {
+        top: 0.1em;
+        right: 0;
+    }
+
+    .navbarLiHarmonistere {
+        padding-top: 0.2em;
+    }
+}
+
+@media only screen and (min-width: 1324px) {
+
+    .navbarHarmonistere {
+        top: 1%;
+        right: 3%;
+    }
+
+    .navbarLiHarmonistere {
+        padding: 1em;
+    }
+}
+
+@media only screen and (min-height: 0px) and (max-height:580px) {
+
+    .navbarLiHarmonistere {
+    display: none;
+    }
+}

@@ -9,6 +9,7 @@ import * as yup from "yup" ;
 import DOMPurify from 'dompurify';
 import { useForm } from 'react-hook-form';
 import CustomModal from '../specialComponents/customModal';
+import SubNavbarCharacter from './subNavbarCharacter';
 
 const validationSchema = yup.object().shape({
     characterName: yup
@@ -554,6 +555,8 @@ function CharacterSheet (props) {
                     </div>
                 </div>
             )}
+
+            <SubNavbarCharacter/>
         </>
     );
     

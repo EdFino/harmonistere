@@ -18,6 +18,9 @@ function HelpSection ({stepForm}) {
         case 4:
             helpMessage = "Vous n'êtes pas obligés de remplir ces champs pour la validation de la fiche. Mais si vous trouvez l'inspiration plus tard et que vous possédez un compte, vous pourrez toujours les modifier dans votre espace jeu";
             break;
+        case 5:
+            helpMessage = "Voyez si la fiche vous convient et que les informations vous satisfons. Si oui, validez !"
+            break;
         default:
             helpMessage = "Erreur de téléchargement";
     }

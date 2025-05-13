@@ -5,9 +5,21 @@ const SubNavbarCharacter = ({characterInfoPanel}) => {
 
     return (
         <ul className={navbarKit.navbarCharacter}>
-            <li className={characterInfoPanel === 1 ? navbarKit.navbarCharacter : 'stepFormWeak'}>Profil</li>
-            <li className={characterInfoPanel === 2 ? 'stepFormBold' : 'stepFormWeak'}>Relations</li>
-            <li className={characterInfoPanel === 3 ? 'stepFormBold' : 'stepFormWeak'}>Notes</li>
+            <li className={`${navbarKit.navbarCharacterLiDefault} ${
+            characterInfoPanel === 1
+            ? navbarKit.navbarCharacterLiActive
+            : navbarKit.navbarCharacterLi
+    }`}>Profil</li>
+            <li className={`${navbarKit.navbarCharacterLiDefault} ${
+            characterInfoPanel === 2
+            ? navbarKit.navbarCharacterLiActive
+            : navbarKit.navbarCharacterLi
+    }`}>Relations</li>
+            <li className={`${navbarKit.navbarCharacterLiDefault} ${
+            characterInfoPanel === 3
+            ? navbarKit.navbarCharacterLiActive
+            : navbarKit.navbarCharacterLi
+    }`}>Notes</li>
         </ul>
     )
 }

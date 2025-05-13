@@ -2,7 +2,14 @@
     font-family: 'Righteous';
     font-size: 3em;
     margin : 0 1em;
+}
+
+.cornerLeftLightTitle {
     color: #FAF4E7;
+}
+
+.cornerLeftBluetTitle {
+    color: #a0d6e5;
 }
 
 .blueHarmonistereTitle {

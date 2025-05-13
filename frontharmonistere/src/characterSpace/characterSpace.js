@@ -10,6 +10,9 @@ import CharacterSheetVerso from './characterSheetVerso';
 import DiceLauncherMini from '../diceLauncher/diceLauncherMini';
 import CustomModal from '../specialComponents/customModal';
 import { useNavigate } from 'react-router-dom';
+import SubNavbarCharacter from './subNavbarCharacter';
+import titleKit from '../style/modules/global/title.module.css';
+
 
 function CharacterSpace () {
 
@@ -115,8 +118,35 @@ function CharacterSpace () {
         setShowSecondDeleteModal(false);
         navigate('/espacejoueur');
     }
-    
+
     return (
+        <>
+            <Navbar
+                light={false}
+            />            
+        <h1 className={`${titleKit.cornerLeftTitle} ${titleKit.cornerLeftBluetTitle}`}>Harmonistère</h1>
+
+        <div id='characterSpaceHeader'>
+
+            <div id='navbarCharacter'>
+                <SubNavbarCharacter
+                    characterInfoPanel = {1}
+                />
+            </div>
+
+            <div id='iconCharacterSpace'>
+                <p className='oneIcon'>P</p>
+                <p className='oneIcon'>E</p>
+            </div>
+
+        </div>
+        </>
+    )
+}
+
+export default CharacterSpace
+
+/*     return (
         <>
             <Navbar/>
             <h1>ESPACE EN COURS DE CONSTRUCTION</h1>
@@ -192,7 +222,4 @@ function CharacterSpace () {
             {sheetDeleted && <Navigate to="/espacejoueur" />}
             </div>
         </>  
-    )
-}
-
-export default CharacterSpace
+    ) */

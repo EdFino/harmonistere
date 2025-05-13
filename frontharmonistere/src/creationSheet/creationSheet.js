@@ -96,7 +96,7 @@ const closeModalSheet = () => {
                 />
 
             
-            <h1 id="harmonistereCornerSheet" className={titleKit.cornerLeftTitle}>Harmonistère</h1>
+            <h1 id="harmonistereCornerSheet" className={`${titleKit.cornerLeftTitle} ${titleKit.cornerLeftLightTitle}`}>Harmonistère</h1>
 
             <div id='creationSheet'>
 

@@ -1,33 +1,39 @@
-#characterSpace {
+body {
+    background: linear-gradient(123deg, #FEF2E2 0%, #EFD9BC);
+}
+
+#characterSpaceHeader {
+    display: grid;
+    grid-template-columns: 35% 55% 10%;
+}
+
+#navbarCharacter {
+    grid-column: 2/3;
+    height: 100%;
+    justify-self: start;
+    text-align: center;
+}
+
+#iconCharacterSpace {
+    align-self: end;
+    grid-column: 3/4;
+    color: red;
     display: flex;
-    justify-content: space-between;
 }
 
-.columnSheet {
-    flex-grow: 1;
-    max-width: 20%;
-    background-color: darkgray;
-    border: solid black 1px;
-    min-height: 500px;
+.oneIcon {
+    align-self: start;
+    border-radius: 50%;
+    background-color: #FFF9F0;
+    width: 2.5em;
+    height: 2.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.3em;
 }
 
-#columnCrud {
-    padding: 0.7em;
-    margin-left: 0.5em;
-}
 
-#columnPlay {
-    padding: 0.7em;
-    margin-right: 0.5em;
-}
+#characterSpaceMain {
 
-.sheetVisualElement {
-    background-color: white;
-    border: solid black 5px;
-    margin: 2em;
-    padding: 0.5em;
-}
-
-#characterSheetVisual {
-    flex-grow: 3;
 }

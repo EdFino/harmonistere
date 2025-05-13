@@ -28,7 +28,30 @@
 }
 
 .navbarCharacter {
-    color: red;
+    background-color: #fff9f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style-type: none;
+    padding: 0.6em 0.4em;
+    border-radius: 41px;
+}
+
+.navbarCharacterLiDefault {
+    font-size: 1.1em;
+    font-weight: 600;
+    padding: 0.4em 2.6em;
+}
+
+.navbarCharacterLi {
+    color: #DBC09A;
+}
+
+.navbarCharacterLiActive {
+    color: #FFF9F0;
+    background-color: #A0D6E5;
+    border-radius: 35px;
+
 }
 
 @media only screen and (min-width: 0px) and (max-width:768px) {

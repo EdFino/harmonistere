@@ -12,6 +12,8 @@ import CustomModal from '../specialComponents/customModal';
 import { useNavigate } from 'react-router-dom';
 import SubNavbarCharacter from './subNavbarCharacter';
 import titleKit from '../style/modules/global/title.module.css';
+import CSPanel from './CSPanel';
+import CSMainPanel from './CSMainPanel';
 
 
 function CharacterSpace () {
@@ -140,6 +142,12 @@ function CharacterSpace () {
             </div>
 
         </div>
+
+        <CSMainPanel/>
+
+        <CSPanel
+            titlePanel="Relations"
+            contentPanel="OLA WORLD"/>
         </>
     )
 }

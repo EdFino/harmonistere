@@ -4,7 +4,10 @@ import cspanelstyle from '../style/modules/components/cspanel.module.css';
 
 function CSMainPanel () {
     return (
-        <div id={cspanelstyle.csMainPanel}>Hello World !</div>
+        <div className={cspanelstyle.csMainPanel}>
+            <p>Hello World !</p>
+            <p>ALLO TU VAS TETALER</p>
+        </div>
     )
 }
 

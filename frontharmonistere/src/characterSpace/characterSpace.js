@@ -122,33 +122,49 @@ function CharacterSpace () {
     }
 
     return (
-        <>
+        <div className='layoutPageCS'>
             <Navbar
                 light={false}
             />            
-        <h1 className={`${titleKit.cornerLeftTitle} ${titleKit.cornerLeftBluetTitle}`}>Harmonistère</h1>
+            <h1 className={`${titleKit.cornerLeftTitle} ${titleKit.cornerLeftBluetTitle}`}>Harmonistère</h1>
 
-        <div id='characterSpaceHeader'>
+            <div id='characterSpaceHeader'>
 
-            <div id='navbarCharacter'>
-                <SubNavbarCharacter
-                    characterInfoPanel = {1}
-                />
+                <div id='navbarCharacter'>
+                    <SubNavbarCharacter
+                        characterInfoPanel = {1}
+                    />
+                </div>
+
+                <div id='iconCharacterSpace'>
+                    <p className='oneIcon'>P</p>
+                    <p className='oneIcon'>E</p>
+                </div>
+
             </div>
 
-            <div id='iconCharacterSpace'>
-                <p className='oneIcon'>P</p>
-                <p className='oneIcon'>E</p>
-            </div>
+            <div id='characterSpaceMain'>
 
+                <div id='CSPanelOne'>
+                    <CSMainPanel/>
+                </div>
+                <div id='CSPanelTwo'>
+                    <CSPanel
+                        titlePanel="Relations"
+                        contentPanel="OLA WORLD"/>
+                </div>
+                <div id='CSPanelThreeFour'>
+                    <CSPanel
+                        titlePanel="Relations"
+                        contentPanel="OLA WORLD"/>
+                </div>
+                <div id='CSPanelFive'>
+                    <CSPanel
+                        titlePanel="Relations"
+                        contentPanel="OLA WORLD"/>
+                </div>
+            </div>
         </div>
-
-        <CSMainPanel/>
-
-        <CSPanel
-            titlePanel="Relations"
-            contentPanel="OLA WORLD"/>
-        </>
     )
 }
 

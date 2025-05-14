@@ -1,5 +1,13 @@
 body {
     background: linear-gradient(123deg, #FEF2E2 0%, #EFD9BC);
+    height: 100vh;
+    overflow: hidden;
+}
+
+.layoutPageCS {
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    height: 100vh;
 }
 
 #characterSpaceHeader {
@@ -33,7 +41,43 @@ body {
     margin: 0.3em;
 }
 
-
 #characterSpaceMain {
+    height: 65vh;
+    margin: 2.5em 4em 3em 4em;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 3em;
+    overflow-y: auto;
+}
 
+#CSPanelOne,
+#CSPanelTwo,
+#CSPanelThreeFour,
+#CSPanelFive {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    align-self: stretch;
+    justify-self: stretch;
+}
+
+#CSPanelOne {
+    grid-column: 1/3;
+    grid-row: 1/3;
+}
+
+#CSPanelTwo {
+    grid-column: 3/6;
+    grid-row-start: 1/2;
+}
+#CSPanelThreeFour {
+    grid-column: 3/6;
+    grid-row-start: 2/3;
+}
+
+#CSPanelFive {
+    grid-column: 6/10;
+    grid-row: 1/3;
 }

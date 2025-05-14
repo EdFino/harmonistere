@@ -1,0 +1,33 @@
+.avatarInfoPolice {
+    color: #5FA6CE;
+    text-align: center;
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+.avatarPersonnalityTitlePolice {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 1.5em;
+    line-height: 0.5;
+}
+
+.avatarPersonnalityPolice {
+    font-size: 1em;
+    font-weight: 500;
+    margin-bottom: 0.5em;
+}
+
+
+.avatarPersonnalityTitlePoliceInversed {
+        font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 1.5em;
+    line-height: 0.5;
+}
+
+.avatarPersonnalityPoliceInversed {
+    font-size: 1em;
+    font-weight: 500;
+    margin-top: 0.5em;
+}

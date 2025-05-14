@@ -146,7 +146,16 @@ function CharacterSpace () {
             <div id='characterSpaceMain'>
 
                 <div id='CSPanelOne'>
-                    <CSMainPanel/>
+                    <CSMainPanel
+                        characterName={characterOneName}
+                        characterAge={characterOneAge}
+                        isOneBender={isOneBender}
+                        benderSelect={characterOneBender}
+                        principalTrait={characterOnePrincipal}
+                        ascendantTrait={characterOneAscendant}
+                        neutralTrait={characterOneNeutral}
+                        oppositeTrait={characterOneOpposite}
+                    />
                 </div>
                 <div id='CSPanelTwo'>
                     <CSPanel

@@ -1,0 +1,89 @@
+.characterCircle {
+    grid-row: 3/4;
+    position: relative;
+    width: 10em;
+    height: 10em;
+    border-radius: 50%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 5px;
+    overflow: hidden;
+    transform: rotate(45deg);
+    color: #233463;
+    justify-self: center;
+    align-self: center;
+}
+
+.quarter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+}
+
+.quarterTop {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    border-top-left-radius: 100%;
+}
+
+.quarterContentTop {
+    transform: rotate(-45deg);
+    height: 100%;
+    width: 100%;
+
+}
+
+.quarterRight {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    border-top-right-radius: 100%;
+}
+
+.quarterContentRight {
+    transform: rotate(45deg);
+}
+
+.quarterBottom {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    border-bottom-right-radius: 100%;
+}
+
+.quarterContentBottom {
+    transform: rotate(-45deg);
+}
+
+.quarterLeft {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    border-bottom-left-radius: 100%;
+}
+
+.quarterContentLeft {
+    transform: rotate(-135deg);
+}
+
+.quarterContentTop, .quarterContentRight, .quarterContentBottom, .quarterContentLeft {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.traitCritique {
+    background-color: #FFA6A6;
+}
+
+.traitBonus {
+    background-color: #96DE9B;
+}
+
+.traitNeutre {
+    background-color: #F5DCAB;
+}
+
+.traitMalus {
+    background-color: #D5D5D5;
+}

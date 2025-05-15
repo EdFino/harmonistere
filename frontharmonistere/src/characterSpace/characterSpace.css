@@ -1,10 +1,12 @@
 body {
     background: linear-gradient(123deg, #FEF2E2 0%, #EFD9BC);
+    background-attachment: fixed;
 }
 
 .layoutPageCS {
     display: grid;
     grid-template-rows: auto auto 1fr;
+    max-height: 120vh;
 }
 
 #characterSpaceHeader {

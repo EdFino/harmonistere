@@ -1,8 +1,8 @@
 .characterCircle {
     grid-row: 3/4;
     position: relative;
-    width: 10em;
-    height: 10em;
+    width: 12em;
+    height: 12em;
     border-radius: 50%;
     display: grid;
     grid-template-columns: 1fr 1fr;

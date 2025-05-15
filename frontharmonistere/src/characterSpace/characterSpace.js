@@ -14,6 +14,7 @@ import SubNavbarCharacter from './subNavbarCharacter';
 import titleKit from '../style/modules/global/title.module.css';
 import CSPanel from './CSPanel';
 import CSMainPanel from './CSMainPanel';
+import RelationPanel from './relationPanel';
 
 
 function CharacterSpace () {
@@ -121,6 +122,35 @@ function CharacterSpace () {
         navigate('/espacejoueur');
     }
 
+        const falseDB = [{
+            name: 'Arya',
+            relationShip : 'Amitié'
+        },
+        {
+            name: 'Finn',
+            relationShip : 'Haine'
+        },
+        {
+            name: 'Germain',
+            relationShip : 'Indifférence'
+        },        {
+            name: 'Matth',
+            relationShip : 'Amour'
+        },        {
+            name: 'Maria',
+            relationShip : 'Amitié'
+        },        {
+            name: 'Seb',
+            relationShip : 'Amitié'
+        },        {
+            name: 'Caliméro',
+            relationShip : 'Indifférence'
+        },        {
+            name: 'Last but the Least',
+            relationShip : 'Haine'
+        },
+    ]
+
     return (
         <div className='layoutPageCS'>
             <Navbar
@@ -160,7 +190,9 @@ function CharacterSpace () {
                 <div id='CSPanelTwo'>
                     <CSPanel
                         titlePanel="Relations"
-                        contentPanel="OLA WORLD"/>
+                        contentPanel={<RelationPanel
+                            relation={falseDB}/>}
+                        />
                 </div>
                 <div id='CSPanelThreeFour'>
                     <CSPanel
@@ -169,7 +201,7 @@ function CharacterSpace () {
                 </div>
                 <div id='CSPanelFive'>
                     <CSPanel
-                        titlePanel="Relations"
+                        titlePanel="Attributs"
                         contentPanel="OLA WORLD"/>
                 </div>
             </div>

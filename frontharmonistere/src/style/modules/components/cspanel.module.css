@@ -51,4 +51,49 @@
     width: 100%;
     flex-grow: 1;
     overflow-y: auto;
+    padding-right: 15px;
+}
+
+.relationPanel {
+    overflow-y: auto;
+    padding: 1em 1em 0.3em 2em;
+    color: #233463;
+    max-height: 30vh;
+}
+
+.relationPanel::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Fond de la scrollbar */
+.relationPanel::-webkit-scrollbar-track {
+    background: #F6E5CE;
+    border-radius: 4px;
+    height: 80%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+/* Barre elle-même */
+.relationPanel::-webkit-scrollbar-thumb {
+    background: #DBC09A;
+    border-radius: 4px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-clip: content-box;
+}
+
+.relationLine {
+    display: grid;
+    grid-template-columns: 40% 40% 10%;
+    justify-content: space-between;
+}
+
+.hrStyle {
+    background-color: #F6E5CE;
+    border: none;
+    height: 1px;
+    margin-top: 4px;
+    margin-bottom: 15px;
+    opacity: 0.7;
 }

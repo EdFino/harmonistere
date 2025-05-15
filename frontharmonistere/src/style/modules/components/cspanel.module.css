@@ -50,15 +50,17 @@
     border-radius: 0 0 30px 30px;
     width: 100%;
     flex-grow: 1;
-    overflow-y: auto;
-    padding-right: 15px;
+    color: #233463;
 }
 
 .relationPanel {
     overflow-y: auto;
     padding: 1em 1em 0.3em 2em;
-    color: #233463;
     max-height: 30vh;
+}
+
+.scrollPading {
+    padding-right: 15px;
 }
 
 .relationPanel::-webkit-scrollbar {
@@ -94,6 +96,30 @@
     border: none;
     height: 1px;
     margin-top: 4px;
-    margin-bottom: 15px;
+    margin-bottom: 1.5em;
     opacity: 0.7;
+}
+
+.facultiesPanel {
+    height: 100%;
+    padding: 1em;
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    align-items: center;
+}
+
+.facultiesLine {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    line-height: 1.65;
+}
+
+.numberFaculties {
+    justify-self: center;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }

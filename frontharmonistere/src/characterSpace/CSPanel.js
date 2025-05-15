@@ -9,7 +9,7 @@ function CSPanel ({titlePanel, contentPanel}) {
                 <p>{titlePanel}</p>
             </div>
             <div className={cspanelstyle.csPanelMain}>
-                <h3>{contentPanel}</h3>
+                {contentPanel}
             </div>
         </div>
     )

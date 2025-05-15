@@ -8,6 +8,8 @@ function RelationPanel ({relation}) {
 
     return (
 
+        <div className={cspanelKit.scrollPading}>
+
         <div className={cspanelKit.relationPanel}>
 
             {relation.map((person, index) => (
@@ -23,6 +25,7 @@ function RelationPanel ({relation}) {
                 </div>
             ))}
 
+        </div>
         </div>
     )
 }

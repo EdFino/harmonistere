@@ -15,6 +15,8 @@ import titleKit from '../style/modules/global/title.module.css';
 import CSPanel from './CSPanel';
 import CSMainPanel from './CSMainPanel';
 import RelationPanel from './relationPanel';
+import FacultiesPanel from './facultiesPanel';
+import LocalStorageTest from './LocalStorageTest';
 
 
 function CharacterSpace () {
@@ -191,18 +193,26 @@ function CharacterSpace () {
                     <CSPanel
                         titlePanel="Relations"
                         contentPanel={<RelationPanel
-                            relation={falseDB}/>}
+                        relation={falseDB}
+                    />}
                         />
                 </div>
                 <div id='CSPanelThreeFour'>
-                    <CSPanel
-                        titlePanel="Relations"
-                        contentPanel="OLA WORLD"/>
+                    <div className='CSPanelMini'>
+                        <CSPanel
+                            titlePanel="Facultés"
+                            contentPanel={<FacultiesPanel/>}/>
+                    </div>
+                    <div className='CSPanelMini'>
+                        <CSPanel
+                            titlePanel="Altérations"
+                            contentPanel="Ola World"/>
+                    </div>
                 </div>
                 <div id='CSPanelFive'>
                     <CSPanel
                         titlePanel="Attributs"
-                        contentPanel="OLA WORLD"/>
+                        contentPanel={<LocalStorageTest/>}/>
                 </div>
             </div>
         </div>

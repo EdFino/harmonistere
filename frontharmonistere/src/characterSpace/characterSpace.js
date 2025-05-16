@@ -16,7 +16,7 @@ import CSPanel from './CSPanel';
 import CSMainPanel from './CSMainPanel';
 import RelationPanel from './relationPanel';
 import FacultiesPanel from './facultiesPanel';
-import LocalStorageTest from './LocalStorageTest';
+import AlterationPanel from './alterationPanel';
 
 
 function CharacterSpace () {
@@ -206,13 +206,13 @@ function CharacterSpace () {
                     <div className='CSPanelMini'>
                         <CSPanel
                             titlePanel="Altérations"
-                            contentPanel="Ola World"/>
+                            contentPanel={<AlterationPanel/>} />
                     </div>
                 </div>
                 <div id='CSPanelFive'>
                     <CSPanel
                         titlePanel="Attributs"
-                        contentPanel={<LocalStorageTest/>}/>
+                        contentPanel="Ola World ?"/>
                 </div>
             </div>
         </div>

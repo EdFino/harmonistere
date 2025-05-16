@@ -63,7 +63,7 @@ useEffect(() => {
 
 
     return (
-        <div className={`${cspanelKit.facultiesPanel} ${policeKit.relationLinePolice}`}>
+        <div className={`${cspanelKit.miniPanel} ${policeKit.relationLinePolice}`}>
             <div className={cspanelKit.facultiesInfo}>
                 <div className={cspanelKit.facultiesLine}>
                     <p>Stamina</p>

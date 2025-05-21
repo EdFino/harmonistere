@@ -53,6 +53,7 @@ function CharacterSpace () {
     const [physicalDescription, setPhysicalDescription] = useState('');
     const [personnalityDescription, setPersonnalityDescription] = useState('');
     const [storyCharacter, setStoryCharacter] = useState('');
+    const [powerLevel, setPowerLevel] = useState();
 
 
     const { id } = useParams();
@@ -84,6 +85,7 @@ function CharacterSpace () {
                     setPhysicalDescription(data.physicDescription);
                     setPersonnalityDescription(data.mentalDescription);
                     setStoryCharacter(data.story);
+                    setPowerLevel(data.powerLevel);
                 })
                 .catch(error => {
                     console.log('Erreur lors de la récupération des données : ', error);
@@ -196,6 +198,7 @@ function CharacterSpace () {
                         characterAge={characterOneAge}
                         isOneBender={isOneBender}
                         benderSelect={characterOneBender}
+                        powerLevel={powerLevel}
                         principalTrait={characterOnePrincipal}
                         ascendantTrait={characterOneAscendant}
                         neutralTrait={characterOneNeutral}
@@ -224,7 +227,7 @@ function CharacterSpace () {
                 </div>
                 <div id='CSPanelFive'>
                     <CSPanel
-                        titlePanel="Mallo est la meilleure"
+                        titlePanel="Attributs"
                         contentPanel={<CaracPanel
                             bodyLevel={characterOneBody}
                             mindLevel={characterOneMind}

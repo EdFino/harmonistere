@@ -1,6 +1,12 @@
 // models/sheetModel.js
 const mongoose = require('mongoose');
 
+const relationSchema = new mongoose.Schema({
+    id: { type: String, required: true },
+    name: { type: String, required: true },
+    status: { type: String, required: true }
+}, { _id: false });
+
 const sheetSchema = new mongoose.Schema({
     email: { type: String, required: true },
     sheetData: {
@@ -23,6 +29,8 @@ const sheetSchema = new mongoose.Schema({
         martialArtsLevel: { type: String },
         elementaryArtsLevel: { type: String },
         speakingLevel: { type: String },
+        powerLevel: { type: Number},
+        relations: [relationSchema]
     },
 }, { collection: 'Sheets', versionKey: false });
 

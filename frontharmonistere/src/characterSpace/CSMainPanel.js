@@ -11,7 +11,7 @@ import earthIcon from '../images/Terre.png';
 import fireIcon from '../images/Feu.png';
 
 
-function CSMainPanel ({characterName, characterAge, benderSelect, principalTrait, ascendantTrait, neutralTrait, oppositeTrait}) {
+function CSMainPanel ({characterName, characterAge, benderSelect, powerLevel, principalTrait, ascendantTrait, neutralTrait, oppositeTrait}) {
 
     function whatHarmonistereType (benderSelect) {
 
@@ -62,7 +62,7 @@ function CSMainPanel ({characterName, characterAge, benderSelect, principalTrait
                 <h2 className={titleKit.avatarName}>{characterName}</h2>
                 <p className={policeKit.avatarInfoPolice}>{characterAge} ans</p>
                 <p className={policeKit.avatarInfoPolice}>{harmonistereType}{benderSelect}</p>
-                <p className={policeKit.avatarInfoPolice}>Niveau 0</p>
+                <p className={policeKit.avatarInfoPolice}>Niveau {powerLevel}</p>
             </div>
             <div className={circleKit.characterCircle}>
                 <div className={`${circleKit.quarter} ${circleKit.quarterTop} ${getTraitClass('Air')}`}>

@@ -66,7 +66,7 @@ function CreationSheet () {
                 mentalDescription: DOMPurify.sanitize(formData.mentalDescription),
                 story: DOMPurify.sanitize(formData.story),
                 powerLevel: 0,
-                relations: {}
+                relations: []
             }
         };
 

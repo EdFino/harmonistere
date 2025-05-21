@@ -97,7 +97,7 @@ const SecondPersonnalitySheet = ({formData, handleFormData, nextStep, previousSt
                 {errors.neutralTrait && <><span className='invalid-feedback'>{errors.neutralTrait.message}</span><br/></>}
 
                 <select id="oppositeTrait" name="oppositeTrait" className={kit.inputSelectHarmonistere} {...register("oppositeTrait")}>
-                    <option value='' disabled selected hidden>Votre trait contraire : </option>
+                    <option value='' disabled selected hidden>Votre trait contraire</option>
                     {availableElementsOpposite.map((element, index) => (
                         <option key={index} value={element} className={kit.optionHarmonistere}>{element}</option>
                     ))}

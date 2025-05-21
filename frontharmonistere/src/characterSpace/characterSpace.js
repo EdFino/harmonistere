@@ -12,11 +12,15 @@ import CustomModal from '../specialComponents/customModal';
 import { useNavigate } from 'react-router-dom';
 import SubNavbarCharacter from './subNavbarCharacter';
 import titleKit from '../style/modules/global/title.module.css';
+import imageKit from '../style/modules/global/image.module.css';
 import CSPanel from './CSPanel';
 import CSMainPanel from './CSMainPanel';
 import RelationPanel from './relationPanel';
 import FacultiesPanel from './facultiesPanel';
 import AlterationPanel from './alterationPanel';
+import CaracPanel from './caracPanel';
+import editeurIcon from '../images/editeur.png';
+import privateIcon from '../images/private.png';
 
 
 function CharacterSpace () {
@@ -169,8 +173,17 @@ function CharacterSpace () {
                 </div>
 
                 <div id='iconCharacterSpace'>
-                    <p className='oneIcon'>P</p>
-                    <p className='oneIcon'>E</p>
+                        <img
+                            src={privateIcon}
+                            className={imageKit.iconProperties}
+                            alt='Icône pour flouter des zones'
+                            style={{marginRight: "0.6em"}}
+                        />
+                        <img
+                            src={editeurIcon}
+                            className={imageKit.iconProperties}
+                            alt='Icône pour éditer sa fiche de personnage'
+                        />
                 </div>
 
             </div>
@@ -211,8 +224,15 @@ function CharacterSpace () {
                 </div>
                 <div id='CSPanelFive'>
                     <CSPanel
-                        titlePanel="Attributs"
-                        contentPanel="Ola World ?"/>
+                        titlePanel="Mallo est la meilleure"
+                        contentPanel={<CaracPanel
+                            bodyLevel={characterOneBody}
+                            mindLevel={characterOneMind}
+                            soulLevel={characterOneSoul}
+                            martialArtsLevel={characterOneMartial}
+                            elementaryArtsLevel={characterOneElement}
+                            speakingLevel={characterOneSpeaking}
+                        />}/>
                 </div>
             </div>
         </div>

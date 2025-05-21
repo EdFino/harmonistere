@@ -48,7 +48,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.iconNumberModifiable {
+    background-color: #A0D6E5;
     cursor: pointer;
+}
+
+.iconNumberLimit {
+    background-color: #d6edf5;
 }
 
 .alignCenter {
@@ -62,4 +70,17 @@
     font-weight: lighter;
     position: relative;
     bottom: 0.4em;
+}
+
+.detailsCaracPanel {
+    font-size: 0.85em;
+}
+
+.caracValuePolice {
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+.footerCaracPolice {
+    margin-left: 0.3em;
 }

@@ -64,7 +64,9 @@ function CreationSheet () {
                 notes: DOMPurify.sanitize(formData.notes),
                 physicDescription: DOMPurify.sanitize(formData.physicDescription),
                 mentalDescription: DOMPurify.sanitize(formData.mentalDescription),
-                story: DOMPurify.sanitize(formData.characterName)
+                story: DOMPurify.sanitize(formData.story),
+                powerLevel: 0,
+                relations: {}
             }
         };
 

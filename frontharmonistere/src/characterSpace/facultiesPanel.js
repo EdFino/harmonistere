@@ -45,15 +45,24 @@ useEffect(() => {
         return (
             <div className={cspanelKit.numberFaculties}>
                 <span
-                    className={policeKit.iconNumber}
-                    onClick={() => setValue(prev => Math.max(0, prev - 1))}>
+                    className={
+                    value === 0
+                        ? `${policeKit.iconNumber} ${policeKit.iconNumberLimit}`
+                        : `${policeKit.iconNumber} ${policeKit.iconNumberModifiable}`
+                    }       
+                    onClick={() => setValue(prev => Math.max(0, prev - 1))}
+                >
                         −
                     </span>
                     <span className={policeKit.alignCenter}>
                         {value}
                     </span>
                     <span
-                        className={policeKit.iconNumber}
+                        className={
+                            value === maxValue
+                            ? `${policeKit.iconNumber} ${policeKit.iconNumberLimit}`
+                            : `${policeKit.iconNumber} ${policeKit.iconNumberModifiable}`
+                        }
                         onClick={() => setValue(prev => Math.min(maxValue, prev + 1))}>
                             +
                     </span>

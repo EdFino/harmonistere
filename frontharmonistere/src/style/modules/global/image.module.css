@@ -17,3 +17,13 @@
     width: 1.1em;
     height: 1.1em;
 }
+
+.iconProperties {
+    width: 2.4em;
+    height: 2.4em;
+}
+
+.injuredIcon {
+    width: 1.3em;
+    height: auto;
+}

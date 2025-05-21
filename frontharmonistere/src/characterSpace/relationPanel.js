@@ -20,7 +20,7 @@ function RelationPanel ({relation}) {
                         <img src={loupe} className={imageKit.loupeRelation} alt='Icône de recherche'/>
                     </div>
                     {index !== relation.length - 1 && (
-                    <hr className={cspanelKit.hrStyle} />
+                    <hr className={`${cspanelKit.hrStyle} ${cspanelKit.hrStyleRelation}`}/>
         )}
                 </div>
             ))}

@@ -33,6 +33,7 @@ function CharacterSpace () {
     const [sheetPresented, setSheetPresented] = useState (false);
     const [changeSheet, setChangeSheet] = useState(false);
     const [diceLauncherReady, setDiceLauncherReady] = useState(false);
+    const [isSelectingInjury, setIsSelectingInjury] = useState(false);
 
     const [characterOneName, setCharacterOneName] = useState ('');
     const [characterOneAge, setCharacterOneAge] = useState ('');
@@ -160,7 +161,9 @@ function CharacterSpace () {
     ]
 
     return (
+
         <div className='layoutPageCS'>
+            {isSelectingInjury && <div className="overlay" />}
             <Navbar
                 light={false}
             />            
@@ -235,7 +238,9 @@ function CharacterSpace () {
                             martialArtsLevel={characterOneMartial}
                             elementaryArtsLevel={characterOneElement}
                             speakingLevel={characterOneSpeaking}
-                        />}/>
+                            onStartInjurySelection={() => setIsSelectingInjury(!isSelectingInjury)}
+                        />}
+                        activablePanel={isSelectingInjury}/>
                 </div>
             </div>
         </div>

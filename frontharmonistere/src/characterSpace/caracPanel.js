@@ -1,4 +1,4 @@
-import React from 'react';
+import {React, useState} from 'react';
 import policeKit from '../style/modules/global/police.module.css';
 import cspanelKit from '../style/modules/components/cspanel.module.css';
 import imageKit from '../style/modules/global/image.module.css';
@@ -10,8 +10,75 @@ function CaracPanel ({
     soulLevel,
     martialArtsLevel,
     elementaryArtsLevel,
-    speakingLevel
+    speakingLevel,
+    onStartInjurySelection,
     }) {
+
+    const [injurySelection, setInjurySelection] = useState (false);
+
+    const [checkboxInjury, setCheckboxInjury] = useState (0);
+
+    const [checkboxes, setCheckboxes] = useState({
+        1: false,
+        2: false,
+        3: false
+    });
+
+    const [cellulBody, setCellulBody] = useState ({
+        isInjured: false,
+        checkboxSelected: 0
+    })
+    const [cellulMind, setCellulMind] = useState ({
+        isInjured: false,
+        checkboxSelected: 0
+    })
+    const [cellulSoul, setCellulSoul] = useState ({
+        isInjured: false,
+        checkboxSelected: 0
+    })
+    const [cellulMartial, setCellulMartial] = useState ({
+        isInjured: false,
+        checkboxSelected: 0
+    })
+    const [cellulElementary, setCellulElementary] = useState ({
+        isInjured: false,
+        checkboxSelected: 0
+    })
+    const [cellulSpeaking, setCellulSpeaking] = useState ({
+        isInjured: false,
+        checkboxSelected: 0
+    })
+
+    const handleCheckboxChange = (e, numberCheckbox) => {
+        const checked = e.target.checked;
+
+        if (checked) {
+            setCheckboxes(prev => ({
+                ...prev,
+                [numberCheckbox]: checked
+            }));
+            onStartInjurySelection();
+            setInjurySelection(true);
+            setCheckboxInjury(numberCheckbox);
+        } else {
+            const updateIfMatch = (cellul, setCellul) => {
+            if (cellul.checkboxSelected === numberCheckbox) {
+                setCellul(prev => ({
+                    ...prev,
+                    isInjured: false,
+                    checkboxSelected: 0
+                }));
+            }
+        };
+
+        updateIfMatch(cellulBody, setCellulBody);
+        updateIfMatch(cellulMind, setCellulMind);
+        updateIfMatch(cellulSoul, setCellulSoul);
+        updateIfMatch(cellulMartial, setCellulMartial);
+        updateIfMatch(cellulElementary, setCellulElementary);
+        updateIfMatch(cellulSpeaking, setCellulSpeaking);
+        }
+    };
 
     function translationLevel(caracLevel) {
         const value = typeof caracLevel === 'string' ? caracLevel : String(caracLevel);
@@ -48,22 +115,63 @@ function CaracPanel ({
         );
     }
 
-    function cellulPanelCreation(titleCarac, levelCarac, isInjuredOrNot, detailsCarac) {
+    function injuredNow (whatPanel, whatCheckbox) {
+        whatPanel(prev => ({
+            ...prev,
+            isInjured: true,
+            checkboxSelected: whatCheckbox
+    }));
+        onStartInjurySelection();
+        setInjurySelection(false);
+    }
+
+    function cellulPanelCreation(panelState, setPanelState, titleCarac, levelCarac, isInjuredOrNot, detailsCarac) {
+
+        const handleClick = () => {
+            if (injurySelection) {
+                injuredNow(setPanelState, checkboxInjury);
+            }
+        };
+
+        const handleRemoveInjury = (panelState, setPanelState) => {
+            const checkboxId = panelState.checkboxSelected;
+
+            if (checkboxId === 0) return;
+
+            setCheckboxes(prev => ({
+                ...prev,
+                [checkboxId]: false
+            }));
+
+            setPanelState(prev => ({
+                ...prev,
+                isInjured: false,
+                checkboxSelected: 0
+            }));
+        };
+
         return (
-        <div className={cspanelKit.cellulPanel}>
+        <div
+            className={`${cspanelKit.cellulPanel} ${injurySelection ? cspanelKit.cellulPanelHover : ''}`}
+            onClick={handleClick}
+        >
             <div className={cspanelKit.lineCellulPanel}>
-            <div className={policeKit.relationLinePolice}>{titleCarac}</div>
-            {translationLevel(levelCarac)}
-            {isInjuredOrNot && (
-                <img
-                src={injuredIcon}
-                className={imageKit.injuredIcon}
-                alt="Icône blessé"
-                />
-            )}
+                <div className={policeKit.relationLinePolice}>{titleCarac}</div>
+                {translationLevel(levelCarac)}
+                {isInjuredOrNot && (
+                    <img
+                    src={injuredIcon}
+                    className={imageKit.injuredIcon}
+                    alt="Icône blessé"
+                    onClick={(e) => {
+                        e.stopPropagation(); // éviter de déclencher handleClick
+                        handleRemoveInjury(panelState, setPanelState);
+                    }}
+                    />
+                )}
             </div>
             <div className={`${cspanelKit.cellulDetailsPanel} ${policeKit.detailsCaracPanel}`}>
-            {detailsCarac}
+                {detailsCarac}
             </div>
         </div>
         );
@@ -73,14 +181,14 @@ function CaracPanel ({
         <div className={cspanelKit.caracPanel}>
             <div className={cspanelKit.caracPanelMain}>
                 <div className={cspanelKit.columnPanel}>
-                    {cellulPanelCreation("Corps", bodyLevel, true, "Corps très musclé mais légèrement blessé.")}
-                    {cellulPanelCreation("Esprit", mindLevel, false, "Grande concentration et volonté.")}
-                    {cellulPanelCreation("Âme", soulLevel, false, "Grande concentration et volonté.")}
+                    {cellulPanelCreation(cellulBody, setCellulBody, "Corps", bodyLevel, cellulBody.isInjured, "Corps très musclé mais légèrement blessé.")}
+                    {cellulPanelCreation(cellulMind, setCellulMind, "Esprit", mindLevel, cellulMind.isInjured, "Grande concentration et volonté.")}
+                    {cellulPanelCreation(cellulSoul, setCellulSoul, "Âme", soulLevel, cellulSoul.isInjured, "Grande concentration et volonté.")}
                 </div>
                 <div className={cspanelKit.columnPanel}>
-                    {cellulPanelCreation("Martial", martialArtsLevel, false, "Bonnes bases techniques.")}
-                    {cellulPanelCreation("Élémentaire", elementaryArtsLevel, true, "Maîtrise élémentaire moyenne.")}
-                    {cellulPanelCreation("Rhétorique", speakingLevel, false, "Maîtrise rhétorique moyenne. Corps très musclé mais légèrement blessé. Corps très musclé mais légèrement blessé. Corps très musclé mais légèrement blessé.")}
+                    {cellulPanelCreation(cellulMartial, setCellulMartial, "Martial", martialArtsLevel, cellulMartial.isInjured, "Bonnes bases techniques.")}
+                    {cellulPanelCreation(cellulElementary, setCellulElementary, "Élémentaire", elementaryArtsLevel, cellulElementary.isInjured, "Maîtrise élémentaire moyenne.")}
+                    {cellulPanelCreation(cellulSpeaking, setCellulSpeaking, "Rhétorique", speakingLevel, cellulSpeaking.isInjured, "Maîtrise rhétorique moyenne. Corps très musclé mais légèrement blessé. Corps très musclé mais légèrement blessé. Corps très musclé mais légèrement blessé.")}
                 </div>
             </div>
 
@@ -89,19 +197,31 @@ function CaracPanel ({
             <div className={cspanelKit.caracPanelFooter}>
                 <span className={policeKit.relationLinePolice}>Blessures :</span>
                 <div>
-                    <input type="checkbox"/>
+                    <input
+                        id='checkBoxInjuryOne'
+                        type="checkbox"
+                        checked={checkboxes[1]}
+                        onChange={(e) => handleCheckboxChange(e, 1)}/>
                     <span className={policeKit.footerCaracPolice}>Légère 1</span>
                 </div>
                 <div>
-                    <input type="checkbox"/>
+                    <input
+                        id='checkBoxInjuryTwo'
+                        type="checkbox"
+                        checked={checkboxes[2]}
+                        onChange={(e) => handleCheckboxChange(e, 2)}/>
                     <span className={policeKit.footerCaracPolice}>Légère 2</span>
                 </div>
                 <div>
-                    <input type="checkbox"/>
+                    <input
+                        id='checkBoxInjuryThree'
+                        type="checkbox"
+                        checked={checkboxes[3]}
+                        onChange={(e) => handleCheckboxChange(e, 3)}/>
                     <span className={policeKit.footerCaracPolice}>Légère 3</span>
                 </div>
                 <div>
-                    <input type="checkbox"/>
+                    <input id='checkBoxSeriousInjury' type="checkbox"/>
                     <span className={policeKit.footerCaracPolice}>Grave</span>
                 </div>
             </div>

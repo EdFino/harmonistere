@@ -1,14 +1,14 @@
 import React from 'react';
-import cspanelstyle from '../style/modules/components/cspanel.module.css';
+import cspanelKit from '../style/modules/components/cspanel.module.css';
 
-function CSPanel ({titlePanel, contentPanel}) {
+function CSPanel ({titlePanel, contentPanel, activablePanel}) {
 
     return (
-        <div className={cspanelstyle.csPanelStyle}>
-            <div className={cspanelstyle.csPanelHeader}>
+        <div className={`${cspanelKit.cspanelStyle} ${activablePanel ? cspanelKit.interactivePanel : ""}`}>
+            <div className={cspanelKit.csPanelHeader}>
                 <p>{titlePanel}</p>
             </div>
-            <div className={cspanelstyle.csPanelMain}>
+            <div className={cspanelKit.csPanelMain}>
                 {contentPanel}
             </div>
         </div>

@@ -26,4 +26,5 @@
 .injuredIcon {
     width: 1.3em;
     height: auto;
+    cursor: pointer;
 }

@@ -23,6 +23,10 @@ import editeurIcon from '../images/editeur.png';
 import privateIcon from '../images/private.png';
 import manoeuverIcon from '../images/manoeuverIcon.png';
 import diceIcon from '../images/diceIcon.png';
+import Popup from 'reactjs-popup';
+import modalKit from '../specialComponents/customModal';
+import cspanelKit from '../style/modules/components/cspanel.module.css';
+
 
 
 function CharacterSpace () {
@@ -57,6 +61,10 @@ function CharacterSpace () {
     const [personnalityDescription, setPersonnalityDescription] = useState('');
     const [storyCharacter, setStoryCharacter] = useState('');
     const [powerLevel, setPowerLevel] = useState();
+
+    const [showModalManoeuver, setShowModalManoeuver] = useState(false);
+
+    const [showModalDice, setShowModalDice] = useState(false);
 
 
     const { id } = useParams();
@@ -253,90 +261,25 @@ function CharacterSpace () {
                 />
                 <img
                     src={diceIcon}
-                    className={`${imageKit.absoluteIcons} ${imageKit.diceIcon}`}
+                    className={`${imageKit.absoluteIcons} ${imageKit.diceIcon} ${showModalDice ? imageKit.iconClicked : ''}`}
                     alt='Icône de lancer de dés libres'
+                    onClick={() => {setShowModalDice(true)}}
                 />
             </div>
+            {showModalDice && (
+                <Popup
+                    open={showModalDice}
+                    contentStyle={{padding: '0', maxWidth: '50vw'}}
+                    modal
+                    nested
+                >
+                    <CSPanel
+                        titlePanel="Lanceur de dés"
+                        contentPanel={<DiceLauncherMini/>} />
+                </Popup>
+            )}            
         </div>
     )
 }
 
 export default CharacterSpace
-
-/*     return (
-        <>
-            <Navbar/>
-            <h1>ESPACE EN COURS DE CONSTRUCTION</h1>
-            <h2>{characterOneName}</h2>
-            <div id='characterSpace'>
-                <div id='columnCrud' className='columnSheet'>
-                    <p>Ici il y aura les fonctions pour modifier ou supprimer sa fiche</p>
-                    <button type='button' onClick={editSheet}>Editer votre fiche</button><br/>
-                    <button type='button' onClick={() => setShowFirstDeleteModal(true)}>Supprimer la fiche</button>
-                </div>
-                <div id='characterSheetVisual'>
-                {!sheetPresented ? (
-                    <div id='sheetVisualRecto' className='sheetVisualElement'>
-                        <CharacterSheet
-                            characterName={characterOneName}
-                            characterAge={characterOneAge}
-                            benderOrNot={isOneBender}
-                            benderSelect={characterOneBender}
-                            principalTrait={characterOnePrincipal}
-                            ascendantTrait={characterOneAscendant}
-                            neutralTrait={characterOneNeutral}
-                            oppositeTrait={characterOneOpposite}
-                            bodyLevel={characterOneBody}
-                            mindLevel={characterOneMind}
-                            soulLevel={characterOneSoul}
-                            martialArtsLevel={characterOneMartial}
-                            elementaryArtsLevel={characterOneElement}
-                            speakingLevel={characterOneSpeaking}
-                            skills={specialSkills}
-                            notes={notes}
-                            physicDescription={physicalDescription}
-                            mentalDescription={personnalityDescription}
-                            story={storyCharacter}
-                            changeSheet={changeSheet}
-                            />
-                            </div>)
-                            : (
-                            <div id='sheetVisualVerso' className='sheetVisualElement'>
-                                <CharacterSheetVerso
-                                    name={characterOneName}
-                                    physicalDescription={physicalDescription}
-                                    personnalityDescription={personnalityDescription}
-                                    storyCharacter={storyCharacter}/>
-                            </div>
-                            )
-                            }
-                        <button type='button' onClick={() => {setSheetPresented(!sheetPresented)}}>Recto-Verso</button>
-
-                </div>
-                <div id='columnPlay' className='columnSheet'>
-                    <h3>Lanceur de dés</h3>
-                    <button type='button' onClick={diceLauncherSet}>Lanceur</button>
-                    {diceLauncherReady ? (
-                    <DiceLauncherMini/>) : null}
-                </div>
-
-                        <CustomModal
-                            isOpen={showFirstDeleteModal}
-                            onClose={closeFirstDeleteModal}
-                            message= "Êtes-vous certain de vouloir supprimer votre fiche ?"
-                            messageEnd="Annuler l'opération"
-                            secondOnClose={handleDelete}
-                            secondMessageEnd="Suppression de la fiche"
-                        />
-
-                        <CustomModal
-                            isOpen={showSecondDeleteModal}
-                            onClose={closeSecondDeleteModal}
-                            message= "Votre fiche a été supprimée !"
-                            messageEnd="Retour dans mon espace"
-                        />
-
-            {sheetDeleted && <Navigate to="/espacejoueur" />}
-            </div>
-        </>  
-    ) */

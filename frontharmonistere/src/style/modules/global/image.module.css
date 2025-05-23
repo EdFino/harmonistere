@@ -35,16 +35,14 @@
     position: absolute;
     bottom: -4%;
     cursor: pointer;
-    transition: transform 0.3s ease;
-    transition: filter 0.3s ease;
-
+    transition: transform 0.2s ease;
+    transition: filter 0.2s ease;
 }
 
 .absoluteIcons:hover {
     transform: scale(1.05);
     filter: brightness(1.1);
 }
-
 
 .manoeuverIcon {
     z-index: 3;
@@ -54,4 +52,8 @@
 .diceIcon {
     z-index: 2;
     left: 10em;
+}
+
+.iconClicked {
+    bottom: 5em;
 }

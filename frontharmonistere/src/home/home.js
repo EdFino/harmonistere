@@ -79,7 +79,7 @@ function Home() {
 
             {showAccountSuccessModal && (
                 <CustomModal
-                isOpen={showAccountSuccessModal} // Mise à jour ici
+                isOpen={showAccountSuccessModal}
                 onClose={closeAccountModal}
                 message="Compte créé ! Bienvenue dans Harmonistère"
                 messageEnd="Fermer la fenêtre"

@@ -28,3 +28,30 @@
     height: auto;
     cursor: pointer;
 }
+
+.absoluteIcons {
+    width: 115px;
+    height: 115px;
+    position: absolute;
+    bottom: -4%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    transition: filter 0.3s ease;
+
+}
+
+.absoluteIcons:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+
+.manoeuverIcon {
+    z-index: 3;
+    left: 4em;
+}
+
+.diceIcon {
+    z-index: 2;
+    left: 10em;
+}

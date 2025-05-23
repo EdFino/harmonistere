@@ -68,6 +68,10 @@ function CaracPanel ({
                     isInjured: false,
                     checkboxSelected: 0
                 }));
+                setCheckboxes(prev => ({
+                    ...prev,
+                    [numberCheckbox]: false
+            }));
             }
         };
 

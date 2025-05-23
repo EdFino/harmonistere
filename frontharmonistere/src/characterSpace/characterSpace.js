@@ -21,6 +21,8 @@ import AlterationPanel from './alterationPanel';
 import CaracPanel from './caracPanel';
 import editeurIcon from '../images/editeur.png';
 import privateIcon from '../images/private.png';
+import manoeuverIcon from '../images/manoeuverIcon.png';
+import diceIcon from '../images/diceIcon.png';
 
 
 function CharacterSpace () {
@@ -242,6 +244,18 @@ function CharacterSpace () {
                         />}
                         activablePanel={isSelectingInjury}/>
                 </div>
+            </div>
+            <div className='absoluteDices'>
+                <img
+                    src={manoeuverIcon}
+                    className={`${imageKit.absoluteIcons} ${imageKit.manoeuverIcon}`}
+                    alt='Icône de manoeuvre'
+                />
+                <img
+                    src={diceIcon}
+                    className={`${imageKit.absoluteIcons} ${imageKit.diceIcon}`}
+                    alt='Icône de lancer de dés libres'
+                />
             </div>
         </div>
     )

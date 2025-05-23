@@ -7,6 +7,9 @@ body {
     display: grid;
     grid-template-rows: auto auto 1fr;
     max-height: 120vh;
+    position: relative;
+    overflow: hidden;
+
 }
 
 #characterSpaceHeader {
@@ -94,5 +97,5 @@ body {
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.6);
-    z-index: 2;
+    z-index: 5;
 }

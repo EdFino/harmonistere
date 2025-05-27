@@ -6,7 +6,7 @@ body {
 .layoutPageCS {
     display: grid;
     grid-template-rows: auto auto 1fr;
-    max-height: 120vh;
+    height: 120vh;
     position: relative;
     overflow: hidden;
 
@@ -49,7 +49,8 @@ body {
     grid-template-columns: repeat(9, 1fr);
     grid-template-rows: repeat(2, 1fr);
     gap: 3em;
-    overflow-y: auto;
+    justify-content: center;
+    align-items: center;
 }
 
 #CSPanelOne,
@@ -71,11 +72,11 @@ body {
 
 #CSPanelTwo {
     grid-column: 3/6;
-    grid-row-start: 1/2;
+    grid-row: 1/2;
 }
 #CSPanelThreeFour {
     grid-column: 3/6;
-    grid-row-start: 2/3;
+    grid-row: 2/3;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 2em;

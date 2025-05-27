@@ -26,6 +26,7 @@ import diceIcon from '../images/diceIcon.png';
 import Popup from 'reactjs-popup';
 import modalKit from '../specialComponents/customModal';
 import cspanelKit from '../style/modules/components/cspanel.module.css';
+import ManoeuverModalPanel from './manoeuverModalPanel';
 
 
 
@@ -49,12 +50,37 @@ function CharacterSpace () {
     const [characterOneAscendant, setCharacterOneAscendant] = useState ('');
     const [characterOneNeutral, setCharacterOneNeutral] = useState ('');
     const [characterOneOpposite, setCharacterOneOpposite] = useState ('');
-    const [characterOneBody, setCharacterOneBody] = useState ('');
-    const [characterOneMind, setCharacterOneMind] = useState ('');
-    const [characterOneSoul, setCharacterOneSoul] = useState ('');
-    const [characterOneMartial, setCharacterOneMartial] = useState ('');
-    const [characterOneElement, setCharacterOneElement] = useState ('');
-    const [characterOneSpeaking, setCharacterOneSpeaking] = useState ('');
+
+    const [characterOneBody, setCharacterOneBody] = useState({
+        value: '',
+        description: '',
+        color: ''
+    });
+    const [characterOneMind, setCharacterOneMind] = useState({
+        value: '',
+        description: '',
+        color: ''
+    });
+    const [characterOneSoul, setCharacterOneSoul] = useState({
+        value: '',
+        description: '',
+        color: ''
+    });
+    const [characterOneMartial, setCharacterOneMartial] = useState({
+        value: '',
+        description: '',
+        color: ''
+    });
+    const [characterOneElement, setCharacterOneElement] = useState({
+        value: '',
+        description: '',
+        color: ''
+    });
+    const [characterOneSpeaking, setCharacterOneSpeaking] = useState({
+        value: '',
+        description: '',
+        color: ''
+    });
     const [specialSkills, setSpecialSkills] = useState('');
     const [notes, setNotes] = useState('');
     const [physicalDescription, setPhysicalDescription] = useState('');
@@ -66,7 +92,6 @@ function CharacterSpace () {
 
     const [showModalDice, setShowModalDice] = useState(false);
 
-
     const { id } = useParams();
 
     useEffect(() => {
@@ -77,32 +102,74 @@ function CharacterSpace () {
                     console.log(data);
                     setSheetData(response.data);
     
-                    setCharacterOneName(data.characterName);  
+                    setCharacterOneName(data.characterName);
                     setCharacterOneAge(data.characterAge);                       
-                    setIsOneBender(data.benderOrNot);                       
-                    setCharacterOneBender(data.benderSelect);                       
+                    setIsOneBender(data.benderOrNot);
+                    setCharacterOneBender(data.benderSelect);
                     setCharacterOnePrincipal(data.principalTrait);                       
                     setCharacterOneAscendant(data.ascendantTrait);                       
                     setCharacterOneNeutral(data.neutralTrait);                       
                     setCharacterOneOpposite(data.oppositeTrait);                       
-                    setCharacterOneBody(data.bodyLevel);                       
-                    setCharacterOneMind(data.mindLevel);                       
-                    setCharacterOneSoul(data.soulLevel);                       
-                    setCharacterOneMartial(data.martialArtsLevel);                       
-                    setCharacterOneElement(data.elementaryArtsLevel);                       
-                    setCharacterOneSpeaking(data.speakingLevel);
                     setSpecialSkills(data.skills);
                     setNotes(data.notes);
                     setPhysicalDescription(data.physicDescription);
                     setPersonnalityDescription(data.mentalDescription);
                     setStoryCharacter(data.story);
                     setPowerLevel(data.powerLevel);
+                    setCarac(setCharacterOneBody, data.bodyLevel);
+                    setCarac(setCharacterOneMind, data.mindLevel);
+                    setCarac(setCharacterOneSoul, data.soulLevel);
+                    setCarac(setCharacterOneMartial, data.martialArtsLevel);
+                    setCarac(setCharacterOneElement, data.elementaryArtsLevel);
+                    setCarac(setCharacterOneSpeaking, data.speakingLevel);
                 })
                 .catch(error => {
                     console.log('Erreur lors de la récupération des données : ', error);
                 });
         }
     }, [user]);
+
+    function setCarac(setter, value) {
+        if (value !== undefined) {
+            const interpreted = interpretLevel(value);
+            setter({
+                value,
+                description: interpreted.description,
+                color: interpreted.color
+            });
+        }
+    }
+
+    function interpretLevel(value) {
+    switch (String(value)) {
+        case "-1":
+            return {
+                description: "Malus",
+                color: "#D5D5D5"
+            };
+        case "0":
+            return {
+                description: "Neutre",
+                color: "#F5DCAB"
+            };
+        case "1":
+            return {
+                description: "Bonus",
+                color: "#96DE9B"
+            };
+        case "2":
+            return {
+                description: "Critique",
+                color: "#FFA6A6"
+            };
+        default:
+            return {
+                description: "Inconnu",
+                color: "#E0E0E0"
+            };
+        }
+    }
+
 
     const handleDelete = () => {
         setShowFirstDeleteModal(false);
@@ -118,9 +185,9 @@ function CharacterSpace () {
             });
         }, 5000);
     };
-    
 
-    console.log (sheetData);
+    console.log ("Le corps, ça va ?" + characterOneBody.value)
+    
 
     const editSheet = () => {
         setChangeSheet(!changeSheet);
@@ -170,6 +237,15 @@ function CharacterSpace () {
         },
     ]
 
+    const areCaracsLoaded = () =>
+  characterOneBody.description &&
+  characterOneMind.description &&
+  characterOneSoul.description &&
+  characterOneMartial.description &&
+  characterOneElement.description &&
+  characterOneSpeaking.description;
+
+
     return (
 
         <div className='layoutPageCS'>
@@ -206,17 +282,19 @@ function CharacterSpace () {
             <div id='characterSpaceMain'>
 
                 <div id='CSPanelOne'>
-                    <CSMainPanel
-                        characterName={characterOneName}
-                        characterAge={characterOneAge}
-                        isOneBender={isOneBender}
-                        benderSelect={characterOneBender}
-                        powerLevel={powerLevel}
-                        principalTrait={characterOnePrincipal}
-                        ascendantTrait={characterOneAscendant}
-                        neutralTrait={characterOneNeutral}
-                        oppositeTrait={characterOneOpposite}
-                    />
+                    {areCaracsLoaded() && (
+                        <CSMainPanel
+                            characterName={characterOneName}
+                            characterAge={characterOneAge}
+                            isOneBender={isOneBender}
+                            benderSelect={characterOneBender}
+                            powerLevel={powerLevel}
+                            principalTrait={characterOnePrincipal}
+                            ascendantTrait={characterOneAscendant}
+                            neutralTrait={characterOneNeutral}
+                            oppositeTrait={characterOneOpposite}
+                        />
+                    )}
                 </div>
                 <div id='CSPanelTwo'>
                     <CSPanel
@@ -238,26 +316,35 @@ function CharacterSpace () {
                             contentPanel={<AlterationPanel/>} />
                     </div>
                 </div>
+                {areCaracsLoaded() && (
                 <div id='CSPanelFive'>
                     <CSPanel
                         titlePanel="Attributs"
                         contentPanel={<CaracPanel
                             bodyLevel={characterOneBody}
+                            setBodyLevel={setCharacterOneBody}
                             mindLevel={characterOneMind}
+                            setMindLevel={setCharacterOneMind}
                             soulLevel={characterOneSoul}
+                            setSoulLevel={setCharacterOneSoul}
                             martialArtsLevel={characterOneMartial}
+                            setMartialArtsLevel={setCharacterOneMartial}
                             elementaryArtsLevel={characterOneElement}
+                            setElementaryArtsLevel={setCharacterOneElement}
                             speakingLevel={characterOneSpeaking}
+                            setSpeakingLevel={setCharacterOneSpeaking}
                             onStartInjurySelection={() => setIsSelectingInjury(!isSelectingInjury)}
                         />}
                         activablePanel={isSelectingInjury}/>
                 </div>
+                )}
             </div>
             <div className='absoluteDices'>
                 <img
                     src={manoeuverIcon}
-                    className={`${imageKit.absoluteIcons} ${imageKit.manoeuverIcon}`}
+                    className={`${imageKit.absoluteIcons} ${imageKit.manoeuverIcon} ${showModalManoeuver ? imageKit.iconClicked : ''}`}
                     alt='Icône de manoeuvre'
+                    onClick={() => {setShowModalManoeuver(true)}}
                 />
                 <img
                     src={diceIcon}
@@ -266,9 +353,37 @@ function CharacterSpace () {
                     onClick={() => {setShowModalDice(true)}}
                 />
             </div>
+            {showModalManoeuver && (
+                <Popup
+                    open={showModalManoeuver}
+                    onClose={() => {setShowModalManoeuver(false)}}
+                    contentStyle={{padding: '0', maxWidth: '50vw', maxHeight: '90vw'}}
+                    modal
+                    nested
+                >
+                    {areCaracsLoaded() && (
+                    <CSPanel
+                        titlePanel="Manœuvre"
+                        contentPanel={<ManoeuverModalPanel
+                            bodyLevel={characterOneBody}
+                            mindLevel={characterOneMind}
+                            soulLevel={characterOneSoul}
+                            martialArtsLevel={characterOneMartial}
+                            elementaryArtsLevel={characterOneElement}
+                            speakingLevel={characterOneSpeaking}
+                            principalTrait={characterOnePrincipal}
+                            ascendantTrait={characterOneAscendant}
+                            neutralTrait={characterOneNeutral}
+                            oppositeTrait={characterOneOpposite}
+                        />}
+                    />
+                        )}
+                </Popup>
+            )}
             {showModalDice && (
                 <Popup
                     open={showModalDice}
+                    onClose={() => {setShowModalDice(false)}}
                     contentStyle={{padding: '0', maxWidth: '50vw'}}
                     modal
                     nested
@@ -279,7 +394,7 @@ function CharacterSpace () {
                 </Popup>
             )}            
         </div>
-    )
-}
+
+        )}
 
 export default CharacterSpace

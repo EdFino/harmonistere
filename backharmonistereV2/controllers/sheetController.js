@@ -26,24 +26,22 @@ exports.readSheet = async (req, res) => {
 
 exports.updateSheet = async (req, res) => {
     try {
-        const { id } = req.params; // ID de la fiche
-        console.log('ID reçu pour mise à jour :', id); // Vérifiez la valeur ici
-        const updatedSheetData = req.body;
+        const { id } = req.params;
+        const updatedSheetData = req.body.sheetData;
 
+        console.log('ID reçu pour mise à jour :', id);
         console.log('Données reçues pour mise à jour :', updatedSheetData);
-        console.log ('Voici notre second name: ', updatedSheetData.characterName);
-        console.log ('Voici notre second benderOrNot: ', updatedSheetData.benderOrNot);
-
 
         const sheet = await Sheet.findById(id);
         if (!sheet) {
             return res.status(404).json({ error: 'Fiche non trouvée' });
         }
-        for (const key in updatedSheetData) {
-            if (updatedSheetData.hasOwnProperty(key)) {
-                sheet.sheetData[key] = updatedSheetData[key];
-            }
-        }
+
+        // Remplacement complet de sheetData
+        sheet.sheetData = updatedSheetData;
+
+        // Très important si sheetData est un objet imbriqué ou Mixed
+        sheet.markModified('sheetData');
 
         await sheet.save();
 

@@ -7,6 +7,21 @@ const relationSchema = new mongoose.Schema({
     status: { type: String, required: true }
 }, { _id: false });
 
+const subInjurySchema = new mongoose.Schema({
+    isInjured: { type: Boolean, default: false },
+    checkboxSelected: { type: Number, default: 0 }
+}, { _id: false });
+
+const injurySchema = new mongoose.Schema({
+    lightInjuries: { type: Number, default: 0 },
+    bodyInjured: subInjurySchema,
+    mindInjured: subInjurySchema,
+    soulInjured: subInjurySchema,
+    martialInjured: subInjurySchema,
+    elementInjured: subInjurySchema,
+    speakingInjured: subInjurySchema,
+}, { _id: false });
+
 const sheetSchema = new mongoose.Schema({
     email: { type: String, required: true },
     sheetData: {
@@ -31,10 +46,10 @@ const sheetSchema = new mongoose.Schema({
         speakingLevel: { type: String },
         powerLevel: { type: Number},
         relations: [relationSchema],
-        focus: { type: String },
-        breath: { type: String },
-        synergy: { type: String },
-        injuries: [{ type: String }]
+        breath: { type: Number },
+        focus: { type: Number },
+        synergy: { type: Number },
+        injuries: injurySchema
     },
 }, { collection: 'Sheets', versionKey: false });
 

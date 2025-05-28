@@ -19,6 +19,7 @@ import RelationPanel from './relationPanel';
 import FacultiesPanel from './facultiesPanel';
 import AlterationPanel from './alterationPanel';
 import CaracPanel from './caracPanel';
+import saveIcon from '../images/saveIcon.png';
 import editeurIcon from '../images/editeur.png';
 import privateIcon from '../images/private.png';
 import manoeuverIcon from '../images/manoeuverIcon.png';
@@ -114,6 +115,9 @@ function CharacterSpace () {
     const [personnalityDescription, setPersonnalityDescription] = useState('');
     const [storyCharacter, setStoryCharacter] = useState('');
     const [powerLevel, setPowerLevel] = useState();
+    const [focus, setFocus] = useState();
+    const [breath, setBreath] = useState();
+    const [injuries, setInjuries] = useState ();
 
     const [showModalManoeuver, setShowModalManoeuver] = useState(false);
 
@@ -149,6 +153,9 @@ function CharacterSpace () {
                     setCarac(setCharacterOneMartial, data.martialArtsLevel, "Martial");
                     setCarac(setCharacterOneElement, data.elementaryArtsLevel, "Elément");
                     setCarac(setCharacterOneSpeaking, data.speakingLevel, "Rhétorique");
+                    setFocus(data.focus);
+                    setBreath(data.breath);
+                    setInjuries(data.injuries);
                 })
                 .catch(error => {
                     console.log('Erreur lors de la récupération des données : ', error);
@@ -207,6 +214,75 @@ function CharacterSpace () {
         }
     }
 
+    const autoSaveSheet = () => {
+    if (!user || !sheetData) return;
+
+    const updatedSheet = {
+        characterName: characterOneName,
+        characterAge: characterOneAge,
+        benderOrNot: isOneBender,
+        benderSelect: characterOneBender,
+        principalTrait: characterOnePrincipal.name,
+        ascendantTrait: characterOneAscendant.name,
+        neutralTrait: characterOneNeutral.name,
+        oppositeTrait: characterOneOpposite.name,
+        skills: specialSkills,
+        notes: notes,
+        physicDescription: physicalDescription,
+        mentalDescription: personnalityDescription,
+        story: storyCharacter,
+        powerLevel,
+        bodyLevel: characterOneBody.value,
+        mindLevel: characterOneMind.value,
+        soulLevel: characterOneSoul.value,
+        martialArtsLevel: characterOneMartial.value,
+        elementaryArtsLevel: characterOneElement.value,
+        speakingLevel: characterOneSpeaking.value,
+        focus,
+        breath,
+        injuries
+    };
+
+    axios.put(`http://localhost:5038/api/sheets/updateSheet/${id}`, { sheetData: updatedSheet })
+        .then(() => {
+            console.log("Sauvegarde automatique effectuée.");
+        })
+        .catch(error => {
+            console.error("Erreur lors de la sauvegarde automatique :", error);
+        });
+};
+
+useEffect(() => {
+    const interval = setInterval(() => {
+        autoSaveSheet();
+    }, 50000);
+
+    return () => clearInterval(interval); // nettoyage à la destruction du composant
+}, [
+    characterOneName,
+    characterOneAge,
+    isOneBender,
+    characterOneBender,
+    characterOnePrincipal,
+    characterOneAscendant,
+    characterOneNeutral,
+    characterOneOpposite,
+    specialSkills,
+    notes,
+    physicalDescription,
+    personnalityDescription,
+    storyCharacter,
+    powerLevel,
+    characterOneBody,
+    characterOneMind,
+    characterOneSoul,
+    characterOneMartial,
+    characterOneElement,
+    characterOneSpeaking,
+    focus,
+    breath,
+    injuries
+]);
 
     const handleDelete = () => {
         setShowFirstDeleteModal(false);
@@ -221,10 +297,7 @@ function CharacterSpace () {
                 console.log ('La fiche n\'a pas pu être supprimée : ', error);
             });
         }, 5000);
-    };
-
-    console.log ("Le tempérament, ça va ?" + characterOnePrincipal.value)
-    
+    };    
 
     const editSheet = () => {
         setChangeSheet(!changeSheet);
@@ -274,6 +347,12 @@ function CharacterSpace () {
         },
     ]
 
+    const handleFacultiesChange = ({ focus, breath }) => {
+        setFocus(focus);
+        setBreath(breath);
+};
+
+
     const areCaracsLoaded = () =>
   characterOneBody.description &&
   characterOneMind.description &&
@@ -301,6 +380,12 @@ function CharacterSpace () {
                 </div>
 
                 <div id='iconCharacterSpace'>
+                        <img
+                            src={saveIcon}
+                            className={imageKit.iconProperties}
+                            alt='Icône pour sauvegarder sa fiche'
+                            style={{marginRight: "0.6em"}}
+                        />
                         <img
                             src={privateIcon}
                             className={imageKit.iconProperties}
@@ -341,11 +426,19 @@ function CharacterSpace () {
                     />}
                         />
                 </div>
+                {areCaracsLoaded() && (
                 <div id='CSPanelThreeFour'>
                     <div className='CSPanelMini'>
                         <CSPanel
                             titlePanel="Facultés"
-                            contentPanel={<FacultiesPanel/>}/>
+                            contentPanel={<FacultiesPanel
+                                focus={focus}
+                                setFocus={setFocus}
+                                breath={breath}
+                                setBreath={setBreath}
+                                onValuesChange={handleFacultiesChange}
+                            />}
+                        />
                     </div>
                     <div className='CSPanelMini'>
                         <CSPanel
@@ -353,6 +446,7 @@ function CharacterSpace () {
                             contentPanel={<AlterationPanel/>} />
                     </div>
                 </div>
+                )}
                 {areCaracsLoaded() && (
                 <div id='CSPanelFive'>
                     <CSPanel
@@ -412,6 +506,9 @@ function CharacterSpace () {
                             ascendantTrait={characterOneAscendant}
                             neutralTrait={characterOneNeutral}
                             oppositeTrait={characterOneOpposite}
+                            focus={focus}
+                            setFocus={setFocus}
+                            onValuesChange={handleFacultiesChange}
                         />}
                     />
                         )}

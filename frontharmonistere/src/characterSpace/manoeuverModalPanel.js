@@ -18,8 +18,13 @@ function ManoeuverModalPanel ({
             principalTrait,
             ascendantTrait,
             neutralTrait,
-            oppositeTrait
+            oppositeTrait,
+            focus,
+            setFocus,
+            onValuesChange
 }) {
+
+    const [focusModal, setFocusModal] = useState(focus);
 
     function selectDice (carac) {
         return (
@@ -28,6 +33,10 @@ function ManoeuverModalPanel ({
                 <p className={policeKit.buttonLauncherPolice}>{carac.description}</p>
             </div>
         )
+    }
+
+    function onclickCheckbox () {
+
     }
 
     return (
@@ -103,7 +112,7 @@ function ManoeuverModalPanel ({
 
             <div className={cspanelKit.focusAndRoll}>
                 <div className={cspanelKit.focusNumber}>
-                    <p className={policeKit.grandFocus}>3</p> points de focus
+                    <p className={policeKit.grandFocus}>{focusModal}</p> points de focus
                 </div>
                 <button className={buttonKit.rollResetButton}>Lancer</button>
                 <button className={buttonKit.rollResetButton}>Réinitialiser</button>

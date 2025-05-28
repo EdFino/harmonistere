@@ -66,7 +66,18 @@ function CreationSheet () {
                 mentalDescription: DOMPurify.sanitize(formData.mentalDescription),
                 story: DOMPurify.sanitize(formData.story),
                 powerLevel: 0,
-                relations: []
+                relations: [],
+                breath: 4,
+                focus: 0,
+                injuries: {
+                    lightInjuries: 0,
+                    bodyInjured: { isInjured: false, checkboxSelected: 0 },
+                    mindInjured: { isInjured: false, checkboxSelected: 0 },
+                    soulInjured: { isInjured: false, checkboxSelected: 0 },
+                    martialInjured: { isInjured: false, checkboxSelected: 0 },
+                    elementInjured: { isInjured: false, checkboxSelected: 0 },
+                    speakingInjured: { isInjured: false, checkboxSelected: 0 }
+                }
             }
         };
 

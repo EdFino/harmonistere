@@ -34,18 +34,18 @@ function CSMainPanel ({characterName, characterAge, benderSelect, powerLevel, pr
     const harmonistereType = whatHarmonistereType(benderSelect);
 
         function getTraitClass(element) {
-            if (element === principalTrait) return circleKit.traitCritique;
-            if (element === ascendantTrait) return circleKit.traitBonus;
-            if (element === neutralTrait) return circleKit.traitNeutre;
-            if (element === oppositeTrait) return circleKit.traitMalus;
+            if (element === principalTrait.name) return principalTrait.color;
+            if (element === ascendantTrait.name) return ascendantTrait.color;
+            if (element === neutralTrait.name) return neutralTrait.color;
+            if (element === oppositeTrait.name) return oppositeTrait.color;
         return '';
     }
 
     function getTraitLabel(element) {
-            if (element === principalTrait) return 'Critique';
-            if (element === ascendantTrait) return 'Bonus';
-            if (element === neutralTrait) return 'Neutre';
-            if (element === oppositeTrait) return 'Malus';
+            if (element === principalTrait.name) return principalTrait.description;
+            if (element === ascendantTrait.name) return ascendantTrait.description;
+            if (element === neutralTrait.name) return neutralTrait.description;
+            if (element === oppositeTrait.name) return oppositeTrait.description;
         return '';
     }
 
@@ -65,21 +65,21 @@ function CSMainPanel ({characterName, characterAge, benderSelect, powerLevel, pr
                 <p className={policeKit.avatarInfoPolice}>Niveau {powerLevel}</p>
             </div>
             <div className={circleKit.characterCircle}>
-                <div className={`${circleKit.quarter} ${circleKit.quarterTop} ${getTraitClass('Air')}`}>
+                <div className={`${circleKit.quarter} ${circleKit.quarterTop}`} style={{backgroundColor: getTraitClass('Air')}}>
                     <div className={circleKit.quarterContentTop}>
                         <h4 className={policeKit.avatarPersonnalityTitlePolice}>Air</h4>
                         <p className={policeKit.avatarPersonnalityPolice}>{getTraitLabel('Air')}</p>
                         <img src={airIcon} className={imageKit.iconElement} alt="Icône de l'élément Air"/>
                     </div>
                 </div>
-                <div className={`${circleKit.quarter} ${circleKit.quarterRight} ${getTraitClass('Eau')}`}>
+                <div className={`${circleKit.quarter} ${circleKit.quarterRight}`} style={{backgroundColor: getTraitClass('Eau')}}>
                     <div className={circleKit.quarterContentRight}>
                         <h4 className={policeKit.avatarPersonnalityTitlePolice}>Eau</h4>
                         <p className={policeKit.avatarPersonnalityPolice}>{getTraitLabel('Eau')}</p>
                         <img src={waterIcon} className={imageKit.iconElement} alt="Icône de l'élément Eau"/>
                     </div>
                 </div>
-                <div className={`${circleKit.quarter} ${circleKit.quarterBottom} ${getTraitClass('Terre')}`}>
+                <div className={`${circleKit.quarter} ${circleKit.quarterBottom}`} style={{backgroundColor: getTraitClass('Terre')}}>
                     <div className={circleKit.quarterContentBottom}>
                         <img src={earthIcon} className={imageKit.iconElement} alt="Icône de l'élément Terre"/>
                         <p className={policeKit.avatarPersonnalityPoliceInversed}>{getTraitLabel('Terre')}</p>
@@ -87,7 +87,7 @@ function CSMainPanel ({characterName, characterAge, benderSelect, powerLevel, pr
 
                     </div>
                 </div>
-                <div className={`${circleKit.quarter} ${circleKit.quarterLeft} ${getTraitClass('Feu')}`}>
+                <div className={`${circleKit.quarter} ${circleKit.quarterLeft}`} style={{backgroundColor: getTraitClass('Feu')}}>
                     <div className={circleKit.quarterContentLeft}>
                         <h4 className={policeKit.avatarPersonnalityTitlePolice}>Feu</h4>
                         <p className={policeKit.avatarPersonnalityPolice}>{getTraitLabel('Feu')}</p>

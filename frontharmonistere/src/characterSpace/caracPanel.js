@@ -158,14 +158,14 @@ function CaracPanel ({
         <div className={cspanelKit.caracPanel}>
             <div className={cspanelKit.caracPanelMain}>
                 <div className={cspanelKit.columnPanel}>
-                    {cellulPanelCreation(cellulBody, setCellulBody, "Corps", bodyLevel.description, bodyLevel.color, cellulBody.isInjured, "Corps très musclé mais légèrement blessé.")}
-                    {cellulPanelCreation(cellulMind, setCellulMind, "Esprit", mindLevel.description, mindLevel.color, cellulMind.isInjured, "Grande concentration et volonté.")}
-                    {cellulPanelCreation(cellulSoul, setCellulSoul, "Âme", soulLevel.description, soulLevel.color, cellulSoul.isInjured, "Grande concentration et volonté.")}
+                    {cellulPanelCreation(cellulBody, setCellulBody, bodyLevel.name, bodyLevel.description, bodyLevel.color, cellulBody.isInjured, "Corps très musclé mais légèrement blessé.")}
+                    {cellulPanelCreation(cellulMind, setCellulMind, mindLevel.name, mindLevel.description, mindLevel.color, cellulMind.isInjured, "Grande concentration et volonté.")}
+                    {cellulPanelCreation(cellulSoul, setCellulSoul, soulLevel.name, soulLevel.description, soulLevel.color, cellulSoul.isInjured, "Grande concentration et volonté.")}
                 </div>
                 <div className={cspanelKit.columnPanel}>
-                    {cellulPanelCreation(cellulMartial, setCellulMartial, "Martial", martialArtsLevel.description, martialArtsLevel.color, cellulMartial.isInjured, "Bonnes bases techniques.")}
-                    {cellulPanelCreation(cellulElementary, setCellulElementary, "Élémentaire", elementaryArtsLevel.description, elementaryArtsLevel.color, cellulElementary.isInjured, "Maîtrise élémentaire moyenne.")}
-                    {cellulPanelCreation(cellulSpeaking, setCellulSpeaking, "Rhétorique", speakingLevel.description, speakingLevel.color, cellulSpeaking.isInjured, "Maîtrise rhétorique moyenne. Corps très musclé mais légèrement blessé. Corps très musclé mais légèrement blessé. Corps très musclé mais légèrement blessé.")}
+                    {cellulPanelCreation(cellulMartial, setCellulMartial, martialArtsLevel.name, martialArtsLevel.description, martialArtsLevel.color, cellulMartial.isInjured, "Bonnes bases techniques.")}
+                    {cellulPanelCreation(cellulElementary, setCellulElementary, elementaryArtsLevel.name, elementaryArtsLevel.description, elementaryArtsLevel.color, cellulElementary.isInjured, "Maîtrise élémentaire moyenne.")}
+                    {cellulPanelCreation(cellulSpeaking, setCellulSpeaking, speakingLevel.name, speakingLevel.description, speakingLevel.color, cellulSpeaking.isInjured, "Maîtrise rhétorique moyenne. Corps très musclé mais légèrement blessé. Corps très musclé mais légèrement blessé. Corps très musclé mais légèrement blessé.")}
                 </div>
             </div>
 

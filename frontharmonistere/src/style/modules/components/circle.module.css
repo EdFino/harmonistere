@@ -71,19 +71,3 @@
     justify-content: center;
     align-items: center;
 }
-
-.traitCritique {
-    background-color: #FFA6A6;
-}
-
-.traitBonus {
-    background-color: #96DE9B;
-}
-
-.traitNeutre {
-    background-color: #F5DCAB;
-}
-
-.traitMalus {
-    background-color: #D5D5D5;
-}

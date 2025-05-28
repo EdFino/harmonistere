@@ -15,3 +15,32 @@
     background: #233463;
     color: #FEF2E2;
 }
+
+.diceButtonModal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0.7em 3.1em;
+    margin: 0.6em;
+    border-radius: 20px;
+    width: 6em;
+    height: 3.2em;
+    cursor: pointer;
+}
+
+.rollResetButton {
+    display: flex;
+    align-items: center;
+    background-color: #A0D6E5 ;
+    border-radius: 35px;
+    color: #233463;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    letter-spacing: 0.03em;
+    margin : 0 1em;
+    padding: 0.5em 1.5em;
+    min-height: 3.5em;
+    border: none;
+    cursor: pointer;
+  }

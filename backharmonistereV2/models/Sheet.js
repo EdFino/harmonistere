@@ -30,7 +30,11 @@ const sheetSchema = new mongoose.Schema({
         elementaryArtsLevel: { type: String },
         speakingLevel: { type: String },
         powerLevel: { type: Number},
-        relations: [relationSchema]
+        relations: [relationSchema],
+        focus: { type: String },
+        breath: { type: String },
+        synergy: { type: String },
+        injuries: [{ type: String }]
     },
 }, { collection: 'Sheets', versionKey: false });
 

@@ -46,37 +46,64 @@ function CharacterSpace () {
     const [characterOneAge, setCharacterOneAge] = useState ('');
     const [isOneBender, setIsOneBender] = useState ('');
     const [characterOneBender, setCharacterOneBender] = useState ('');
-    const [characterOnePrincipal, setCharacterOnePrincipal] = useState ('');
-    const [characterOneAscendant, setCharacterOneAscendant] = useState ('');
-    const [characterOneNeutral, setCharacterOneNeutral] = useState ('');
-    const [characterOneOpposite, setCharacterOneOpposite] = useState ('');
+
+    const [characterOnePrincipal, setCharacterOnePrincipal] = useState ({
+        name: '',
+        value: '2',
+        description: 'Critique',
+        color: '#FFA6A6'
+    });
+    const [characterOneAscendant, setCharacterOneAscendant] = useState ({
+        name: '',
+        value: '1',
+        description: 'Bonus',
+        color: '#96DE9B'
+    });
+    const [characterOneNeutral, setCharacterOneNeutral] = useState ({
+        name: '',
+        value: '0',
+        description: 'Neutre',
+        color: '#F5DCAB'
+    });
+    const [characterOneOpposite, setCharacterOneOpposite] = useState ({
+        name: '',
+        value: '-1',
+        description: 'Malus',
+        color: '#D5D5D5'
+    });
 
     const [characterOneBody, setCharacterOneBody] = useState({
+        name: '',
         value: '',
         description: '',
         color: ''
     });
     const [characterOneMind, setCharacterOneMind] = useState({
+        name: '',
         value: '',
         description: '',
         color: ''
     });
     const [characterOneSoul, setCharacterOneSoul] = useState({
+        name: '',
         value: '',
         description: '',
         color: ''
     });
     const [characterOneMartial, setCharacterOneMartial] = useState({
+        name: '',
         value: '',
         description: '',
         color: ''
     });
     const [characterOneElement, setCharacterOneElement] = useState({
+        name: '',
         value: '',
         description: '',
         color: ''
     });
     const [characterOneSpeaking, setCharacterOneSpeaking] = useState({
+        name: '',
         value: '',
         description: '',
         color: ''
@@ -106,22 +133,22 @@ function CharacterSpace () {
                     setCharacterOneAge(data.characterAge);                       
                     setIsOneBender(data.benderOrNot);
                     setCharacterOneBender(data.benderSelect);
-                    setCharacterOnePrincipal(data.principalTrait);                       
-                    setCharacterOneAscendant(data.ascendantTrait);                       
-                    setCharacterOneNeutral(data.neutralTrait);                       
-                    setCharacterOneOpposite(data.oppositeTrait);                       
+                    setTemper(setCharacterOnePrincipal, data.principalTrait);
+                    setTemper(setCharacterOneAscendant, data.ascendantTrait);
+                    setTemper(setCharacterOneNeutral, data.neutralTrait);                       
+                    setTemper(setCharacterOneOpposite, data.oppositeTrait);                       
                     setSpecialSkills(data.skills);
                     setNotes(data.notes);
                     setPhysicalDescription(data.physicDescription);
                     setPersonnalityDescription(data.mentalDescription);
                     setStoryCharacter(data.story);
                     setPowerLevel(data.powerLevel);
-                    setCarac(setCharacterOneBody, data.bodyLevel);
-                    setCarac(setCharacterOneMind, data.mindLevel);
-                    setCarac(setCharacterOneSoul, data.soulLevel);
-                    setCarac(setCharacterOneMartial, data.martialArtsLevel);
-                    setCarac(setCharacterOneElement, data.elementaryArtsLevel);
-                    setCarac(setCharacterOneSpeaking, data.speakingLevel);
+                    setCarac(setCharacterOneBody, data.bodyLevel, "Corps");
+                    setCarac(setCharacterOneMind, data.mindLevel, "Esprit");
+                    setCarac(setCharacterOneSoul, data.soulLevel, "Âme");
+                    setCarac(setCharacterOneMartial, data.martialArtsLevel, "Martial");
+                    setCarac(setCharacterOneElement, data.elementaryArtsLevel, "Elément");
+                    setCarac(setCharacterOneSpeaking, data.speakingLevel, "Rhétorique");
                 })
                 .catch(error => {
                     console.log('Erreur lors de la récupération des données : ', error);
@@ -129,16 +156,26 @@ function CharacterSpace () {
         }
     }, [user]);
 
-    function setCarac(setter, value) {
+    function setCarac(setter, value, caracName) {
         if (value !== undefined) {
             const interpreted = interpretLevel(value);
             setter({
+                name: caracName,
                 value,
                 description: interpreted.description,
                 color: interpreted.color
             });
         }
     }
+
+    function setTemper(setter, newValue) {
+    if (newValue !== undefined) {
+        setter(prev => ({
+            ...prev,
+            name: newValue
+        }));
+    }
+}
 
     function interpretLevel(value) {
     switch (String(value)) {
@@ -186,7 +223,7 @@ function CharacterSpace () {
         }, 5000);
     };
 
-    console.log ("Le corps, ça va ?" + characterOneBody.value)
+    console.log ("Le tempérament, ça va ?" + characterOnePrincipal.value)
     
 
     const editSheet = () => {

@@ -169,7 +169,6 @@ body {
     min-height: 3.5em;
     border: none;
     cursor: pointer;
-    /* text-align: center; */
   }
 
 .diceButton:hover, .rollResetButton:hover, .selectedDiceIcon:hover{

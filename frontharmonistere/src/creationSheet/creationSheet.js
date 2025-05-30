@@ -113,7 +113,7 @@ const closeModalSheet = () => {
 
             <div id='creationSheet'>
 
-            <h2 className={titleKit.blueHarmonistereSheetTitle}>Créer une fiche</h2>
+            <p className={titleKit.blueHarmonistereSheetTitle}>Créer une fiche</p>
 
             <SubNavbarSheet
                 stepForm = {stepForm}/>

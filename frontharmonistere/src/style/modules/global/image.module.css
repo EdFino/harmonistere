@@ -21,6 +21,7 @@
 .iconProperties {
     width: 2.4em;
     height: 2.4em;
+    cursor: pointer;
 }
 
 .injuredIcon {

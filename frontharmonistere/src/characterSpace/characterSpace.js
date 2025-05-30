@@ -284,6 +284,10 @@ useEffect(() => {
     injuries
 ]);
 
+const handleManualSave = () => {
+    autoSaveSheet();
+};
+
     const handleDelete = () => {
         setShowFirstDeleteModal(false);
         setShowSecondDeleteModal(true);
@@ -385,6 +389,7 @@ useEffect(() => {
                             className={imageKit.iconProperties}
                             alt='Icône pour sauvegarder sa fiche'
                             style={{marginRight: "0.6em"}}
+                            onClick={handleManualSave}
                         />
                         <img
                             src={privateIcon}

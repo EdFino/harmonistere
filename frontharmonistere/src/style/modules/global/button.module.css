@@ -21,26 +21,43 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 0.7em 3.1em;
-    margin: 0.6em;
+    margin: 0.4em;
     border-radius: 20px;
-    width: 6em;
+    border: 3px solid transparent;
+    width: 6.9em;
     height: 3.2em;
     cursor: pointer;
+    transition: border-color 0.2s ease;
+
+}
+
+.isSelected, .diceButtonModal:hover {
+    border: 3px #233463 solid;
 }
 
 .rollResetButton {
     display: flex;
     align-items: center;
-    background-color: #A0D6E5 ;
+    justify-content: center;
     border-radius: 35px;
     color: #233463;
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
     letter-spacing: 0.03em;
-    margin : 0 1em;
+    margin : 0.8em;
+    margin-top: 0em;
     padding: 0.5em 1.5em;
     min-height: 3.5em;
-    border: none;
     cursor: pointer;
-  }
+    width: 18em;
+}
+
+.rollButton {
+    background-color: #A0D6E5;
+    border: none;
+}
+
+.resetButton {
+    background-color: #FFF9F0;
+    border: 3px #8FD7EA solid;
+}

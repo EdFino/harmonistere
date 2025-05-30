@@ -230,9 +230,31 @@
 }
 
 .focusAndRoll {
-    display: flex;
+    display: grid;
+    grid-template-columns: 25% 50% 25%;
+    justify-content: center;
+    align-items: end;
 }
 
 .focusNumber {
+    grid-column: 1/2;
+    justify-self: center;
     display: flex;
+    border: 5px rgba(219, 192, 154, 0.4) solid;
+    border-radius: 35px;
+    padding: 0.1em 1.8em;
+    margin-right: 1em;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttonsLauncher {
+    display: flex;
+    grid-column: 2/3;
+}
+
+.showDicesSelected {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

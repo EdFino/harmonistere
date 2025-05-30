@@ -93,3 +93,27 @@
 .buttonLauncherPolice {
     font-size: 0.65em;
 }
+
+.focusPoints {
+    font-size: 0.9em;
+    font-weight: bold;
+    line-height: 1.2em;
+}
+
+.grandFocus {
+    color: #A0D6E5;
+    font-size: 2.3em;
+    font-weight: bold;
+    margin-right: 0.2em;
+}
+
+.showDices {
+    font-size: 0.9em;
+    font-weight: 800;
+}
+
+.verticalLine {
+  width: 3px;
+  height: 19px;
+  background-color: #E3CCAF;
+}

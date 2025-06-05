@@ -240,7 +240,6 @@ function ManoeuverModalPanel ({
         )}
                     </React.Fragment>
                 ))}
-                
             </div>
 
             <div className={cspanelKit.focusAndRoll}>
@@ -267,22 +266,20 @@ function ManoeuverModalPanel ({
                 </div>
             </div>
 
-                <div className={cspanelKit.resultDices}>
-                    {showingResult.map((result, i) => (
-                        <p key={i}>{result}</p>
+                <div className={cspanelKit.showDicesSelected}>
+                    {showingResult.filter(Boolean).map((result, i, array) => (
+                        <React.Fragment key={i}>
+                            <div style={{ padding: '0 5px'}}>
+                                {result && <p className={policeKit.showResults}>{result}</p>}
+                            </div>
+                            {i < array.length - 1 && (
+                                <div className={policeKit.verticalLine}></div>
+                            )}
+                        </React.Fragment>
                     ))}
-                </div>
+            </div>
 
-                <div className={cspanelKit.resultDices}>
-                    {selectedValues.map((result, i) => (
-                        <p key={i}>{result}</p>
-                    ))}
-                </div>
-                <div className={cspanelKit.resultDices}>
-                    {numberFocusLine.map((result, i) => (
-                        <p key={i}>Bonus ligne {i} : {result}</p>
-                    ))}
-                </div>
+
         </div>
     )
 }

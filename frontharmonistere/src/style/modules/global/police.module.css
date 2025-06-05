@@ -112,6 +112,11 @@
     font-weight: 800;
 }
 
+.showResults {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
 .verticalLine {
   width: 3px;
   height: 19px;

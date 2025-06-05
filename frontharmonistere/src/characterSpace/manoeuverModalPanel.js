@@ -4,8 +4,8 @@ import cspanelKit from '../style/modules/components/cspanel.module.css';
 import policeKit from '../style/modules/global/police.module.css';
 import imageKit from '../style/modules/global/image.module.css';
 import generalKit from '../style/kitUI.module.css';
-import titleKit from '../style/modules/global/title.module.css'
-import buttonKit from '../style/modules/global/button.module.css'
+import titleKit from '../style/modules/global/title.module.css';
+import buttonKit from '../style/modules/global/button.module.css';
 import formKit from '../style/modules/global/form.module.css';
 import { launcherDices } from '../utils/dices';
 
@@ -27,9 +27,12 @@ function ManoeuverModalPanel ({
 
     const [focusModal, setFocusModal] = useState(focus);
     const [showingResult, setShowingResult] = useState(Array(3).fill(null));
-
     const [selectedCaracs, setSelectedCarac] = useState(Array(3).fill(null));
     const [selectedValues, setSelectedValues] = useState(Array(3).fill(null));
+    const [checkboxStates, setCheckboxStates] = useState(Array(9).fill(false));
+    const [numberFocusLine, setNumberFocusLine] = useState(Array(3).fill(0));
+    const [focusedValues, setFocusedValues] = useState(Array(3).fill(null));
+
 
     const malusContext = {
         name: "Défavorable",
@@ -59,25 +62,62 @@ function ManoeuverModalPanel ({
     function handleSelect(carac, rowIndex) {
         const newSelections = [...selectedCaracs];
         const newValues = [...selectedValues];
+        const newFocused = [...focusedValues];
         newSelections[rowIndex] = carac;
         newValues[rowIndex] = carac.value;
+        const caracWithFocus = applyFocus(carac, numberFocusLine[rowIndex]);
+        newFocused[rowIndex] = caracWithFocus.value;
         setSelectedCarac(newSelections);
-        setSelectedValues(newValues)
+        setSelectedValues(newValues);
+        setFocusedValues(newFocused);
+    }
+
+    function handleCheckboxesFocus(isChecked) {
+        setFocusModal(prev => prev + (isChecked ? -1 : 1));
     }
 
     function selectDice (carac, rowIndex) {
 
         const isSelected = selectedCaracs[rowIndex]?.name === carac.name;
+        const caracWithFocus = isSelected ? applyFocus(carac, numberFocusLine[rowIndex]) : carac;
         return (
             <div
                 key={carac.name}
                 className={`${buttonKit.diceButtonModal} ${isSelected ? buttonKit.isSelected : ''}`}
-                style={{backgroundColor: carac.color}}
+                style={{ backgroundColor: caracWithFocus.newColor ?? carac.color }}
                 onClick={() => handleSelect(carac, rowIndex)}
                 >
                     <p className={policeKit.buttonLauncherTitle}>{carac.name}</p>
-                    <p className={policeKit.buttonLauncherPolice}>{carac.description}</p>
+                    <p className={policeKit.buttonLauncherPolice}>{caracWithFocus.newDescription ?? caracWithFocus.description}</p>
             </div>
+        )
+    }
+
+    function craftingCheckbox (checkboxNumber, lineNumber) {
+        return (
+            <input
+                type='checkbox'
+                className={formKit.checkboxModal}
+                checked={checkboxStates[checkboxNumber]}
+                disabled={!selectedCaracs[lineNumber] || focusModal <= 0 && !checkboxStates[checkboxNumber]}
+                onChange={(e) => {
+                    const updated = [...checkboxStates];
+                    updated[checkboxNumber] = e.target.checked;
+                    setCheckboxStates(updated);
+                    handleCheckboxesFocus(e.target.checked);
+                    setNumberFocusLine(prev => {
+                        const newArray = [...prev];
+                        newArray[lineNumber] += e.target.checked ? 1 : -1;
+                        const updatedFocused = [...focusedValues];
+                        if (selectedCaracs[lineNumber]) {
+                            const updatedCarac = applyFocus(selectedCaracs[lineNumber], newArray[lineNumber]);
+                            updatedFocused[lineNumber] = updatedCarac.value;
+                        }
+                        setFocusedValues(updatedFocused);
+                        return newArray;
+                    })
+                }}
+            />
         )
     }
 
@@ -86,8 +126,43 @@ function ManoeuverModalPanel ({
     console.log (selectedValues[2])
     console.log (selectedValues[0])
 
-    function onclickCheckbox () {
+    function applyFocus (myCarac, valueToAdd) {
+        const baseValue = parseInt(myCarac.value);
+        let newValue = baseValue + valueToAdd;
 
+        let newDescription = myCarac.description;
+        let newColor = myCarac.color;
+
+        switch (newValue) {
+            case -1:
+                newDescription = "Malus";
+                newColor = '#D5D5D5';
+                break;
+            case 0:
+                newDescription = "Neutre";
+                newColor = '#F5DCAB';
+                break;
+            case 1:
+                newDescription = "Bonus";
+                newColor = "#96DE9B";
+                break;
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+                newDescription = "Critique";
+                newColor = "#FFA6A6";
+                break;
+            default:
+                break;
+        }
+
+        return {
+            ...myCarac,
+            value: newValue,
+            newDescription,
+            newColor
+        };
     }
 
     return (
@@ -101,13 +176,14 @@ function ManoeuverModalPanel ({
                     {selectDice(martialArtsLevel, 0)}
                     {selectDice(elementaryArtsLevel, 0)}
                     {selectDice(speakingLevel, 0)}
+
                 </div>
                 <div className={cspanelKit.checkboxFocusModal}>
                     <p className={policeKit.buttonLauncherTitle}>Point de focus :</p>
                     <div className={cspanelKit.checkboxLine}>
-                        <input type='checkbox' id='checkboxCaracOne' className={formKit.checkboxModal}/>
-                        <input type='checkbox' id='checkboxCaracTwo' className={formKit.checkboxModal}/>
-                        <input type='checkbox' id='checkboxCaracThree' className={formKit.checkboxModal}/>
+                        {craftingCheckbox(0, 0)}
+                        {craftingCheckbox(1, 0)}
+                        {craftingCheckbox(2, 0)}
                     </div>
                 </div>
             </div>
@@ -126,9 +202,9 @@ function ManoeuverModalPanel ({
                 <div className={cspanelKit.checkboxFocusModal}>
                     <p className={policeKit.buttonLauncherTitle}>Point de focus :</p>
                     <div className={cspanelKit.checkboxLine}>
-                        <input type='checkbox' id='checkboxCaracOne' className={formKit.checkboxModal}/>
-                        <input type='checkbox' id='checkboxCaracTwo' className={formKit.checkboxModal}/>
-                        <input type='checkbox' id='checkboxCaracThree' className={formKit.checkboxModal}/>
+                        {craftingCheckbox(3, 1)}
+                        {craftingCheckbox(4, 1)}
+                        {craftingCheckbox(5, 1)}
                     </div>
                 </div>
             </div>
@@ -146,9 +222,9 @@ function ManoeuverModalPanel ({
                 <div className={cspanelKit.checkboxFocusModal}>
                     <p className={policeKit.buttonLauncherTitle}>Point de focus :</p>
                     <div className={cspanelKit.checkboxLine}>
-                        <input type='checkbox' id='checkboxCaracOne' className={formKit.checkboxModal}/>
-                        <input type='checkbox' id='checkboxCaracTwo' className={formKit.checkboxModal}/>
-                        <input type='checkbox' id='checkboxCaracThree' className={formKit.checkboxModal}/>
+                        {craftingCheckbox(6, 2)}
+                        {craftingCheckbox(7, 2)}
+                        {craftingCheckbox(8, 2)}
                     </div>
                 </div>
             </div>
@@ -174,7 +250,7 @@ function ManoeuverModalPanel ({
                 <div className={cspanelKit.buttonsLauncher}>
                     <button
                         className={`${buttonKit.rollResetButton} ${buttonKit.rollButton}`}
-                        onClick={() => {setShowingResult(launcherDices(parseInt(selectedValues[0], 10), parseInt(selectedValues[1], 10), selectedValues[2]))}}
+                        onClick={() => {setShowingResult(launcherDices(parseInt(focusedValues[0], 10), parseInt(focusedValues[1], 10), focusedValues[2]))}}
                     >
                         Lancer
                     </button>
@@ -184,6 +260,7 @@ function ManoeuverModalPanel ({
                             setSelectedCarac(Array(3).fill(null));
                             setSelectedValues(Array(3).fill(null));
                             setShowingResult(Array(3).fill(null));
+                            setFocusedValues(Array(3).fill(null));
                         }}>
                             Réinitialiser
                     </button>
@@ -199,6 +276,11 @@ function ManoeuverModalPanel ({
                 <div className={cspanelKit.resultDices}>
                     {selectedValues.map((result, i) => (
                         <p key={i}>{result}</p>
+                    ))}
+                </div>
+                <div className={cspanelKit.resultDices}>
+                    {numberFocusLine.map((result, i) => (
+                        <p key={i}>Bonus ligne {i} : {result}</p>
                     ))}
                 </div>
         </div>

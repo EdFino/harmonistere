@@ -14,3 +14,8 @@ input[type="checkbox"].checkboxModal {
 input[type="checkbox"].checkboxModal:checked {
     background-color: #A0D6E5;
 }
+
+input[type="checkbox"].checkboxModal:disabled {
+  opacity: 0.5;
+  cursor: auto;
+}

@@ -32,9 +32,6 @@ function PlayerSpace () {
     const [characterNewSession, setCharacterNewSession] = useState ('');
     const [formRejoinSession, setFormRejoinSession] = useState();
 
-    localStorage.clear();
-
-
     useEffect(() => {
         if (user) {
             axios.get(`http://localhost:5038/api/sheets/readSheet?email=${user.email}`)

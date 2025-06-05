@@ -6,11 +6,15 @@ import imageKit from '../style/modules/global/image.module.css';
 
 function FacultiesPanel ({breath, setBreath, focus, setFocus, onValuesChange}) {
 
-    const [breathNumber, setBreathNumber] = useState(breath);
+    const getStoredNumber = (key, fallback) => {
+        const item = localStorage.getItem(key);
+        const parsed = parseInt(item, 10);
+        return !isNaN(parsed) ? parsed : fallback;
+    };
 
-    const [focusNumber, setFocusNumber] = useState(focus);
-
-    const [synergyNumber, setSynergyNumber] = useState(0);
+    const [breathNumber, setBreathNumber] = useState(getStoredNumber('breath', breath));
+    const [focusNumber, setFocusNumber] = useState(getStoredNumber('focus', focus));
+    const [synergyNumber, setSynergyNumber] = useState(getStoredNumber('synergy', 0));
 
     useEffect(() => {
         localStorage.setItem('breath', breathNumber);

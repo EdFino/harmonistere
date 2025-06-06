@@ -45,7 +45,7 @@ const sheetSchema = new mongoose.Schema({
         elementaryArtsLevel: { type: String },
         speakingLevel: { type: String },
         powerLevel: { type: Number},
-        relations: [relationSchema],
+        relations: { type: [relationSchema], default: [] },
         breath: { type: Number },
         focus: { type: Number },
         synergy: { type: Number },

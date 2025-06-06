@@ -22,10 +22,9 @@ function ManoeuverModalPanel ({
             oppositeTrait,
             focus,
             setFocus,
-            onValuesChange
+            onFocusChange
 }) {
 
-    const [focusModal, setFocusModal] = useState(focus);
     const [showingResult, setShowingResult] = useState(Array(3).fill(null));
     const [selectedCaracs, setSelectedCarac] = useState(Array(3).fill(null));
     const [selectedValues, setSelectedValues] = useState(Array(3).fill(null));
@@ -72,10 +71,6 @@ function ManoeuverModalPanel ({
         setFocusedValues(newFocused);
     }
 
-    function handleCheckboxesFocus(isChecked) {
-        setFocusModal(prev => prev + (isChecked ? -1 : 1));
-    }
-
     function selectDice (carac, rowIndex) {
 
         const isSelected = selectedCaracs[rowIndex]?.name === carac.name;
@@ -99,12 +94,11 @@ function ManoeuverModalPanel ({
                 type='checkbox'
                 className={formKit.checkboxModal}
                 checked={checkboxStates[checkboxNumber]}
-                disabled={!selectedCaracs[lineNumber] || focusModal <= 0 && !checkboxStates[checkboxNumber]}
+                disabled={!selectedCaracs[lineNumber] || displayedFocus <= 0 && !checkboxStates[checkboxNumber]}
                 onChange={(e) => {
                     const updated = [...checkboxStates];
                     updated[checkboxNumber] = e.target.checked;
                     setCheckboxStates(updated);
-                    handleCheckboxesFocus(e.target.checked);
                     setNumberFocusLine(prev => {
                         const newArray = [...prev];
                         newArray[lineNumber] += e.target.checked ? 1 : -1;
@@ -164,6 +158,11 @@ function ManoeuverModalPanel ({
             newColor
         };
     }
+
+    const autorisationToRoll = focusedValues.filter(v => v !== null).length === 3;
+    const focusUsed = checkboxStates.filter(Boolean).length;
+    const displayedFocus = focus - focusUsed;
+
 
     return (
         <div className={cspanelKit.manoeuverModalPanel}>
@@ -244,12 +243,44 @@ function ManoeuverModalPanel ({
 
             <div className={cspanelKit.focusAndRoll}>
                 <div className={cspanelKit.focusNumber}>
-                    <p className={policeKit.grandFocus}>{focusModal}</p><p className={policeKit.focusPoints}>points de focus</p>
+                    <p className={policeKit.grandFocus}>{displayedFocus}</p><p className={policeKit.focusPoints}>points de focus</p>
                 </div>
                 <div className={cspanelKit.buttonsLauncher}>
                     <button
                         className={`${buttonKit.rollResetButton} ${buttonKit.rollButton}`}
-                        onClick={() => {setShowingResult(launcherDices(parseInt(focusedValues[0], 10), parseInt(focusedValues[1], 10), focusedValues[2]))}}
+                        disabled={!autorisationToRoll}
+                        onClick={() => {
+                            const result = launcherDices(
+                                parseInt(focusedValues[0], 10),
+                                parseInt(focusedValues[1], 10),
+                                parseInt(focusedValues[2], 10)
+                            );
+                            console.log("DisplayedFocus", displayedFocus)
+                            setShowingResult(result);
+                            
+                            const focusUsed = checkboxStates.filter(Boolean).length;
+                            const currentDisplayedFocus = focus - focusUsed;
+
+                            console.log('--- DEBUG ON CLICK ---');
+                            console.log('focus (base):', focus);
+                            console.log('checkboxStates:', checkboxStates);
+                            console.log('focusUsed:', checkboxStates.filter(Boolean).length);
+
+
+                            // ✅ Appel direct avec les bonnes valeurs
+                            if (onFocusChange) {
+                                console.log('✅ Appel de onValuesChange');
+                                onFocusChange({
+                                focus: currentDisplayedFocus
+                                });
+                            }
+
+                            setCheckboxStates(Array(9).fill(false));
+                            setSelectedCarac(Array(3).fill(null));
+                            setSelectedValues(Array(3).fill(null));
+                            setFocusedValues(Array(3).fill(null));
+                            setNumberFocusLine(Array(3).fill(0));
+                        }}
                     >
                         Lancer
                     </button>
@@ -260,13 +291,15 @@ function ManoeuverModalPanel ({
                             setSelectedValues(Array(3).fill(null));
                             setShowingResult(Array(3).fill(null));
                             setFocusedValues(Array(3).fill(null));
+                            setNumberFocusLine(Array(3).fill(0));
+                            setCheckboxStates(Array(9).fill(false));
                         }}>
                             Réinitialiser
                     </button>
                 </div>
             </div>
 
-                <div className={cspanelKit.showDicesSelected}>
+                <div className={cspanelKit.showResultsSelected}>
                     {showingResult.filter(Boolean).map((result, i, array) => (
                         <React.Fragment key={i}>
                             <div style={{ padding: '0 5px'}}>

@@ -30,7 +30,6 @@ import cspanelKit from '../style/modules/components/cspanel.module.css';
 import ManoeuverModalPanel from './manoeuverModalPanel';
 
 
-
 function CharacterSpace () {
 
     const [user] = useAuthState(auth);
@@ -153,9 +152,25 @@ function CharacterSpace () {
                     setCarac(setCharacterOneMartial, data.martialArtsLevel, "Martial");
                     setCarac(setCharacterOneElement, data.elementaryArtsLevel, "Elément");
                     setCarac(setCharacterOneSpeaking, data.speakingLevel, "Rhétorique");
-                    setFocus(data.focus);
-                    setBreath(data.breath);
                     setInjuries(data.injuries);
+                    const storedFocus = localStorage.getItem('focus');
+                    const parsedFocus = Number(storedFocus)
+                    if (storedFocus !== null && !isNaN(parsedFocus)) {
+                        setFocus(Number(storedFocus));
+                    } else {
+                        setFocus(data.focus);
+                        localStorage.setItem('focus', data.focus);
+                    }
+
+                    const storedBreath = localStorage.getItem('breath');
+                    const parsedBreath = Number(storedBreath);
+                    if (storedBreath !== null && !isNaN(parsedBreath)) {
+                        setBreath(Number(storedBreath));
+                    } else {
+                        setBreath(data.breath);
+                        localStorage.setItem('breath', data.breath);
+                    }
+
                 })
                 .catch(error => {
                     console.log('Erreur lors de la récupération des données : ', error);
@@ -351,10 +366,18 @@ const handleManualSave = () => {
         },
     ]
 
-    const handleFacultiesChange = ({ focus, breath }) => {
+    const handleFocusChange = ({focus}) => {
+        
         setFocus(focus);
+        localStorage.setItem('focus', focus);
+    };
+
+    const handleBreathChange = ({breath}) => {
+        
         setBreath(breath);
-};
+        localStorage.setItem('breath', breath);
+    };
+
 
 
     const areCaracsLoaded = () =>
@@ -441,7 +464,8 @@ const handleManualSave = () => {
                                 setFocus={setFocus}
                                 breath={breath}
                                 setBreath={setBreath}
-                                onValuesChange={handleFacultiesChange}
+                                onFocusChange={handleFocusChange}
+                                onBreathChange={handleBreathChange}
                             />}
                         />
                     </div>
@@ -513,7 +537,7 @@ const handleManualSave = () => {
                             oppositeTrait={characterOneOpposite}
                             focus={focus}
                             setFocus={setFocus}
-                            onValuesChange={handleFacultiesChange}
+                            onFocusChange={handleFocusChange}
                         />}
                     />
                         )}

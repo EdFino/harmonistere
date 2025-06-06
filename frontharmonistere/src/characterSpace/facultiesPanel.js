@@ -4,96 +4,55 @@ import cspanelKit from '../style/modules/components/cspanel.module.css';
 import policeKit from '../style/modules/global/police.module.css';
 import imageKit from '../style/modules/global/image.module.css';
 
-function FacultiesPanel ({breath, setBreath, focus, setFocus, onValuesChange}) {
+function FacultiesPanel({ breath, focus, onFocusChange, onBreathChange }) {
 
-    const getStoredNumber = (key, fallback) => {
-        const item = localStorage.getItem(key);
-        const parsed = parseInt(item, 10);
-        return !isNaN(parsed) ? parsed : fallback;
+    const handleChange = (type, delta, max) => {
+
+        const currentValue = type === 'breath' ? breath : focus;
+        const newValue = Math.min(Math.max(currentValue + delta, 0), max);
+
+        if (type === 'focus') {
+            onFocusChange({ focus: newValue });
+        } else if (type === 'breath') {
+            onBreathChange({ breath: newValue });
+        }
     };
 
-    const [breathNumber, setBreathNumber] = useState(getStoredNumber('breath', breath));
-    const [focusNumber, setFocusNumber] = useState(getStoredNumber('focus', focus));
-    const [synergyNumber, setSynergyNumber] = useState(getStoredNumber('synergy', 0));
 
-    useEffect(() => {
-        localStorage.setItem('breath', breathNumber);
-    }, [breathNumber]);
-
-    useEffect(() => {
-        localStorage.setItem('focus', focusNumber);
-    }, [focusNumber]);
-
-    useEffect(() => {
-        localStorage.setItem('synergy', synergyNumber);
-    }, [synergyNumber]);
-
-    useEffect(() => {
-        if (onValuesChange) {
-            onValuesChange({
-                breath: breathNumber,
-                focus: focusNumber,
-                synergy: synergyNumber
-            });
-        }
-    }, [breathNumber, focusNumber, synergyNumber, onValuesChange]);
-
-
-    function changeFaculties (value, setValue, maxValue) {
-        return (
+    const renderCounter = (label, value, type, max) => (
+        <div className={cspanelKit.facultiesLine}>
+            <p>{label}</p>
             <div className={cspanelKit.numberFaculties}>
                 <span
-                    className={
-                    value === 0
-                        ? `${policeKit.iconNumber} ${policeKit.iconNumberLimit}`
-                        : `${policeKit.iconNumber} ${policeKit.iconNumberModifiable}`
-                    }       
-                    onClick={() => setValue(prev => Math.max(0, prev - 1))}
+                    className={value === 0 ? `${policeKit.iconNumber} ${policeKit.iconNumberLimit}` : `${policeKit.iconNumber} ${policeKit.iconNumberModifiable}`}
+                    onClick={() => handleChange(type, -1, max)}
                 >
-                        −
-                    </span>
-                    <span className={policeKit.alignCenter}>
-                        {value}
-                    </span>
-                    <span
-                        className={
-                            value === maxValue
-                            ? `${policeKit.iconNumber} ${policeKit.iconNumberLimit}`
-                            : `${policeKit.iconNumber} ${policeKit.iconNumberModifiable}`
-                        }
-                        onClick={() => setValue(prev => Math.min(maxValue, prev + 1))}>
-                            +
-                    </span>
+                    −
+                </span>
+                <span className={policeKit.alignCenter}>{value}</span>
+                <span
+                    className={value === max ? `${policeKit.iconNumber} ${policeKit.iconNumberLimit}` : `${policeKit.iconNumber} ${policeKit.iconNumberModifiable}`}
+                    onClick={() => handleChange(type, 1, max)}
+                >
+                    +
+                </span>
             </div>
-        )
-    }
-
+        </div>
+    );
 
     return (
         <div className={`${cspanelKit.miniPanel} ${policeKit.relationLinePolice}`}>
             <div className={cspanelKit.facultiesInfo}>
-                <div className={cspanelKit.facultiesLine}>
-                    <p>Souffle</p>
-                    {changeFaculties(breathNumber, setBreathNumber, 4)}
-                </div>
+                {renderCounter("Souffle", breath, "breath", 4)}
                 <p className={policeKit.lessOpaquePolice}>Max 4</p>
             </div>
             <div className={cspanelKit.facultiesInfo}>
-                <div className={cspanelKit.facultiesLine}>
-                    <p>Focus</p>
-                    {changeFaculties(focusNumber, setFocusNumber, 10)}
-                </div>
+                {renderCounter("Focus", focus, "focus", 10)}
                 <p className={policeKit.lessOpaquePolice}>Base 0</p>
             </div>
-            <div className={cspanelKit.facultiesInfo}>
-                <div className={cspanelKit.facultiesLine}>
-                    <p>Synergie</p>
-                    {changeFaculties(synergyNumber, setSynergyNumber, 7)}
-                </div>
-                <p className={policeKit.lessOpaquePolice}>Base 7</p>
-            </div>
         </div>
-    )
+    );
 }
+
 
 export default FacultiesPanel;

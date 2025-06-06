@@ -57,6 +57,11 @@
     border: none;
 }
 
+.rollButton:disabled {
+  opacity: 0.5;
+  cursor: auto;
+}
+
 .resetButton {
     background-color: #FFF9F0;
     border: 3px #8FD7EA solid;

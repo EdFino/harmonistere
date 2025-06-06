@@ -19,15 +19,13 @@ import RelationPanel from './relationPanel';
 import FacultiesPanel from './facultiesPanel';
 import AlterationPanel from './alterationPanel';
 import CaracPanel from './caracPanel';
-import saveIcon from '../images/saveIcon.png';
-import editeurIcon from '../images/editeur.png';
-import privateIcon from '../images/private.png';
 import manoeuverIcon from '../images/manoeuverIcon.png';
 import diceIcon from '../images/diceIcon.png';
 import Popup from 'reactjs-popup';
 import modalKit from '../specialComponents/customModal';
 import cspanelKit from '../style/modules/components/cspanel.module.css';
 import ManoeuverModalPanel from './manoeuverModalPanel';
+import IconTools from './iconTools';
 
 
 function CharacterSpace () {
@@ -153,22 +151,22 @@ function CharacterSpace () {
                     setCarac(setCharacterOneElement, data.elementaryArtsLevel, "Elément");
                     setCarac(setCharacterOneSpeaking, data.speakingLevel, "Rhétorique");
                     setInjuries(data.injuries);
-                    const storedFocus = localStorage.getItem('focus');
+                    const storedFocus = localStorage.getItem(`focus-${id}`);
                     const parsedFocus = Number(storedFocus)
                     if (storedFocus !== null && !isNaN(parsedFocus)) {
                         setFocus(Number(storedFocus));
                     } else {
                         setFocus(data.focus);
-                        localStorage.setItem('focus', data.focus);
+                        localStorage.setItem(`focus-${id}`, data.focus);
                     }
 
-                    const storedBreath = localStorage.getItem('breath');
+                    const storedBreath = localStorage.getItem(`breath-${id}`);
                     const parsedBreath = Number(storedBreath);
                     if (storedBreath !== null && !isNaN(parsedBreath)) {
                         setBreath(Number(storedBreath));
                     } else {
                         setBreath(data.breath);
-                        localStorage.setItem('breath', data.breath);
+                        localStorage.setItem(`breath-${id}`, data.breath);
                     }
 
                 })
@@ -369,25 +367,24 @@ const handleManualSave = () => {
     const handleFocusChange = ({focus}) => {
         
         setFocus(focus);
-        localStorage.setItem('focus', focus);
+        localStorage.setItem(`focus-${id}`, focus);
     };
 
     const handleBreathChange = ({breath}) => {
         
         setBreath(breath);
-        localStorage.setItem('breath', breath);
+        localStorage.setItem(`breath-${id}`, breath);
     };
 
 
 
     const areCaracsLoaded = () =>
-  characterOneBody.description &&
-  characterOneMind.description &&
-  characterOneSoul.description &&
-  characterOneMartial.description &&
-  characterOneElement.description &&
-  characterOneSpeaking.description;
-
+        characterOneBody.description &&
+        characterOneMind.description &&
+        characterOneSoul.description &&
+        characterOneMartial.description &&
+        characterOneElement.description &&
+        characterOneSpeaking.description;
 
     return (
 
@@ -406,26 +403,8 @@ const handleManualSave = () => {
                     />
                 </div>
 
-                <div id='iconCharacterSpace'>
-                        <img
-                            src={saveIcon}
-                            className={imageKit.iconProperties}
-                            alt='Icône pour sauvegarder sa fiche'
-                            style={{marginRight: "0.6em"}}
-                            onClick={handleManualSave}
-                        />
-                        <img
-                            src={privateIcon}
-                            className={imageKit.iconProperties}
-                            alt='Icône pour flouter des zones'
-                            style={{marginRight: "0.6em"}}
-                        />
-                        <img
-                            src={editeurIcon}
-                            className={imageKit.iconProperties}
-                            alt='Icône pour éditer sa fiche de personnage'
-                        />
-                </div>
+                <IconTools
+                    onSaveClick={handleManualSave}/>
 
             </div>
 

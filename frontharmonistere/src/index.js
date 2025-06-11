@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ErrorPage from './errorPage/errorPage';
 import Univers from './univers/univers';
-import CharacterSpace from './characterSpace/characterSpace';
+import CharacterSpaceTwo from './characterSpace/characterSpaceTwo';
 import DiceLauncherMini from './diceLauncher/diceLauncherMini';
 import CreationSheet from './creationSheet/creationSheet';
 import PlayerSpace from './playerSpace/playerSpace';
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
   },
   {
     path: 'espacefiche/:id',
-    element: <CharacterSpace/>
+    element: <CharacterSpaceTwo/>
   },
   {
     path: 'lanceur',

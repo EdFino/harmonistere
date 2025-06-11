@@ -9,9 +9,12 @@ import airIcon from '../images/Air.png';
 import waterIcon from '../images/Eau.png';
 import earthIcon from '../images/Terre.png';
 import fireIcon from '../images/Feu.png';
+import { useCharacterContext } from '../hooks/CharacterContext';
 
 
-function CSMainPanel ({characterName, characterAge, benderSelect, powerLevel, principalTrait, ascendantTrait, neutralTrait, oppositeTrait}) {
+function CSMainPanel () {
+
+    const { characterData } = useCharacterContext();
 
     function whatHarmonistereType (benderSelect) {
 
@@ -31,21 +34,21 @@ function CSMainPanel ({characterName, characterAge, benderSelect, powerLevel, pr
         }
     }
 
-    const harmonistereType = whatHarmonistereType(benderSelect);
+    const harmonistereType = whatHarmonistereType(characterData.benderType);
 
         function getTraitClass(element) {
-            if (element === principalTrait.name) return principalTrait.color;
-            if (element === ascendantTrait.name) return ascendantTrait.color;
-            if (element === neutralTrait.name) return neutralTrait.color;
-            if (element === oppositeTrait.name) return oppositeTrait.color;
+        if (element === characterData.traits.principal.name) return characterData.traits.principal.color;
+        if (element === characterData.traits.ascendant.name) return characterData.traits.ascendant.color;
+        if (element === characterData.traits.neutral.name) return characterData.traits.neutral.color;
+        if (element === characterData.traits.opposite.name) return characterData.traits.opposite.color;
         return '';
     }
 
     function getTraitLabel(element) {
-            if (element === principalTrait.name) return principalTrait.description;
-            if (element === ascendantTrait.name) return ascendantTrait.description;
-            if (element === neutralTrait.name) return neutralTrait.description;
-            if (element === oppositeTrait.name) return oppositeTrait.description;
+        if (element === characterData.traits.principal.name) return characterData.traits.principal.description;
+        if (element === characterData.traits.ascendant.name) return characterData.traits.ascendant.description;
+        if (element === characterData.traits.neutral.name) return characterData.traits.neutral.description;
+        if (element === characterData.traits.opposite.name) return characterData.traits.opposite.description;
         return '';
     }
 
@@ -59,10 +62,10 @@ function CSMainPanel ({characterName, characterAge, benderSelect, powerLevel, pr
                 />
             </div>
             <div className={cspanelKit.characterInfo}>
-                <h2 className={titleKit.avatarName}>{characterName}</h2>
-                <p className={policeKit.avatarInfoPolice}>{characterAge} ans</p>
-                <p className={policeKit.avatarInfoPolice}>{harmonistereType}{benderSelect}</p>
-                <p className={policeKit.avatarInfoPolice}>Niveau {powerLevel}</p>
+                <h2 className={titleKit.avatarName}>{characterData.name}</h2>
+                <p className={policeKit.avatarInfoPolice}>{characterData.age} ans</p>
+                <p className={policeKit.avatarInfoPolice}>{harmonistereType}{characterData.benderType}</p>
+                <p className={policeKit.avatarInfoPolice}>Niveau {characterData.powerLevel}</p>
             </div>
             <div className={circleKit.characterCircle}>
                 <div className={`${circleKit.quarter} ${circleKit.quarterTop}`} style={{backgroundColor: getTraitClass('Air')}}>

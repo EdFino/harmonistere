@@ -45,6 +45,7 @@
 
 .navbarCharacterLi {
     color: #DBC09A;
+    cursor: pointer;
 }
 
 .navbarCharacterLiActive {

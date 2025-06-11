@@ -3,26 +3,17 @@ import policeKit from '../style/modules/global/police.module.css';
 import cspanelKit from '../style/modules/components/cspanel.module.css';
 import imageKit from '../style/modules/global/image.module.css';
 import injuredIcon from '../images/injured.png';
+import { useCharacterContext } from '../hooks/CharacterContext';
 
-function CaracPanel ({
-    bodyLevel,
-    setBodyLevel,
-    mindLevel,
-    setMindLevel,
-    soulLevel,
-    setSoulLevel,
-    martialArtsLevel,
-    setMartialArtsLevel,
-    elementaryArtsLevel,
-    setElementaryArtsLevel,
-    speakingLevel,
-    setSpeakingLevel,
-    onStartInjurySelection,
-    }) {
+function CaracPanel () {
 
-    const [injurySelection, setInjurySelection] = useState (false);
+    const { characterData, isSelectingInjury, setIsSelectingInjury } = useCharacterContext();
 
     const [checkboxInjury, setCheckboxInjury] = useState (0);
+
+    function onStartInjurySelection() {
+        setIsSelectingInjury(!isSelectingInjury)
+    }
 
     const [checkboxes, setCheckboxes] = useState({
         1: false,
@@ -64,7 +55,7 @@ function CaracPanel ({
                 [numberCheckbox]: checked
             }));
             onStartInjurySelection();
-            setInjurySelection(true);
+            setIsSelectingInjury(true);
             setCheckboxInjury(numberCheckbox);
         } else {
             const updateIfMatch = (cellul, setCellul) => {
@@ -97,13 +88,13 @@ function CaracPanel ({
             checkboxSelected: whatCheckbox
     }));
         onStartInjurySelection();
-        setInjurySelection(false);
+        setIsSelectingInjury(false);
     }
 
     function cellulPanelCreation(panelState, setPanelState, titleCarac, caracLevel, caracColor, isInjuredOrNot, detailsCarac) {
 
         const handleClick = () => {
-            if (injurySelection) {
+            if (isSelectingInjury) {
                 injuredNow(setPanelState, checkboxInjury);
             }
         };
@@ -127,7 +118,7 @@ function CaracPanel ({
 
         return (
         <div
-            className={`${cspanelKit.cellulPanel} ${injurySelection ? cspanelKit.cellulPanelHover : ''}`}
+            className={`${cspanelKit.cellulPanel} ${isSelectingInjury ? cspanelKit.cellulPanelHover : ''}`}
             onClick={handleClick}
         >
             <div className={cspanelKit.lineCellulPanel}>
@@ -158,14 +149,14 @@ function CaracPanel ({
         <div className={cspanelKit.caracPanel}>
             <div className={cspanelKit.caracPanelMain}>
                 <div className={cspanelKit.columnPanel}>
-                    {cellulPanelCreation(cellulBody, setCellulBody, bodyLevel.name, bodyLevel.description, bodyLevel.color, cellulBody.isInjured, "Corps très musclé mais légèrement blessé.")}
-                    {cellulPanelCreation(cellulMind, setCellulMind, mindLevel.name, mindLevel.description, mindLevel.color, cellulMind.isInjured, "Grande concentration et volonté.")}
-                    {cellulPanelCreation(cellulSoul, setCellulSoul, soulLevel.name, soulLevel.description, soulLevel.color, cellulSoul.isInjured, "Grande concentration et volonté.")}
+                    {cellulPanelCreation(cellulBody, setCellulBody, characterData.attributes.body.name, characterData.attributes.body.description, characterData.attributes.body.color, cellulBody.isInjured, "Corps très musclé mais légèrement blessé.")}
+                    {cellulPanelCreation(cellulMind, setCellulMind, characterData.attributes.mind.name, characterData.attributes.mind.description, characterData.attributes.mind.color, cellulMind.isInjured, "Grande concentration et volonté.")}
+                    {cellulPanelCreation(cellulSoul, setCellulSoul, characterData.attributes.soul.name, characterData.attributes.soul.description, characterData.attributes.soul.color, cellulSoul.isInjured, "Grande concentration et volonté.")}
                 </div>
                 <div className={cspanelKit.columnPanel}>
-                    {cellulPanelCreation(cellulMartial, setCellulMartial, martialArtsLevel.name, martialArtsLevel.description, martialArtsLevel.color, cellulMartial.isInjured, "Bonnes bases techniques.")}
-                    {cellulPanelCreation(cellulElementary, setCellulElementary, elementaryArtsLevel.name, elementaryArtsLevel.description, elementaryArtsLevel.color, cellulElementary.isInjured, "Maîtrise élémentaire moyenne.")}
-                    {cellulPanelCreation(cellulSpeaking, setCellulSpeaking, speakingLevel.name, speakingLevel.description, speakingLevel.color, cellulSpeaking.isInjured, "Maîtrise rhétorique moyenne. Corps très musclé mais légèrement blessé. Corps très musclé mais légèrement blessé. Corps très musclé mais légèrement blessé.")}
+                    {cellulPanelCreation(cellulMartial, setCellulMartial, characterData.attributes.martial.name, characterData.attributes.martial.description, characterData.attributes.martial.color, cellulMartial.isInjured, "Bonnes bases techniques.")}
+                    {cellulPanelCreation(cellulElementary, setCellulElementary, characterData.attributes.element.name, characterData.attributes.element.description, characterData.attributes.element.color, cellulElementary.isInjured, "Maîtrise élémentaire moyenne.")}
+                    {cellulPanelCreation(cellulSpeaking, setCellulSpeaking, characterData.attributes.speaking.name, characterData.attributes.speaking.description, characterData.attributes.speaking.color, cellulSpeaking.isInjured, "Maîtrise rhétorique moyenne. Corps très musclé mais légèrement blessé. Corps très musclé mais légèrement blessé. Corps très musclé mais légèrement blessé.")}
                 </div>
             </div>
 

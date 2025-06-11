@@ -1,8 +1,11 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 export const CharacterContext = createContext(null);
 
-export function CharacterProvider({ children, initialSheetData, id }) {
+export function CharacterProvider({initialSheetData, id, children}) {
+
+    const [isSelectingInjury, setIsSelectingInjury] = useState(false);
+
     const [characterData, setCharacterData] = useState({
         name: '',
         age: '',
@@ -58,35 +61,50 @@ export function CharacterProvider({ children, initialSheetData, id }) {
     useEffect(() => {
         if (!initialSheetData) return;
 
-        setCharacterOneName(initialSheetData.characterName);
-        setCharacterOneAge(initialSheetData.characterAge);
-        setIsOneBender(initialSheetData.benderOrNot);
-        setCharacterOneBender(initialSheetData.benderSelect);
-
-        setCharacterOnePrincipal(prev => ({ ...prev, name: initialSheetData.principalTrait }));
-        setCharacterOneAscendant(prev => ({ ...prev, name: initialSheetData.ascendantTrait }));
-        setCharacterOneNeutral(prev => ({ ...prev, name: initialSheetData.neutralTrait }));
-        setCharacterOneOpposite(prev => ({ ...prev, name: initialSheetData.oppositeTrait }));
-
-        setSpecialSkills(initialSheetData.skills);
-        setNotes(initialSheetData.notes);
-        setPhysicalDescription(initialSheetData.physicDescription);
-        setPersonnalityDescription(initialSheetData.mentalDescription);
-        setStoryCharacter(initialSheetData.story);
-        setPowerLevel(initialSheetData.powerLevel);
-
-        setCarac(setCharacterOneBody, initialSheetData.bodyLevel, "Corps");
-        setCarac(setCharacterOneMind, initialSheetData.mindLevel, "Esprit");
-        setCarac(setCharacterOneSoul, initialSheetData.soulLevel, "Âme");
-        setCarac(setCharacterOneMartial, initialSheetData.martialArtsLevel, "Martial");
-        setCarac(setCharacterOneElement, initialSheetData.elementaryArtsLevel, "Elément");
-        setCarac(setCharacterOneSpeaking, initialSheetData.speakingLevel, "Rhétorique");
-
-        setInjuries(initialSheetData.injuries);
-
+        setCharacterData(prev => ({
+            ...prev,
+            name: initialSheetData.characterName,
+            age: initialSheetData.characterAge,
+            isBender: initialSheetData.benderOrNot,
+            benderType: initialSheetData.benderSelect,
+            traits: {
+                principal: {
+                    ...prev.traits.principal,
+                    name: initialSheetData.principalTrait
+                },
+                ascendant: {
+                    ...prev.traits.ascendant,
+                    name: initialSheetData.ascendantTrait
+                },
+                neutral: {
+                    ...prev.traits.neutral,
+                    name: initialSheetData.neutralTrait
+                },
+                opposite: {
+                    ...prev.traits.opposite,
+                    name: initialSheetData.oppositeTrait
+                }
+            },
+            skills: initialSheetData.skills,
+            notes: initialSheetData.notes,
+            description: {
+                physical: initialSheetData.physicDescription,
+                mental: initialSheetData.mentalDescription,
+                story: initialSheetData.story
+            },
+            powerLevel: initialSheetData.powerLevel,
+            injuries: initialSheetData.injuries,
+            attributes: {
+                body: interpretCarac('Corps', initialSheetData.bodyLevel),
+                mind: interpretCarac('Esprit', initialSheetData.mindLevel),
+                soul: interpretCarac('Âme', initialSheetData.soulLevel),
+                martial: interpretCarac('Martial', initialSheetData.martialArtsLevel),
+                element: interpretCarac('Elément', initialSheetData.elementaryArtsLevel),
+                speaking: interpretCarac('Rhétorique', initialSheetData.speakingLevel),
+            }
+        }));
     }, [initialSheetData]);
 
-    // Fonction d'interprétation (tu peux l'extraire si tu préfères)
     function interpretLevel(value) {
         switch (String(value)) {
         case "-1": return { description: "Malus", color: "#D5D5D5" };
@@ -97,44 +115,22 @@ export function CharacterProvider({ children, initialSheetData, id }) {
         }
     }
 
-    function setCarac(setter, value, caracName) {
-        if (value !== undefined) {
-        const interpreted = interpretLevel(value);
-        setter({
-            name: caracName,
-            value,
-            description: interpreted.description,
-            color: interpreted.color
-        });
-        }
+    function interpretCarac(name, value) {
+        const { description, color } = interpretLevel(value);
+        return { name, value, description, color };
     }
 
-    // Contexte value à partager
     const contextValue = {
-        characterOneName, setCharacterOneName,
-        characterOneAge, setCharacterOneAge,
-        isOneBender, setIsOneBender,
-        characterOneBender, setCharacterOneBender,
-        characterOnePrincipal, setCharacterOnePrincipal,
-        characterOneAscendant, setCharacterOneAscendant,
-        characterOneNeutral, setCharacterOneNeutral,
-        characterOneOpposite, setCharacterOneOpposite,
-        characterOneBody, setCharacterOneBody,
-        characterOneMind, setCharacterOneMind,
-        characterOneSoul, setCharacterOneSoul,
-        characterOneMartial, setCharacterOneMartial,
-        characterOneElement, setCharacterOneElement,
-        characterOneSpeaking, setCharacterOneSpeaking,
-        specialSkills, setSpecialSkills,
-        notes, setNotes,
-        physicalDescription, setPhysicalDescription,
-        personnalityDescription, setPersonnalityDescription,
-        storyCharacter, setStoryCharacter,
-        powerLevel, setPowerLevel,
-        focus, setFocus,
-        breath, setBreath,
-        injuries, setInjuries,
+        characterData,
+        setCharacterData,
+        focus,
+        setFocus,
+        breath,
+        setBreath,
+        isSelectingInjury,
+        setIsSelectingInjury
     };
+
 
     return (
         <CharacterContext.Provider value={contextValue}>
@@ -142,3 +138,5 @@ export function CharacterProvider({ children, initialSheetData, id }) {
         </CharacterContext.Provider>
     );
 }
+
+export const useCharacterContext = () => useContext(CharacterContext);

@@ -3,8 +3,11 @@ import { useState, useEffect } from 'react';
 import cspanelKit from '../style/modules/components/cspanel.module.css';
 import policeKit from '../style/modules/global/police.module.css';
 import imageKit from '../style/modules/global/image.module.css';
+import { useCharacterContext } from '../hooks/CharacterContext';
 
-function FacultiesPanel({ breath, focus, onFocusChange, onBreathChange }) {
+function FacultiesPanel() {
+
+    const { focus, setFocus, breath, setBreath } = useCharacterContext();
 
     const handleChange = (type, delta, max) => {
 
@@ -12,9 +15,9 @@ function FacultiesPanel({ breath, focus, onFocusChange, onBreathChange }) {
         const newValue = Math.min(Math.max(currentValue + delta, 0), max);
 
         if (type === 'focus') {
-            onFocusChange({ focus: newValue });
+            setFocus(newValue)
         } else if (type === 'breath') {
-            onBreathChange({ breath: newValue });
+            setBreath(newValue)
         }
     };
 

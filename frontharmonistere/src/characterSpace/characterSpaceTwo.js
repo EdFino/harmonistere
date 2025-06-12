@@ -11,19 +11,13 @@ import SubNavbarCharacter from './subNavbarCharacter';
 import titleKit from '../style/modules/global/title.module.css';
 import imageKit from '../style/modules/global/image.module.css';
 import CaracPanel from './caracPanel';
-import manoeuverIcon from '../images/manoeuverIcon.png';
-import diceIcon from '../images/diceIcon.png';
-import Popup from 'reactjs-popup';
-import modalKit from '../specialComponents/customModal';
-import cspanelKit from '../style/modules/components/cspanel.module.css';
-import ManoeuverModalPanel from './manoeuverModalPanel';
-import IconTools from './iconTools';
 import ComposantTestOne from './composantTestOne';
 import ComposantTestTwo from './composantTestTwo';
 import ComposantTestThree from './composantTestThree';
 import { CharacterProvider } from '../hooks/CharacterContext';
 import SheetSpace from './sheetSpace';
 import UpdatingOverlay from './updatingOverlay';
+import IconTools from './iconTools';
 
 function CharacterSpaceTwo () {
 

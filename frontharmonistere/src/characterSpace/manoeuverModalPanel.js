@@ -8,22 +8,11 @@ import titleKit from '../style/modules/global/title.module.css';
 import buttonKit from '../style/modules/global/button.module.css';
 import formKit from '../style/modules/global/form.module.css';
 import { launcherDices } from '../utils/dices';
+import { useCharacterContext } from '../hooks/CharacterContext';
 
-function ManoeuverModalPanel ({
-            bodyLevel,
-            mindLevel,
-            soulLevel,
-            martialArtsLevel,
-            elementaryArtsLevel,
-            speakingLevel,
-            principalTrait,
-            ascendantTrait,
-            neutralTrait,
-            oppositeTrait,
-            focus,
-            setFocus,
-            onFocusChange
-}) {
+function ManoeuverModalPanel () {
+
+    const { characterData, focus, setFocus, breath, setBreath } = useCharacterContext();
 
     const [showingResult, setShowingResult] = useState(Array(3).fill(null));
     const [selectedCaracs, setSelectedCarac] = useState(Array(3).fill(null));
@@ -169,12 +158,12 @@ function ManoeuverModalPanel ({
             <div className={cspanelKit.stepModalPanel}>
                 <h3 className={titleKit.manoeuverModalTitle}>Sur quel attribut vous reposez-vous ?</h3>
                 <div className={cspanelKit.lineModalDices}>
-                    {selectDice(bodyLevel, 0)}
-                    {selectDice(mindLevel, 0)}
-                    {selectDice(soulLevel, 0)}
-                    {selectDice(martialArtsLevel, 0)}
-                    {selectDice(elementaryArtsLevel, 0)}
-                    {selectDice(speakingLevel, 0)}
+                    {selectDice(characterData.attributes.body, 0)}
+                    {selectDice(characterData.attributes.mind, 0)}
+                    {selectDice(characterData.attributes.soul, 0)}
+                    {selectDice(characterData.attributes.martial, 0)}
+                    {selectDice(characterData.attributes.element, 0)}
+                    {selectDice(characterData.attributes.speaking, 0)}
 
                 </div>
                 <div className={cspanelKit.checkboxFocusModal}>
@@ -193,10 +182,10 @@ function ManoeuverModalPanel ({
             <div className={cspanelKit.stepModalPanel}>
                 <h3 className={titleKit.manoeuverModalTitle}>Quel est votre état d'esprit ?</h3>
                 <div className={cspanelKit.lineModalDices}>
-                    {selectDice(oppositeTrait, 1)}
-                    {selectDice(neutralTrait, 1)}
-                    {selectDice(ascendantTrait, 1)}
-                    {selectDice(principalTrait, 1)}
+                    {selectDice(characterData.traits.opposite, 1)}
+                    {selectDice(characterData.traits.neutral, 1)}
+                    {selectDice(characterData.traits.ascendant, 1)}
+                    {selectDice(characterData.traits.principal, 1)}
                 </div>
                 <div className={cspanelKit.checkboxFocusModal}>
                     <p className={policeKit.buttonLauncherTitle}>Point de focus :</p>
@@ -267,13 +256,7 @@ function ManoeuverModalPanel ({
                             console.log('focusUsed:', checkboxStates.filter(Boolean).length);
 
 
-                            // ✅ Appel direct avec les bonnes valeurs
-                            if (onFocusChange) {
-                                console.log('✅ Appel de onValuesChange');
-                                onFocusChange({
-                                focus: currentDisplayedFocus
-                                });
-                            }
+                            setFocus(currentDisplayedFocus);
 
                             setCheckboxStates(Array(9).fill(false));
                             setSelectedCarac(Array(3).fill(null));

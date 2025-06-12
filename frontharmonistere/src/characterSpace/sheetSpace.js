@@ -1,4 +1,4 @@
-import React from 'react'
+import {React, useState } from 'react'
 import CSMainPanel from './CSMainPanel';
 import CSPanel from './CSPanel';
 import RelationPanel from './relationPanel';
@@ -6,8 +6,20 @@ import FacultiesPanel from './facultiesPanel';
 import AlterationPanel from './alterationPanel';
 import CaracPanel from './caracPanel';
 import { useCharacterContext } from '../hooks/CharacterContext';
+import manoeuverIcon from '../images/manoeuverIcon.png';
+import diceIcon from '../images/diceIcon.png';
+import Popup from 'reactjs-popup';
+import modalKit from '../specialComponents/customModal';
+import cspanelKit from '../style/modules/components/cspanel.module.css';
+import ManoeuverModalPanel from './manoeuverModalPanel';
+import imageKit from '../style/modules/global/image.module.css';
+import DiceLauncherMini from '../diceLauncher/diceLauncherMini';
 
 function SheetSpace () {
+
+    const [showModalManoeuver, setShowModalManoeuver] = useState(false);
+    const [showModalDice, setShowModalDice] = useState(false);
+
 
     const { isSelectingInjury } = useCharacterContext();
 
@@ -42,7 +54,6 @@ function SheetSpace () {
 
     return (
         <div id='characterSpaceMain'>
-
             <div id='CSPanelOne'>
                     <CSMainPanel/>
             </div>
@@ -74,7 +85,49 @@ function SheetSpace () {
                     contentPanel={<CaracPanel
                     />}
                     activablePanel={isSelectingInjury}/>
-                </div>
+            </div>
+                    <div className='absoluteDices'>
+            <img
+                src={manoeuverIcon}
+                className={`${imageKit.absoluteIcons} ${imageKit.manoeuverIcon} ${showModalManoeuver ? imageKit.iconClicked : ''}`}
+                alt='Icône de manoeuvre'
+                onClick={() => {setShowModalManoeuver(true)}}
+            />
+                <img
+                    src={diceIcon}
+                    className={`${imageKit.absoluteIcons} ${imageKit.diceIcon} ${showModalDice ? imageKit.iconClicked : ''}`}
+                    alt='Icône de lancer de dés libres'
+                    onClick={() => {setShowModalDice(true)}}
+                />
+            </div>
+            {showModalManoeuver && (
+                <Popup
+                    open={showModalManoeuver}
+                    onClose={() => {setShowModalManoeuver(false)}}
+                    contentStyle={{padding: '0', maxWidth: '50vw', maxHeight: '90vw'}}
+                    modal
+                    nested
+                >
+                    <CSPanel
+                        titlePanel="Manœuvre"
+                        contentPanel={<ManoeuverModalPanel
+                        />}
+                    />
+                </Popup>
+            )}
+            {showModalDice && (
+                <Popup
+                    open={showModalDice}
+                    onClose={() => {setShowModalDice(false)}}
+                    contentStyle={{padding: '0', maxWidth: '50vw'}}
+                    modal
+                    nested
+                >
+                    <CSPanel
+                        titlePanel="Lanceur de dés"
+                        contentPanel={<DiceLauncherMini/>} />
+                </Popup>
+            )}
         </div>
 
 )}

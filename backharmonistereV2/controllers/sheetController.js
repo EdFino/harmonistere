@@ -83,3 +83,23 @@ exports.deleteSheet = async (req, res) => {
         res.status(500).json({ error: 'Erreur lors de la suppression de la fiche' });
     }
 };
+
+exports.searchSheets = async (req, res) => {
+    try {
+        const query = req.query.query;
+
+        // Affiche ce que tu reçois
+        console.log('🔍 Requête de recherche reçue avec :', query);
+
+        const results = await Sheet.find({
+            'sheetData.characterName': { $regex: query, $options: 'i' }
+        }).limit(10);
+
+        console.log('✅ Résultats trouvés :', results.length); // Tu peux logguer les résultats, ou juste leur nombre
+
+        res.status(200).json(results);
+    } catch (error) {
+        console.error('❌ Erreur dans searchSheets :', error);
+        res.status(500).json({ error: 'Erreur lors de la recherche' });
+    }
+};

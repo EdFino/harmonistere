@@ -22,7 +22,7 @@ input[type="checkbox"].checkboxModal:disabled {
 
 .searchbarRelation {
     width: 320px;
-    padding: 0.7em 1.2em;
+    padding: 0.7em 3.3em 0.7em 1.1em;
     font-size: 1.1em;
     background-color: #FFF9F0;
     border-radius: 41px;

@@ -8,5 +8,6 @@ router.get('/readSheet', sheetController.readSheet);
 router.get('/getSheet/:id', sheetController.getSheet);
 router.put('/updateSheet/:id', sheetController.updateSheet);
 router.delete('/deleteSheet/:id', sheetController.deleteSheet);
+router.get('/search', sheetController.searchSheets);
 
 module.exports = router;

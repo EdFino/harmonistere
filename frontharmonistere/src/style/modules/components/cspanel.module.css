@@ -265,3 +265,7 @@
     align-items: center;
     margin-top: 2em;
 }
+
+.searchBarDiv {
+    width: 100%;
+}

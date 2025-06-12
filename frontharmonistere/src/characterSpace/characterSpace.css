@@ -9,24 +9,28 @@ body {
     height: 120vh;
     position: relative;
     overflow: hidden;
-
 }
 
 #characterSpaceHeader {
+    margin: 0em 4em;
     display: grid;
-    grid-template-columns: 35% 55% 10%;
+    grid-template-columns: 33% 33% 33%;
 }
 
 #navbarCharacter {
     grid-column: 2/3;
     height: 100%;
-    justify-self: start;
+    justify-self: center;
     text-align: center;
 }
 
-#iconCharacterSpace {
+#endHeader {
     align-self: end;
     grid-column: 3/4;
+    justify-self: end;
+}
+
+#iconCharacterSpace {
     color: red;
     display: flex;
 }

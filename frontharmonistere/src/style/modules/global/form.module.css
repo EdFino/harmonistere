@@ -19,3 +19,16 @@ input[type="checkbox"].checkboxModal:disabled {
   opacity: 0.5;
   cursor: auto;
 }
+
+.searchbarRelation {
+    width: 320px;
+    padding: 0.7em 1.2em;
+    font-size: 1.1em;
+    background-color: #FFF9F0;
+    border-radius: 41px;
+    border: none;
+    outline: none;
+    background-image: url('../../../images/loupe-mini.png');
+    background-repeat: no-repeat;
+    background-position: right 20px center;
+}

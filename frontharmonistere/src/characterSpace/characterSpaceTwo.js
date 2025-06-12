@@ -10,14 +10,13 @@ import { useNavigate } from 'react-router-dom';
 import SubNavbarCharacter from './subNavbarCharacter';
 import titleKit from '../style/modules/global/title.module.css';
 import imageKit from '../style/modules/global/image.module.css';
-import CaracPanel from './caracPanel';
-import ComposantTestOne from './composantTestOne';
 import ComposantTestTwo from './composantTestTwo';
 import ComposantTestThree from './composantTestThree';
 import { CharacterProvider } from '../hooks/CharacterContext';
 import SheetSpace from './sheetSpace';
 import UpdatingOverlay from './updatingOverlay';
 import IconTools from './iconTools';
+import SearchRelation from './searchRelation';
 
 function CharacterSpaceTwo () {
 
@@ -125,9 +124,13 @@ useEffect(() => {
                         />
                     </div>
 
-                    <IconTools
-                        /* onSaveClick={handleManualSave} *//>
+                    <div id='endHeader'>
+                    {[1, 3].includes(characterPresentation) && <IconTools
+                        /* onSaveClick={handleManualSave} *//>}
+                    {characterPresentation === 2 && <SearchRelation/>}
+                    </div>
                 </div>
+
                 
                 {characterPresentation === 1 &&
                 <SheetSpace/>}

@@ -10,7 +10,6 @@ import manoeuverIcon from '../images/manoeuverIcon.png';
 import diceIcon from '../images/diceIcon.png';
 import Popup from 'reactjs-popup';
 import modalKit from '../specialComponents/customModal';
-import cspanelKit from '../style/modules/components/cspanel.module.css';
 import ManoeuverModalPanel from './manoeuverModalPanel';
 import imageKit from '../style/modules/global/image.module.css';
 import DiceLauncherMini from '../diceLauncher/diceLauncherMini';
